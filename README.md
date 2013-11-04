@@ -4,7 +4,7 @@ Repository for Team 15
 
 the ourTron folder contians the eclipse project of our current development.
 
-**if you want You can clone the 'develop' branch and import the 'ourTron' folder as eclipse project. **
+*if you want You can clone the 'develop' branch and import the 'ourTron' folder as eclipse project.*
 
 
 ##folder structure up to now (04/11/13)
