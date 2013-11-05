@@ -1,0 +1,4 @@
+//player 1 is part of their trail, same with player 2. 
+public enum MapSignEnum {
+	WALL, player1Trail, player2Trail, power1, power2
+}
