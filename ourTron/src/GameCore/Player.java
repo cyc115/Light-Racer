@@ -5,7 +5,7 @@ public class Player {
  private int speed;
  private int powerUp;
  
-public Player() {
+public Player() { 
 	super();
 	Coordinate startingCoordinate = new Coordinate(0, 0);
 	Control startingDirection = Control.RIGHT;
