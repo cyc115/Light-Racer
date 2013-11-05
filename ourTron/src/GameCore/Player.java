@@ -6,7 +6,6 @@ public class Player {
  private int powerUp;
  
 public Player() { 
-	super();
 	Coordinate startingCoordinate = new Coordinate(0, 0);
 	Control startingDirection = Control.RIGHT;
 	int startingSpeed = 1;

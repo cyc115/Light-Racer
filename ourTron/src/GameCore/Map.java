@@ -6,7 +6,6 @@ public class Map {
 	private String mapName;
 	
 	public Map(String mapName) { //initializes blank Map with just the edges filled in as WALL  
-		super();
 		this.mapName = mapName;
 		initializeJustEdges();
 	}
