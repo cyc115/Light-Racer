@@ -18,7 +18,7 @@ public Player() {
 }
 
 	public String convertFromUser(User user){ //TODO: convert from User
-		return User.getUser(); //maybe this should be getUsername?
+		return User.getUsername();
 	}
 	
 	public Coordinate getPlayerLocation() {
