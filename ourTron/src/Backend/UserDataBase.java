@@ -12,7 +12,7 @@ public class UserDataBase {
 	private String location;
 
 	UserDataBase() {
-		location = null;
+		location = "UserDataBase.info";
 //		this.db = null;
 		library = new LinkedList<User>();
 	}
