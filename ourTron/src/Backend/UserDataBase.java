@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.LinkedList;
-
+//
 /**
  * This class is easily extensible to allow temporary users as this class will
  * simply not write/read to a file but instead just keep the temporary user in

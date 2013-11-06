@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
 
+//
 public class PlayerStatistics {
 	//TODO last 10 wins and losses between two players.
 	private User user1;
