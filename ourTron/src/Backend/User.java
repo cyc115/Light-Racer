@@ -34,6 +34,14 @@ public class User {
 		return this.username;
 	}
 	
+	public int getWin() {
+		return win;
+	}
+
+	public int getLoss() {
+		return loss;
+	}
+
 	public void setPassword(String password) {
 		this.password=password;
 	}
