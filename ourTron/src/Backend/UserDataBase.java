@@ -13,6 +13,7 @@ public class UserDataBase {
 
 	UserDataBase() {
 		location = null;
+//		this.db = null;
 		library = new LinkedList<User>();
 	}
 
@@ -30,6 +31,13 @@ public class UserDataBase {
 			readFromFile();
 	}
 	
+	public User retriveUser(String username) {
+		for(User thisUser : library)
+			if(thisUser.getUsername().equals(username))
+				return thisUser;
+		return null;
+	}
+	
 	//TODO get this name changed
 	/**This method will return a {@link User} object corresponding to the user input in the method. 
 	 * If that user does not exist in the database, null is returned
@@ -45,12 +53,17 @@ public class UserDataBase {
 	}
 	
 	/**Adds a {@link User} object to the database and updates the file on the hard drive.
+	 * Only does so if the username does not already exist in the database
 	 * <p>
 	 * @param user	The user to be added
 	 */
 	public void addUser(User user) {
-		library.add(user);
-		writeToFile();
+		if(retriveUser(user.getUsername()) == null) {
+			library.add(user);
+			writeToFile();
+		} else {
+			System.err.print("User already exists in the Database. Exiting");
+		}
 	}
 
 	@SuppressWarnings("unchecked")
