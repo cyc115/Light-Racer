@@ -10,12 +10,33 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
-public class Login extends UIElement {
+public class Login extends UIElement  {
+	
+	//following are filds that need to be reset during reset() call 
+	private JTextField jtfUser = new JTextField();
+	private JTextField jtfUser2 = new JTextField();
 	private JPasswordField pwdPass;
 	private JPasswordField passwordField;
+	
+	//unique instance
+	private static Login loginInstance = new Login(); 
+	
+	/**
+	 * reinitialize the login dialog ,why does this not reset the form ? 
+	 * @TODO find a way to reset form 
+	 */
+	public void reset(){
+		jtfUser.setText("");
+		jtfUser2.setText("");
+		pwdPass.setText("");
+		passwordField.setText("");
+	}
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -31,15 +52,28 @@ public class Login extends UIElement {
 			}
 		});
 	}
+	
+	
+	/**
+	 * use this to obtain a unique instance of the login dialog
+	 * @return
+	 */
+	public static Login getInstance(){
+		return loginInstance;
+	}
+	
+
+	
 
 	/**
-	 * Create the frame.
+	 * initialize login
 	 */
-	public Login() {
+	
+	private Login() {
 		setTitle("Log in ");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new MigLayout("", "[][grow][][][]", "[][][][][][][][][grow]10"));
+		this.setAlwaysOnTop(true);
 		
 		JLabel jl1 = new JLabel("User1"); //title1
 		JLabel jl0 = new JLabel("User2");
@@ -48,11 +82,10 @@ public class Login extends UIElement {
 		JLabel jl2 = new JLabel("User Name :"); // user name password
 		JLabel jl3 = new JLabel("Password :");
 
-		JTextField jtfUser = new JTextField();
 		
 		JLabel jl4 = new JLabel("User Name :"); // user name password
 		JLabel jl5 = new JLabel("Password :");
-		JTextField jtfUser2 = new JTextField();
+
 		
 		JPanel panel = new JPanel();  //add title 
 		panel.add(jl1);
@@ -80,14 +113,27 @@ public class Login extends UIElement {
 		getContentPane().add(pwdPass, "cell 1 5 4 1,growx,span");
 		
 		JButton b1 = new JButton("Back");  //buttons 
+		b1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loginInstance.setVisible(false);
+				MainMenu menu = MainMenu.getInstance();
+				menu.setVisible(true);
+				
+			}
+		});
 		
-		
-
 		
 		getContentPane().add(b1, "cell 1 7,aligny bottom"); //add the 3 buttons 
 		JButton b2 = new JButton("Submit");
 		getContentPane().add(b2, "cell 3 7,aligny bottom");
+		
+		//clear button
 		JButton b3 = new JButton("Clear");
+		b3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loginInstance.reset();
+			}
+		});
 		getContentPane().add(b3, "cell 4 7,aligny bottom");
 	}
 }

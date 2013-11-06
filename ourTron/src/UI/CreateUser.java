@@ -15,10 +15,26 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CreateUser extends UIElement {
+	
 
 	private JPanel contentPane;
+	
+	//only instance of the UI
+	private static CreateUser cuInstance = new CreateUser();
+	
+	//things that need to be reset by the reset method 
 	private JTextField txtUserName;
-
+	private JPasswordField jpfPassNew = new JPasswordField();
+	private JPasswordField jpfPassAgain = new JPasswordField();
+	
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		txtUserName.setText("user name");
+		jpfPassNew.setText("");
+		jpfPassAgain.setText("");
+	}
+	
 	/**
 	 * Launch the application.
 	 */
@@ -40,7 +56,6 @@ public class CreateUser extends UIElement {
 	 */
 	public CreateUser() {
 		setTitle("Create user dialog");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -64,8 +79,7 @@ public class CreateUser extends UIElement {
 		//password label and fields
 		JLabel lblNewPassWord = new JLabel("New Password:");
 		JLabel lblNewPassWordAgain = new JLabel("Enter Password Again:");
-		JPasswordField jpfPassNew = new JPasswordField();
-		JPasswordField jpfPassAgain = new JPasswordField();
+
 		
 		contentPane.add(lblNewPassWord, "cell 0 2");
 		contentPane.add(jpfPassNew,"cell 1 2 4 1,grow");
@@ -75,6 +89,8 @@ public class CreateUser extends UIElement {
 		JButton btnNewButton = new JButton("Back");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				MainMenu.getInstance().setVisible(true);
+				CreateUser.getInstance().setVisible(false);
 			}
 		});
 		contentPane.add(btnNewButton, "cell 0 4,alignx center,aligny bottom");
@@ -83,10 +99,21 @@ public class CreateUser extends UIElement {
 		contentPane.add(btnNewButton_1, "cell 2 4,aligny bottom");
 		
 		JButton btnClear = new JButton("Clear");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getInstance().reset();
+			}
+		});
 		contentPane.add(btnClear, "cell 4 4,aligny bottom");
 		
 		
 
 	}
+
+	public static CreateUser getInstance() {
+		return cuInstance;
+	}
+
+
 
 }

@@ -14,13 +14,17 @@ public abstract class UIElement extends JFrame {
 
 	private JPanel contentPane;
 
+	
+	//abstract methods
+	
+	public abstract void reset();
 
 	/**
 	 * Create the frame.
 	 */
 	public UIElement() {
 		setTitle("Tron");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 400);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -58,5 +62,8 @@ public abstract class UIElement extends JFrame {
 		setContentPane(contentPane);
 		this.setResizable(false);
 	}
+	
+
+	
 
 }
