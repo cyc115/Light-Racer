@@ -58,9 +58,6 @@ public class GamePanel {
 	}
 	public void obtainPowerUp(){ //TODO: fill in onGamePause
 	}
-	public void checkCollision(){
-	}
-
 
 //	public void updateGame(){
 //	}
