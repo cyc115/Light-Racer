@@ -57,7 +57,7 @@ public class GamePanel {
 	public void usePowerUp(Player player){ //TODO: fill in usePowerUp
 	}
 	public void obtainPowerUp(){ //TODO: fill in onGamePause
-	}
+	} 
 
 //	public void updateGame(){
 //	}
