@@ -1,5 +1,6 @@
 package UI;
 
+<<<<<<< HEAD
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -15,6 +16,28 @@ public class MainMenu extends UIElement {
 
 	private JPanel contentPane;
 
+=======
+import java.awt.EventQueue;
+
+import javax.swing.JButton;
+
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class MainMenu extends UIElement {
+
+	public static MainMenu menuInstance = new MainMenu();
+
+	@Override
+	public void reset() {
+		menuInstance = new MainMenu();
+		
+	}
+	
+	
+>>>>>>> MikeGui
 	/**
 	 * Launch the application.
 	 */
@@ -22,7 +45,11 @@ public class MainMenu extends UIElement {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+<<<<<<< HEAD
 					MainMenu frame = new MainMenu();
+=======
+					MainMenu frame = menuInstance;
+>>>>>>> MikeGui
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,6 +62,7 @@ public class MainMenu extends UIElement {
 	 * Create the frame.
 	 */
 	public MainMenu() {
+<<<<<<< HEAD
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -99,6 +127,53 @@ public class MainMenu extends UIElement {
 		gbc_btnNewButton.gridwidth = 3;
 		
 		contentPane.add(btnNewButton, gbc_btnNewButton);
+=======
+		setTitle("Menu");
+		getContentPane().setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][][][][][][]"));
+		
+		JLabel lblLightRacer = new JLabel("Light Racer @TODO add logo");
+		getContentPane().add(lblLightRacer, "cell 1 0,alignx center");
+		
+		//start game bottom
+		
+		JButton btnNewButton = new JButton("Start Game");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login loginFrame = Login.getInstance();
+				loginFrame.setVisible(true);
+				MainMenu.getInstance().setVisible(false);
+			}
+		});
+		getContentPane().add(btnNewButton, "cell 1 1,alignx center");
+		
+		//create account button 
+		
+		JButton button = new JButton("Create Account");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreateUser createUserFrame = CreateUser.getInstance();
+				createUserFrame.setVisible(true);
+				MainMenu.getInstance().setVisible(false);
+			}
+		});
+		getContentPane().add(button, "cell 1 3,alignx center");
+		
+		JButton button_1 = new JButton("Exit");
+		button_1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});
+		getContentPane().add(button_1, "cell 1 5,alignx center");
+		
+	}
+
+
+
+	public static MainMenu getInstance() {
+		// TODO Auto-generated method stub
+		return menuInstance;
+>>>>>>> MikeGui
 	}
 
 }
