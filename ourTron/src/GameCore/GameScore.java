@@ -1,3 +1,4 @@
+package GameCore; 
 
 public class GameScore {
 	private int playerOneScore;

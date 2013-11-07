@@ -1,3 +1,5 @@
+package GameCore; 
+
 public class Player {
  private Coordinate coord;
  private Control direction;
