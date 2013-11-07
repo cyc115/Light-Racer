@@ -6,25 +6,32 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-//
 public class PlayerStatistics {
-	//TODO last 10 wins and losses between two players.
-	private User user1;
-	private User user2;
 	private LinkedList<PlayerStatisticsEntry> stats;
+	private PlayerStatisticsWriter playerStatsWriter;
 	
-	PlayerStatistics(String filename) {
-		loadStatisticsFromFile(filename);
+	PlayerStatistics() {
+		this.playerStatsWriter = new PlayerStatisticsWriter();
+		
+		//loads the playerStatistics if there is none, otherwise load them. 
+		if(playerStatsWriter.loadStatisticsFromFile() == null)
+			playerStatsWriter.saveStatisticsToFile(this);
+		else
+			this.stats = playerStatsWriter.loadStatisticsFromFile().getStats();
 	}
+	
+	
 	
 	//TODO figure out what goes here!
 	public void displayStatistics() {
 		
 	}
 	
-	private PlayerStatisticsEntry getStatFile() {
+	private PlayerStatisticsEntry getStatisticsEntry() {
 		for(PlayerStatisticsEntry entry : stats) {
-			if(entry.user1.equals(user1) && entry.user2.equals(user2) || entry.user1.equals(user2) && entry.user2.equals(user1))
+			if(entry.user1.equals(user1) && entry.user2.equals(user2))
+				return entry;
+			if(entry.user1.equals(user2) && entry.user2.equals(user1))
 				return entry;
 		}
 		return null;
@@ -41,62 +48,28 @@ public class PlayerStatistics {
 //		this.stats = entry.stats;
 //	}
 	
-	@SuppressWarnings("unchecked")
-	public void loadStatisticsFromFile(String filename) {
-		try {
-			FileInputStream fileIn = new FileInputStream(filename);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			stats = (LinkedList<PlayerStatisticsEntry>) in.readObject();
-			in.close();
-			fileIn.close();
-		} catch (IOException i) {
-			i.printStackTrace();
-			return;
-		} catch (ClassNotFoundException c) {
-			System.out.println("The location does not have a valid file");
-			c.printStackTrace();
-			return;
-		}
+	public LinkedList<PlayerStatisticsEntry> getStats() {
+		return stats;
 	}
-	
-	/**
-	 * This method writes to a file in a serialized fashion. The location of
-	 * output is defined in the instance of this object
-	 */
-	public void saveStatisticsToFile(String filename) {
-		try {
-			FileOutputStream fileOut = new FileOutputStream(filename);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(stats);
-			out.close();
-			fileOut.close();
-			System.out.printf("Your data has been saved in " + filename);
-		} catch (IOException i) {
-			i.printStackTrace();
-		}
+
+	public void setStats(LinkedList<PlayerStatisticsEntry> stats) {
+		this.stats = stats;
 	}
-	
-	//TODO figure out the exact implementation of this class. 
+
 	public class PlayerStatisticsEntry {
 		private User user1;
 		private User user2;
-		private User[] results;
+		private User winner;
 		
 		public PlayerStatisticsEntry(User user1, User user2) {
 			this.user1 = user1;
 			this.user2 = user2;
-			results = new User[10];
 		}
 		
 		public void addWin(User user) {
-			shiftGameResults();
-			results[0] = user;
+			results.add(user);
 		}
-		
-		public User[] getStatistics() {
-			return results;
-		}
-		
+	
 		public User getUser1() {
 			return user1;
 		}
@@ -113,25 +86,64 @@ public class PlayerStatistics {
 			this.user2 = user2;
 		}
 
-		public User[] getResults() {
+		public LinkedList<User> getResults() {
 			return results;
 		}
 
-		public void setResults(User[] results) {
-			this.results = results;
+		public void setResults(LinkedList<User> stats) {
+			this.results = stats;
 		}
-
-		private void shiftGameResults() {
-			results[10] = results[9];
-			results[9] = results[8];
-			results[8] = results[7];
-			results[7] = results[6];
-			results[6] = results[5];
-			results[5] = results[4];
-			results[4] = results[3];
-			results[3] = results[2];
-			results[2] = results[1];
-			results[1] = results[0];
+		
+		public class GameResult{
+			private User user2;
+			private User winner;
+			
+			GameResult(User user2, User winner) {
+				
+			}
+		}
+	}
+	
+	public class PlayerStatisticsWriter {
+		private String location;
+		
+		public PlayerStatisticsWriter() {
+			this.location = "PlayerStatistics.data";
+		}
+		
+		public PlayerStatistics loadStatisticsFromFile() {
+			try {
+				FileInputStream fileIn = new FileInputStream(location);
+				ObjectInputStream in = new ObjectInputStream(fileIn);
+				PlayerStatistics stats =  (PlayerStatistics) in.readObject();
+				in.close();
+				fileIn.close();
+				return stats;
+			} catch (IOException i) {
+				i.printStackTrace();
+				return null;
+			} catch (ClassNotFoundException c) {
+				System.out.println("The location does not have a valid file");
+				c.printStackTrace();
+				return null;
+			}
+		}
+		
+		/**
+		 * This method writes to a file in a serialized fashion. The location of
+		 * output is defined in the instance of this object
+		 */
+		public void saveStatisticsToFile(PlayerStatistics stats) {
+			try {
+				FileOutputStream fileOut = new FileOutputStream(location);
+				ObjectOutputStream out = new ObjectOutputStream(fileOut);
+				out.writeObject(stats);
+				out.close();
+				fileOut.close();
+				System.out.printf("Your data has been saved in " + location);
+			} catch (IOException i) {
+				i.printStackTrace();
+			}
 		}
 	}
 

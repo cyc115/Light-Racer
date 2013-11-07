@@ -1,4 +1,4 @@
-//
+
 public class UserAuth {
 	private UserDataBase userDB;
 	
@@ -7,7 +7,7 @@ public class UserAuth {
 	}
 	
 	public boolean isValidInput(String username, String password) {
-		User user = userDB.retriveUser(username);
+		User user = userDB.retrieveUser(username);
 		if(user.getUsername().equals(username) && user.getPassword().equals(password))
 			return true;
 		else
@@ -15,7 +15,7 @@ public class UserAuth {
 	}
 	
 	public boolean isRegistered(String username) {
-		if(userDB.retriveUser(username) != null)
+		if(userDB.retrieveUser(username) != null)
 			return true;
 		else
 			return false;

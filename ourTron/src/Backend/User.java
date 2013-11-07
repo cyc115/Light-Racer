@@ -1,30 +1,29 @@
 
-//
 public class User {
 	private String username;
 	private String password;
 	private int win;
 	private int loss;
-	//private Date playingTime;pp
-//	private boolean validUser;
-	private UserDataBase userDataBase;
 	
 	public User() {
 		this.username=null;
 		this.password=null;
 		this.win=0;
 		this.loss=0;
-//		this.validUser=false;
-//		this.userDataBase=null;
+	}
+	
+	public User(User user) {
+		this.username = user.username;
+		this.password = user.password;
+		this.win = user.win;
+		this.loss = user.loss;
 	}
 
-	public User(String username, String password, UserDataBase userDataBase) {
+	public User(String username, String password) {
 		this.username=username;
 		this.password=password;
 		this.win=0;
 		this.loss=0;
-//		this.validUser=true;
-		this.userDataBase=userDataBase;
 	}
 	
 	public void setUsername(String username) {
