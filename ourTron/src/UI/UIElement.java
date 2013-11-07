@@ -1,32 +1,31 @@
 package UI;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JMenu;
-import javax.swing.UIManager;
-
+import javax.swing.JMenuItem;
 
 public abstract class UIElement extends JFrame {
 
 	private JPanel contentPane;
-	private JFrame frame;
 
+	
+	//abstract methods
+	
+	public abstract void reset();
 
-
+	/**
+	 * Create the frame.
+	 */
 	public UIElement() {
-		setTitle("titleBar");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 500);
-		this.setResizable(false);
-//		this.setContentPane(new JLabel(new ImageIcon("Res/bg.png")));
-//		http://placehold.it/400x400
+		setTitle("Tron");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 450, 400);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -40,30 +39,31 @@ public abstract class UIElement extends JFrame {
 		JMenuItem mntmEndGame = new JMenuItem("End Game");
 		mnGame.add(mntmEndGame);
 		
-		JMenu mnOption = new JMenu("Option");
-		menuBar.add(mnOption);
+		JMenu mnOptions = new JMenu("Options");
+		menuBar.add(mnOptions);
 		
-		JMenuItem mntmMusic = new JMenuItem("Music");
-		mnOption.add(mntmMusic);
+		JMenuItem mntmOption = new JMenuItem("Option");
+		mnOptions.add(mntmOption);
 		
-		JMenuItem mntmMapSelection = new JMenuItem("Map Selection");
-		mnOption.add(mntmMapSelection);
+		JMenuItem mntmSelectMap = new JMenuItem("Select Map");
+		mnOptions.add(mntmSelectMap);
 		
-		JMenu mnAbout = new JMenu("About");
-		menuBar.add(mnAbout);
+		JMenu mnOther = new JMenu("Other");
+		menuBar.add(mnOther);
 		
-		JMenuItem mntmPlayerState = new JMenuItem("player Statistics");
-		mnAbout.add(mntmPlayerState);
+		JMenuItem mntmAboutUs = new JMenuItem("About Us");
+		mnOther.add(mntmAboutUs);
 		
-		JMenuItem mntmTeam = new JMenuItem("Team");
-		mnAbout.add(mntmTeam);
-		
-		JMenuItem mntmProject = new JMenuItem("Project");
-		mnAbout.add(mntmProject);
+		JMenuItem mntmAboutThisGame = new JMenuItem("About This Game");
+		mnOther.add(mntmAboutThisGame);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.add(new JLabel(new ImageIcon("Res/bg.png")));
 		setContentPane(contentPane);
+		this.setResizable(false);
 	}
+	
+
+	
+
 }
