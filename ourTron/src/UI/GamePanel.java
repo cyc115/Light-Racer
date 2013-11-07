@@ -52,7 +52,7 @@ public class GamePanel extends JPanel {
 		while(!isPaused){
 //			//listener stuff to get the new direction of player1 and player2
 //			Control directionP1;
-//			COntrol directionP2;
+//			Control directionP2;
 //			makeTurn(player1, directionP1);
 //			makeTurn(Player2, directionP2);
 //			checkCollision();
