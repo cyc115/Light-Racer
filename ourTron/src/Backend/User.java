@@ -78,6 +78,7 @@ public class User {
 	
 	public void addGameResult(User opponent, boolean won) {
 		gameHistory.add(new GameEntry(opponent, won));
+		userDB.modifyUser(this);
 	}
 
 	public void incrementWin() {
