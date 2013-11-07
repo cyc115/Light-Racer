@@ -1,3 +1,10 @@
+/**
+ * reviewed: Mike
+ * 
+ */
+
+package Backend;
+
 import java.util.LinkedList;
 
 
@@ -6,6 +13,7 @@ public class User {
 	private String password;
 	private int win;
 	private int loss;
+	//TODO what is gameHistory ,please comment
 	private LinkedList<GameEntry> gameHistory;
 	private UserDataBase userDB;
 	
@@ -23,6 +31,11 @@ public class User {
 		this.password = user.password;
 		this.win = user.win;
 		this.loss = user.loss;
+		
+		/*FIXME is public User(User user) tested ?  
+ * `this.gameHistory=user.gameHistory;` will not create a new gameHistory but point to a shared one ... 
+ * which means that if you change one obj the other one will be affected as well which is not good.*/ 
+		
 		this.gameHistory=user.gameHistory;
 		this.userDB = new UserDataBase();
 	}
@@ -32,6 +45,7 @@ public class User {
 		this.password=password;
 		this.win=0;
 		this.loss=0;
+		
 		this.gameHistory=new LinkedList<GameEntry>();
 		this.userDB = new UserDataBase();
 	}
@@ -67,11 +81,11 @@ public class User {
 	public void setLoss(int loss) {
 		this.loss = loss;
 	}
-
+	//TODO comment on the possible use cases  
 	public UserDataBase getUserDB() {
 		return userDB;
 	}
-
+	//TODO comment on the possible use cases  
 	public void setUserDB(UserDataBase userDB) {
 		this.userDB = userDB;
 	}
@@ -80,11 +94,15 @@ public class User {
 		gameHistory.add(new GameEntry(opponent, won));
 		userDB.modifyUser(this);
 	}
-
+	
+	
+	//TODO possible overlaps with GameEntry (user ,win) 
+	// it's not good to have other ppl remember to increment in the GameEntry class as well as increment the Win number 
+	// in the User class. if this is abs necessary,then have a function to do the increment implicitly for both.
 	public void incrementWin() {
 		this.win += 1;
 	}
-	
+	//TODO same as abv 
 	public void incrementLoss() {
 		this.loss += 1;
 	}
@@ -93,7 +111,7 @@ public class User {
 		return (double)win/loss;
 	}
 	
-	
+	//TODO override hash as well. linked list are not covered in the following 
 	//TODO get permission of team. Update team/UML.
 	public boolean equals(User user){
 		boolean userSame = username.equals(user.username);

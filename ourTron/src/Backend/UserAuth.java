@@ -1,3 +1,4 @@
+package Backend;
 
 public class UserAuth {
 	private UserDataBase userDB;

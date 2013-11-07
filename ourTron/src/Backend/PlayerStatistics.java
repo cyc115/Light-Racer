@@ -1,3 +1,9 @@
+/**
+ * reviewed : Mike
+ * TODO finish this class, and implement everything. right now everything is commented out 
+ */
+
+
 //import java.io.FileInputStream;
 //import java.io.FileOutputStream;
 //import java.io.IOException;
