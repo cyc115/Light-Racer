@@ -8,7 +8,10 @@ import javax.swing.JPanel;
  *
  */
 public class GamePanel extends JPanel {
-
+	
+	/**
+	 * this is the game panel object . only 1 copy exist per game ~!
+	 */
 	private static GamePanel gamePanelInstance = new GamePanel();
 	/**
 	 * Create the panel.
@@ -23,6 +26,10 @@ public class GamePanel extends JPanel {
 	}
 	//TODO stub
 	public void reset(){
+		
+	}
+	//TODO stub
+	public void init(){
 		
 	}
 	
