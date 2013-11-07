@@ -11,7 +11,7 @@ public class Map implements Serializable {
 	private int difficulty;
 	private int height = 200;
 	private int width = 200;
-	private MapSign[][] mapArray = new MapSign[height][width];
+	private MapSign[][] mapArray = new MapSign[width][height];
 	private String mapName;
 	
 	public Map(String location) {
