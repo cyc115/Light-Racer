@@ -1,10 +1,7 @@
 package UI;
 
 import javax.swing.JPanel;
-import GameCore.Control;
-import GameCore.GameScore;
-import GameCore.Map;
-import GameCore.Player;
+import GameCore.*;
 
 
 /**
@@ -18,7 +15,7 @@ public class GamePanel extends JPanel {
 	private GameScore gamescore;
 //	private MusicPlayer soundEffectPlayer
 	private Control direction;
-	private boolean isPaused;
+	private boolean isPaused = false;
 	private Map gameMap;
 	private int roundNumber;
 	private char userKeypboardInput;
@@ -39,16 +36,29 @@ public class GamePanel extends JPanel {
 	}
 	//TODO stub
 	public void reset(){
-		
 	}
+
 	//init() will be called to start the game
 	public void init(){ //TODO: fill in init() 
 		gameMap = new Map();
 //		gameMap.createMapFromFile() ...
 		player1 = new Player();
 		player2 = new Player();
+		this.isPaused = false;
 	}
-
+	public void onGamePause(){ //TODO: fill in onGamePause
+	}
+	public void onGameResume(){ //TODO: fill in onGameResume
+		while(!isPaused){
+//			//listener stuff to get the new direction of player1 and player2
+//			Control directionP1;
+//			COntrol directionP2;
+//			makeTurn(player1, directionP1);
+//			makeTurn(Player2, directionP2);
+//			checkCollision();
+//			movePlayer()
+		}
+	}
 	public void makeTurn(Player player, Control direction){ //TODO: fill in makeTurn
 	//takes old direction of p1 and updates it using button it gets from listener
 	}
@@ -63,7 +73,7 @@ public class GamePanel extends JPanel {
 //	}
 	public void usePowerUp(Player player){ //TODO: fill in usePowerUp
 	}
-	public void obtainPowerUp(){ //TODO: fill in onGamePause
+	public void obtainPowerUp(){ //TODO: fill in
 	} 
 	
 }
