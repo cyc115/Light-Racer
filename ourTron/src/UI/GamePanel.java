@@ -24,12 +24,13 @@ public class GamePanel extends JPanel {
 	public static GamePanel getInstance(){
 		return gamePanelInstance;
 	}
+	
 	//TODO stub
 	public void reset(){
 		
 	}
 	//TODO stub
-	public void init(){
+	public void static init(){
 		
 	}
 	
