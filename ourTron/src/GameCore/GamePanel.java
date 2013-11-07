@@ -4,7 +4,7 @@ import Map;
 import Player;
 
 
-public class GamePanel {
+public class GamePanel { 
 	private Player player1;
 	private Player player2;
 	private GameScore gamescore;
