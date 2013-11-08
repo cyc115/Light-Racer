@@ -1,5 +1,6 @@
 package UI;
 
+<<<<<<< HEAD
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,6 +20,14 @@ import GameCore.Map;
 import GameCore.Player;
 import GameCore.Map.MapSign;
 
+=======
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.Timer;
+import javax.swing.JPanel;
+import GameCore.*;
+>>>>>>> refs/remotes/origin/JoannaGameCore
 
 
 /**
@@ -26,6 +35,7 @@ import GameCore.Map.MapSign;
  * @author <put your name here,who ever's responsible of this class  > 
  *
  */
+<<<<<<< HEAD
 public class GamePanel extends Canvas implements Runnable {
 	/**
 	 * 
@@ -35,6 +45,10 @@ public class GamePanel extends Canvas implements Runnable {
 	public static int scale = 1;
 	private static final long serialVersionUID = 1L;
 	private static final int BUFFER = 3;
+=======
+public class GamePanel extends JPanel implements ActionListener, KeyListener{
+	private Timer time;
+>>>>>>> refs/remotes/origin/JoannaGameCore
 	private Player player1;
 	private Player player2;
 	private GameScore gamescore;
@@ -46,6 +60,7 @@ public class GamePanel extends Canvas implements Runnable {
 	private MapSign[][] gameMapArray;
 	private MapSign[] convertedMapArray;
 	private int roundNumber;
+<<<<<<< HEAD
 	private char userKeypboardInput;
 	private Thread thread;
 	private boolean running = false;
@@ -61,6 +76,51 @@ public class GamePanel extends Canvas implements Runnable {
 	
 	//private BufferedImage bkgimage = null;
 	
+=======
+	private char userKeyboardInputP1;
+	private char userKeyboardInputP2; 
+	//Some drawer object here with alot of logic inside
+	
+	//TODO this might need changing
+	public MyPanel() {
+		this.setPreferredSize(new Dimension(500,500));
+		addKeyListener(this);
+	}
+	
+	public void paintComponenet(Graphics g) {
+		super.repaint();
+	}
+	
+	//TODO put what you want to change between refreshes here!!! 
+	public void actionPerformed(ActionEvent arg0) { //every time exception is thrown in timer, happens in action performed 
+		if(isPaused ==  true)
+			onPause();
+		else
+			onGameResume();
+		
+	}
+	
+	
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(/*get the key pressed*/)
+			userKeyboardInputP1 = //keypressed
+		else
+			userKeyboardInputP2 = //keypressed
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+>>>>>>> refs/remotes/origin/JoannaGameCore
 	
 	
 	/**
@@ -72,9 +132,18 @@ public class GamePanel extends Canvas implements Runnable {
 	 */
 
 	private GamePanel() {
+<<<<<<< HEAD
 		Dimension size = new Dimension(width *scale , height * scale);
 		this.setPreferredSize(size);
 		
+=======
+		//initalize the drawer object
+		//this.drawer = new Drawer();
+		this.setSize(500, 500);
+		this.timer = new Timer(1000, this);
+		this.init();
+		//key = new KeyListener(drawer);
+>>>>>>> refs/remotes/origin/JoannaGameCore
 	}
 	
 	
@@ -83,6 +152,9 @@ public class GamePanel extends Canvas implements Runnable {
 		return gamePanelInstance;
 	}
 	//TODO fill in reset()
+	/**
+	 * reset gameMap and players
+	 */
 	public void reset(){
 	}
 	
@@ -156,6 +228,7 @@ public class GamePanel extends Canvas implements Runnable {
 		}
 		stop();
 	}
+<<<<<<< HEAD
 	
 	
 	
@@ -165,7 +238,15 @@ public class GamePanel extends Canvas implements Runnable {
 
 	private void update() {
 		// TODO need to write changed to oneDmapArray
+=======
+	public void onGamePause(){ //TODO: fill in onGamePause
+		if(timer != null) {
+			this.timer.stop();
+			this.timer = null;
+		}
+>>>>>>> refs/remotes/origin/JoannaGameCore
 	}
+<<<<<<< HEAD
 
 	//render takes care of the graphical processing of the game
 	private void render() {
@@ -201,17 +282,28 @@ public class GamePanel extends Canvas implements Runnable {
 //	}
 //	public void onGameResume(Player player1, Player player2, Map){ //TODO: fill in onGameResume
 //		while(!isPaused){
+=======
+	public void onGameResume(Player player1, Player player2, Map){ //TODO: fill in onGameResume
+		if(timer == null) {
+			this.timer = new Timer(1000, this);
+			this.timer.start();
+		}
+>>>>>>> refs/remotes/origin/JoannaGameCore
 //			//listener stuff to get the new direction of player1 and player2
-			
+		
+		char p1Direction = userKeyboardInputP1;
+		char p2Direction = userKeyboardInputP2;
 //			Control directionP1;
 //			Control directionP2;
-//			makeTurn(player1, directionP1);
-//			makeTurn(Player2, directionP2);
-//			handleCollisions(player1, player2, gameMap);
-//			movePlayers(Player1, Player2, gameMap);
-//			draw gameMap
+		//TODO convert p1Direction and p2Direction to ControlEnum
+			makeTurn(player1, directionP1);
+			makeTurn(Player2, directionP2);
+			handleCollisions(player1, player2, gameMap);
+			movePlayers(player1, player2, gameMap);
+			//draw gameMap
 			
 //		}
+<<<<<<< HEAD
 // }
 	
 	
@@ -266,6 +358,8 @@ public void renderScreen( int[] pixels){
 			}
 			
 		}
+=======
+>>>>>>> refs/remotes/origin/JoannaGameCore
 	}
 	
 	public void clearScreen(int[] pixels){
@@ -313,7 +407,7 @@ public void renderScreen( int[] pixels){
 		return roundNumber;
 	}
 	public void incrRoundNumber(){
-		roundNumber++;
+		this.roundNumber++;
 	}
 	public void endGame(){ //TODO: fill in endGame
 	}
@@ -342,10 +436,10 @@ public void renderScreen( int[] pixels){
 			//return;
 		}
 		else if( (!p1HasCollided)&&(p2HasCollided)){ //p1 wins
-			GameScore.incrP1Win();
+			GamePanel.gameScore.incrP1Win();
 		}
 		else( (!p1HasCollided)&&(p2HasCollided)){ //p2 wins
-			GameScore.incrP2Win();
+			GampePanel.gameScore.incrP2Win();
 		}
 		incrRoundNumber();
 		if(GamePanel.roundNumber<3){
