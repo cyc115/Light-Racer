@@ -1,18 +1,5 @@
 package UI;
 
-<<<<<<< HEAD
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-public class Login extends UIElement {
-
-	private JPanel contentPane;
-
-=======
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -50,7 +37,6 @@ public class Login extends UIElement  {
 	}
 
 	
->>>>>>> MikeGui
 	/**
 	 * Launch the application.
 	 */
@@ -66,22 +52,6 @@ public class Login extends UIElement  {
 			}
 		});
 	}
-<<<<<<< HEAD
-
-	/**
-	 * Create the frame.
-	 */
-	public Login() {
-		setTitle("User login");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-	}
-
-=======
 	
 	
 	/**
@@ -166,5 +136,4 @@ public class Login extends UIElement  {
 		});
 		getContentPane().add(b3, "cell 4 7,aligny bottom");
 	}
->>>>>>> MikeGui
 }
