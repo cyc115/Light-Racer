@@ -30,7 +30,6 @@ public class MainMenu extends UIElement {
 
 	public static MainMenu menuInstance = new MainMenu();
 
-	@Override
 	public void reset() {
 		menuInstance = new MainMenu();
 		

@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import UI.UIElement;
 /**
  * GameFrame hosts the GamePanel 
  * @author yuechuan
@@ -41,6 +43,7 @@ public class GameFrame extends UIElement {
 	public GameFrame() {
 		setBounds(100, 100, 500, 550);
 		contentPane = GamePanel.getInstance();
+		GamePanel.init();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
