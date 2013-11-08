@@ -61,8 +61,8 @@ public class GamePanel extends JPanel {
 //			makeTurn(player1, directionP1);
 //			makeTurn(Player2, directionP2);
 //			handleCollisions(player1, player2, gameMap);
-//			movePlayer(Player1)
-//			movePlayer(Player2)
+//			movePlayers(Player1, Player2, gameMap);
+//			draw gameMap
 			
 		}
 	}
@@ -71,8 +71,13 @@ public class GamePanel extends JPanel {
 	//we can use a switch cases
 		
 	}
-	public void movePlayer(Player player){ //TODO: fill in movePlayer
-		
+	/**
+	 * puts newest player coordinate onto the gameMap
+	 * puts player1Trail and player2Trail on the gameMap
+	 */
+	public void movePlayers(Player player1, Player player2, Map gameMap){ 
+		gameMap.setOccupation(player1.getPlayerLocation(), gameMap.MapSign.player1Trail);
+		gameMap.setOccupation(player2.getPlayerLocation(), gameMap.MapSign.player2Trail);
 	}
 	public int getGameRoundNumber(){ 
 		return roundNumber;
