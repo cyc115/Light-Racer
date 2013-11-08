@@ -34,11 +34,14 @@ public class GamePanel extends JPanel {
 	public static GamePanel getInstance(){
 		return gamePanelInstance;
 	}
-	//TODO stub
+	//TODO fill in reset()
 	public void reset(){
 	}
 
-	//init() will be called to start the game
+	/**
+	 * init() will be called to start the game
+	 * (I think some of this should be moved into contructor but I need to put more thought in)
+	 */
 	public void init(){ //TODO: fill in init() 
 		gameMap = new Map(); //right now, the constructor is set up so this will make a blank map
 //		gameMap.createMapFromFile() ...
