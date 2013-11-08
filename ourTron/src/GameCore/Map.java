@@ -16,6 +16,9 @@ public class Map implements Serializable {
 	private int width = 200;
 	private MapSign[][] mapArray = new MapSign[width][height];
 	private String mapName;
+	public enum MapSign {
+		WALL, player1Trail, player2Trail, power1, power2, EMPTY
+	}
 	
 	public Map(String location) {
 		super();
@@ -52,6 +55,14 @@ public class Map implements Serializable {
 	public boolean isOccupied(Coordinate coordinate){
 		int x = coordinate.getX();
 		int y = coordinate.getY();
+		if (mapArray[x][y] != MapSign.EMPTY){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	public boolean isOccupied(int x, int y){
 		if (mapArray[x][y] != MapSign.EMPTY){
 			return true;
 		}
