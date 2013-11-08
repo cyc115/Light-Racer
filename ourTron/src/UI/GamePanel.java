@@ -1,5 +1,9 @@
 package UI;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.Timer;
 import javax.swing.JPanel;
 import GameCore.*;
 
@@ -9,7 +13,8 @@ import GameCore.*;
  * @author <put your name here,who ever's responsible of this class  > 
  *
  */
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements ActionListener, KeyListener{
+	private Timer time;
 	private Player player1;
 	private Player player2;
 	private GameScore gamescore;
@@ -18,7 +23,51 @@ public class GamePanel extends JPanel {
 	private boolean isPaused;
 	private Map gameMap;
 	private int roundNumber;
-	private char userKeypboardInput;
+	private char userKeyboardInputP1;
+	private char userKeyboardInputP2; 
+	//Some drawer object here with alot of logic inside
+	
+	//TODO this might need changing
+	public MyPanel() {
+		this.setPreferredSize(new Dimension(500,500));
+		addKeyListener(this);
+	}
+	
+	public void paintComponenet(Graphics g) {
+		super.repaint();
+	}
+	
+	//TODO put what you want to change between refreshes here!!! 
+	public void actionPerformed(ActionEvent arg0) { //every time exception is thrown in timer, happens in action performed 
+		if(isPaused ==  true)
+			onPause();
+		else
+			onGameResume();
+		
+	}
+	
+	
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(/*get the key pressed*/)
+			userKeyboardInputP1 = //keypressed
+		else
+			userKeyboardInputP2 = //keypressed
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 	/**
 	 * this is the game panel object . only 1 copy exist per game ~!
 	 */
@@ -27,7 +76,12 @@ public class GamePanel extends JPanel {
 	 * Create the panel.
 	 */
 	private GamePanel() {
+		//initalize the drawer object
+		//this.drawer = new Drawer();
 		this.setSize(500, 500);
+		this.timer = new Timer(1000, this);
+		this.init();
+		//key = new KeyListener(drawer);
 	}
 	
 	//TODO stub
@@ -35,6 +89,9 @@ public class GamePanel extends JPanel {
 		return gamePanelInstance;
 	}
 	//TODO fill in reset()
+	/**
+	 * reset gameMap and players
+	 */
 	public void reset(){
 	}
 
@@ -54,20 +111,30 @@ public class GamePanel extends JPanel {
 		onGameResume(player1, player2, Map);
 	}
 	public void onGamePause(){ //TODO: fill in onGamePause
+		if(timer != null) {
+			this.timer.stop();
+			this.timer = null;
+		}
 	}
 	public void onGameResume(Player player1, Player player2, Map){ //TODO: fill in onGameResume
-		while(!isPaused){
+		if(timer == null) {
+			this.timer = new Timer(1000, this);
+			this.timer.start();
+		}
 //			//listener stuff to get the new direction of player1 and player2
-			
+		
+		char p1Direction = userKeyboardInputP1;
+		char p2Direction = userKeyboardInputP2;
 //			Control directionP1;
 //			Control directionP2;
-//			makeTurn(player1, directionP1);
-//			makeTurn(Player2, directionP2);
-//			handleCollisions(player1, player2, gameMap);
-//			movePlayers(Player1, Player2, gameMap);
-//			draw gameMap
+		//TODO convert p1Direction and p2Direction to ControlEnum
+			makeTurn(player1, directionP1);
+			makeTurn(Player2, directionP2);
+			handleCollisions(player1, player2, gameMap);
+			movePlayers(player1, player2, gameMap);
+			//draw gameMap
 			
-		}
+//		}
 	}
 	public void makeTurn(Player player, Control direction){ //TODO: fill in makeTurn
 	//takes old direction of p1 and updates it using button it gets from listener
@@ -86,7 +153,7 @@ public class GamePanel extends JPanel {
 		return roundNumber;
 	}
 	public void incrRoundNumber(){
-		roundNumber++;
+		this.roundNumber++;
 	}
 	public void endGame(){ //TODO: fill in endGame
 	}
@@ -115,10 +182,10 @@ public class GamePanel extends JPanel {
 			return;
 		}
 		else if( (!p1HasCollided)&&(p2HasCollided)){ //p1 wins
-			GameScore.incrP1Win();
+			GamePanel.gameScore.incrP1Win();
 		}
 		else( (!p1HasCollided)&&(p2HasCollided)){ //p2 wins
-			GameScore.incrP2Win();
+			GampePanel.gameScore.incrP2Win();
 		}
 		incrRoundNumber();
 //		if(GamePanel.roundNumber<3){
