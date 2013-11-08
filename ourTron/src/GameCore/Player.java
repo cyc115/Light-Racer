@@ -6,6 +6,7 @@ public class Player {
  private String username;
  private int speed;
  private int powerUp;
+ private char lastInput;
  
 public Player() { 
 	Coordinate startingCoordinate = new Coordinate(0, 0);
@@ -51,5 +52,11 @@ public Player() {
 	
 	public void setPowerUp(int powerUp) {
 		this.powerUp = powerUp;
+	}
+	public char getLastInput(){
+		return lastInput;
+	}
+	public void setLastInput(char lastInput){
+		this.lastInput = lastInput;
 	}
 }
