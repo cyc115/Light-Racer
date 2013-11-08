@@ -9,10 +9,15 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
  
+
+
+
+
 import GameCore.Control;
 import GameCore.GameScore;
 import GameCore.Map;
 import GameCore.Player;
+import GameCore.Map.MapSign;
 
 
 
@@ -25,8 +30,8 @@ public class GamePanel extends Canvas implements Runnable {
 	/**
 	 * 
 	 */
-	public static int width = 500;
-	public static int height = 500;
+	public static int width = 1024;
+	public static int height = 1024;
 	public static int scale = 1;
 	private static final long serialVersionUID = 1L;
 	private static final int BUFFER = 3;
@@ -36,14 +41,17 @@ public class GamePanel extends Canvas implements Runnable {
 //	private MusicPlayer soundEffectPlayer
 	private Control direction;
 	private boolean isPaused;
+	public int[] tiles = new int [64 * 64];
 	private Map gameMap;
-
+	private MapSign[][] gameMapArray;
+	private MapSign[] convertedMapArray;
 	private int roundNumber;
 	private char userKeypboardInput;
 	private Thread thread;
 	private boolean running = false;
-	private Screen screen;
+	// number of ticks
 	public static int updates;
+	//number of frames displayed on the screen
 	public static int frames;
 	
 	//  (creates an image)
@@ -66,7 +74,7 @@ public class GamePanel extends Canvas implements Runnable {
 	private GamePanel() {
 		Dimension size = new Dimension(width *scale , height * scale);
 		this.setPreferredSize(size);
-		screen = new Screen(width,height);
+		
 	}
 	
 	
@@ -78,17 +86,8 @@ public class GamePanel extends Canvas implements Runnable {
 	public void reset(){
 	}
 	
-	/*public void init(){ //TODO: fill in init()
-        gameMap = new Map(); //right now, the constructor is set up so this will make a blank map
-//        gameMap.createMapFromFile() ...
-        Coordinate staringCoordinateP1 = new Coordinate(0, 0);
-        Coordinate staringCoordinateP2 = new Coordinate(100, 0);
-        player1 = new Player(startingCoordinateP1);
-        player2 = new Player(startingCoordinateP2);
-        this.isPaused = false;
-        this.roundNumber = 0;
-        onGameResume(player1, player2, Map);
-}*/
+	
+       
 	
 	//start() will be called to start a new thread start the game
 	public synchronized void start() {
@@ -110,10 +109,16 @@ public class GamePanel extends Canvas implements Runnable {
 	
 	//when the thread start it runs this 
 	public void run() {
-		//gameMap = new Map();
-//		gameMap.createMapFromFile() ...
-		//player1 = new Player();
-		//player2 = new Player();
+	   gameMap = new Map(); //right now, the constructor is set up so this will make a blank map
+	   gameMapArray = gameMap.getMap();
+//     gameMap.createMapFromFile() ...
+       //Coordinate staringCoordinateP1 = new Coordinate(0, 0);
+       //Coordinate staringCoordinateP2 = new Coordinate(100, 0);
+       //player1 = new Player(startingCoordinateP1);
+       //player2 = new Player(startingCoordinateP2);
+       this.isPaused = false;
+       this.roundNumber = 0;
+       //onGameResume(player1, player2, Map);
 		this.isPaused = false;
 		
 		frames = 0;
@@ -155,8 +160,11 @@ public class GamePanel extends Canvas implements Runnable {
 	
 	
 	
+	
+
+
 	private void update() {
-		// TODO Auto-generated method stub
+		// TODO need to write changed to oneDmapArray
 	}
 
 	//render takes care of the graphical processing of the game
@@ -167,12 +175,9 @@ public class GamePanel extends Canvas implements Runnable {
 			createBufferStrategy(BUFFER);
 			return;
 		}	
-		screen.clear();
-		screen.render();
+		clearScreen(pixels);
+		renderScreen(pixels);
 		
-		for(int i = 0 ; i< pixels.length; i++){
-			pixels[i] = screen.pixels[i];
-		}
 		
 		//Creates a link between Graphics and buffer
 		Graphics g = bs.getDrawGraphics();
@@ -208,6 +213,88 @@ public class GamePanel extends Canvas implements Runnable {
 			
 //		}
 // }
+	
+	
+public void renderScreen( int[] pixels){
+	
+		convertedMapArray = convert2Dto1D(gameMapArray);
+		//Render the map onto the screen
+			for (int i = 0 ; i < convertedMapArray.length ; i++){
+				
+				switch(convertedMapArray[i]){
+				case EMPTY:
+					//grey color
+					tiles[i]= 0xBEC0C2;
+					break;
+				case WALL:
+					//black
+					tiles[i]= 0x424242;
+					break;
+				case player1Trail:
+					//blue
+					tiles[i]= 0x2580CF;
+					break;
+				case player2Trail:
+					//red
+					tiles[i]= 0xCF2550;
+					break;
+				case power1:
+					//green
+					tiles[i]= 0x3BBF3D;
+					break;
+				case power2:
+					//orange
+					tiles[i]= 0xFF9100;
+					break;
+				default:
+					break;
+				
+				}
+			}
+		
+		for (int y = 0; y < height ; y++){
+			int yy = y;
+			if(yy < 0 || y >= height) break;
+			for (int x = 0 ; x < width ; x++){
+				int xx = x;
+				if(xx < 0 || x >= width) break;
+				//updates pixels line by line from left to right and up to bottom
+				//each tiles has 16x16 pixels
+				int tileIndex = (x >> 4) + (y >> 4) * 64;
+				pixels[x + y * width] = tiles[tileIndex];
+				
+			}
+			
+		}
+	}
+	
+	public void clearScreen(int[] pixels){
+		for ( int i = 0 ; i < pixels.length ; i++){
+			pixels[i] = 0;
+		}
+	}
+	
+	private MapSign[] convert2Dto1D(MapSign[][] gameMapArray) {
+		MapSign[] convertedArray = new MapSign[gameMapArray.length * gameMapArray.length];
+		for (int i = 0 ; i < gameMapArray.length ; i++){
+			for( int j = 0 ; j < gameMapArray.length ; j++){
+				convertedArray[(i * gameMapArray.length) + j] = gameMapArray[i][j];
+				}
+			
+			}
+		return convertedArray;
+		
+		}
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
 	
 	public void makeTurn(Player player, Control direction){ //TODO: fill in makeTurn
 	//takes old direction of p1 and updates it using button it gets from listener

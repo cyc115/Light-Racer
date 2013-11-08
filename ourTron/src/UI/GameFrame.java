@@ -55,7 +55,7 @@ public class GameFrame extends UIElement {
 	 * Create the frame.
 	 */
 	public GameFrame() {
-		this.setSize(800,800);
+		this.setSize(1500,1500);
 		
 		//contentPane = GamePanel.getInstance();
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

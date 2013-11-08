@@ -12,8 +12,8 @@ import java.util.LinkedList;
 public class Map implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int difficulty;
-	private int height = 200;
-	private int width = 200;
+	private int height = 64;
+	private int width = 64;
 	private MapSign[][] mapArray = new MapSign[width][height];
 	private String mapName;
 	public enum MapSign {
@@ -139,4 +139,9 @@ public class Map implements Serializable {
 		this.mapArray = map.mapArray;
 		this.mapName = map.mapName;
 	}
+	
+	public MapSign[][] getMap(){
+		return this.mapArray;
+	}
+	
 }
