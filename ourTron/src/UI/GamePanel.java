@@ -15,7 +15,7 @@ public class GamePanel extends JPanel {
 	private GameScore gamescore;
 //	private MusicPlayer soundEffectPlayer
 	private Control direction;
-	private boolean isPaused = false;
+	private boolean isPaused;
 	private Map gameMap;
 	private int roundNumber;
 	private char userKeypboardInput;
@@ -42,15 +42,19 @@ public class GamePanel extends JPanel {
 	public void init(){ //TODO: fill in init() 
 		gameMap = new Map();
 //		gameMap.createMapFromFile() ...
-		player1 = new Player();
-		player2 = new Player();
+		Coordinate staringCoordinateP1 = new Coordinate(0, 0);
+		Coordinate staringCoordinateP2 = new Coordinate(100, 0);
+		player1 = new Player(startingCoordinateP1);
+		player2 = new Player(startingCoordinateP2);
 		this.isPaused = false;
+		onGaneResume();
 	}
 	public void onGamePause(){ //TODO: fill in onGamePause
 	}
 	public void onGameResume(){ //TODO: fill in onGameResume
 		while(!isPaused){
 //			//listener stuff to get the new direction of player1 and player2
+			
 //			Control directionP1;
 //			Control directionP2;
 //			makeTurn(player1, directionP1);
@@ -61,16 +65,18 @@ public class GamePanel extends JPanel {
 	}
 	public void makeTurn(Player player, Control direction){ //TODO: fill in makeTurn
 	//takes old direction of p1 and updates it using button it gets from listener
+		
 	}
 	public void movePlayer(Player player){ //TODO: fill in movePlayer
+		
 	}
 	public int getGameRoundNumber(){ 
 		return roundNumber;
 	}
 	public void endGame(){ //TODO: fill in endGame
 	}
-//	public boolean hasCollided(){ //TODO: fill in hasCollided
-//	}
+	public boolean hasCollided(){ //TODO: fill in hasCollided
+	}
 	public void usePowerUp(Player player){ //TODO: fill in usePowerUp
 	}
 	public void obtainPowerUp(){ //TODO: fill in

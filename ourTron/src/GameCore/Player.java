@@ -8,8 +8,7 @@ public class Player {
  private int powerUp;
  private char lastInput;
  
-public Player() { 
-	Coordinate startingCoordinate = new Coordinate(0, 0);
+public Player(Coordinate startingCoordinate) { 
 	Control startingDirection = Control.RIGHT;
 	int startingSpeed = 1;
 	this.coord = startingCoordinate;
