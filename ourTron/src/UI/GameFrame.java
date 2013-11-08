@@ -43,7 +43,7 @@ public class GameFrame extends UIElement {
 	public GameFrame() {
 		setBounds(100, 100, 500, 550);
 		contentPane = GamePanel.getInstance();
-		contentPane.init();
+		GamePanel.init();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);

@@ -30,7 +30,7 @@ public class GamePanel extends JPanel {
 		
 	}
 	//TODO stub
-	public void static init(){
+	public static void init(){
 		
 	}
 	
