@@ -7,6 +7,7 @@ the ourTron folder contians the eclipse project of our current development.
 *if you want You can clone the 'develop' branch and import the 'ourTron' folder as eclipse project.*
 
 ##Game status up to now(09/11/13)
+<pre>
 1.The Game is now playable (sorta).
 2.Everything is pushed under HanGameCore
 3.GameFrame and GamePanel can host a game.GamePanel can load Map from Map Class. Keylisteners have been implemented 
