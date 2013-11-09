@@ -15,6 +15,7 @@ and works with both players( WASD for player 1 and the arrows for player 2)
 4.Collision detection is implemented.
 6.I've added a background image to the game (looks way cooler). However you need downlaod the image (tron2.jpg) from the Drive 
 and you need to specify the file path in the GamePanel constructor. 
+7.You need to download swing.jar file from the Drive and add it to the build path of the project.
 7.There is a demo image on the drive.
 
 8.Game may lag on your computer.The ups and fps are printed on the console. Ups should remain stable at around 30.
