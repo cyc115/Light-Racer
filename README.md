@@ -14,7 +14,7 @@ the ourTron folder contians the eclipse project of our current development.
 and works with both players( WASD for player 1 and the arrows for player 2)
 4.Collision detection is implemented.
 6.I've added a background image to the game (looks way cooler). However you need downlaod the image (tron2.jpg) from the Drive 
-and you need to specify the path in the GamePanel constructor. 
+and you need to specify the file path in the GamePanel constructor. 
 7.There is a demo image on the drive.
 
 8.Game may lag on your computer.The ups and fps are printed on the console. Ups should remain stable at around 30.
