@@ -18,8 +18,11 @@ import GameCore.Map.MapSign;
 
 
 
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
@@ -37,24 +40,28 @@ import GameCore.*;
  */
 
 
-	public class GamePanel extends Canvas implements  KeyListener,Runnable{
+	public class GamePanel extends Canvas implements Runnable{
 		
 		public static int width = 1024;
 		public static int height = 1024;
 		public static int scale = 1;
 		private static final long serialVersionUID = 1L;
 		private static final int BUFFER = 3;
+		private static final int tileSize = 128;
+		private static final int bitshift = 3;
 
 		
 		private Player player1;
 		private Player player2;
 		private GameScore gamescore;
 		//	private MusicPlayer soundEffectPlayer
+		//keyboards input are stored in the the linkedlists
 		private LinkedList <Control> p1Direction;
 		private LinkedList <Control> p2Direction;
-		final static int  MAX_KEYINPUT = 3;
-		private boolean isPaused;
-		public int[] tiles = new int [64 * 64];
+		final static int  MAX_KEYINPUT = 5;
+		private boolean isPaused = false;
+		private boolean endGame = false;
+		public int[] tiles = new int [tileSize * tileSize];
 		private Map gameMap;
 		private MapSign[][] gameMapArray;
 		private MapSign[] convertedMapArray;
@@ -79,135 +86,8 @@ import GameCore.*;
 		//Some drawer object here with a lot of logic inside
 
 		
-        @Override
-        public void keyPressed(KeyEvent e) {
-        	
-                switch(e.getKeyCode()) {
-
-                //for player 1
-                case KeyEvent.VK_W:
-                	 if(!isPaused && !endGame()) {
-                		 //makes sure we don't poll more than 3 times
-                         if(p1Direction.size() < MAX_KEYINPUT) {
-                        	 	//checks that the most recent direction is either EAST or WEST
-                                 Control last = p1Direction.peekLast();
-                                 if(last != Control.SOUTH && last != Control.NORTH) {
-                                         p1Direction.addLast(Control.NORTH);
-                                 }
-                         }
-                 }
-                 break;
-                	
-                // for player 2
-                case KeyEvent.VK_UP:
-                        if(!isPaused && !endGame()) {
-                                if(p2Direction.size() < MAX_KEYINPUT) {
-                                        Control last = p2Direction.peekLast();
-                                        if(last != Control.SOUTH && last != Control.NORTH) {
-                                                p2Direction.addLast(Control.NORTH);
-                                        }
-                                }
-               }
-               break;
-                        
-               //for player 1
-                case KeyEvent.VK_S:
-                	 if(!isPaused && !endGame()) {
-                		//makes sure we don't poll more than 3 times
-                         if(p1Direction.size() < MAX_KEYINPUT) {
-                                 Control last = p1Direction.peekLast();
-                               //checks that the most recent direction is either EAST or WEST
-                                 if(last != Control.NORTH && last != Control.SOUTH) {
-                                         p1Direction.addLast(Control.SOUTH);
-                                 }
-                         }
-                 }
-                 break;
-
-                // for player 2 
-                case KeyEvent.VK_DOWN:
-                        if(!isPaused && !endGame()) {
-                                if(p2Direction.size() < MAX_KEYINPUT) {
-                                        Control last = p2Direction.peekLast();
-                                        if(last != Control.NORTH && last != Control.SOUTH) {
-                                                p1Direction.addLast(Control.SOUTH);
-                                        }
-                                }
-                        }
-                        break;
-
-                //for player 1
-                case KeyEvent.VK_A:
-                	 if(!isPaused && !endGame()) {
-                		//makes sure we don't poll more than 3 times
-                         if(p1Direction.size() < MAX_KEYINPUT) {
-                                 Control last = p1Direction.peekLast();
-                               //checks that the most recent direction is either North or South
-                                 if(last != Control.WEST && last != Control.EAST) {
-                                         p1Direction.addLast(Control.WEST);
-                                 }
-                         }
-                 }
-                 break;
-                 
-                //for player 2	
-                case KeyEvent.VK_LEFT:
-                	if(!isPaused && !endGame()) {
-                		//makes sure we don't poll more than 3 times
-                         if(p2Direction.size() < MAX_KEYINPUT) {
-                                 Control last = p2Direction.peekLast();
-                               //checks that the most recent direction is either North or South
-                                 if(last != Control.WEST && last != Control.EAST) {
-                                         p2Direction.addLast(Control.WEST);
-                                 }
-                         }
-                }
-                break;
+   
        
-                //for player 1
-                case KeyEvent.VK_D:
-                	if(!isPaused && !endGame()) {
-                		//makes sure we don't poll more than 3 times
-                         if(p1Direction.size() < MAX_KEYINPUT) {
-                                 Control last = p1Direction.peekLast();
-                               //checks that the most recent direction is either North or South
-                                 if(last != Control.WEST && last != Control.EAST) {
-                                         p1Direction.addLast(Control.EAST);
-                                 }
-                         }
-                }
-                break;
-                
-                //for player 2 
-                case KeyEvent.VK_RIGHT:
-                	if(!isPaused && !endGame()) {
-                		//makes sure we don't poll more than 3 times
-                         if(p2Direction.size() < MAX_KEYINPUT) {
-                                 Control last = p2Direction.peekLast();
-                               //checks that the most recent direction is either North or South
-                                 if(last != Control.WEST && last != Control.EAST) {
-                                         p2Direction.addLast(Control.EAST);
-                                 }
-                         }
-                }
-                break;
-                
-                case KeyEvent.VK_P:
-                        if(endGame()) {
-                                pauseGame();
-                        }
-                        break;
-          
-                /*
-                 * Reset the game if one is not currently in progress.
-                 */
-                case KeyEvent.VK_ENTER:
-                        if( endGame() ) {
-                                resetGame();
-                        }
-                        break;
-                }
-        }
         
     
 		/**
@@ -220,11 +100,148 @@ import GameCore.*;
 		
 		//Constructor
 		private GamePanel() {
-			
-			this.setSize(500, 500);
-			addKeyListener(this);
+
+			this.setSize(1024, 1024);
+			//addKeyListener(this);
+
+
+			addKeyListener(new KeyAdapter() {
+
+				@Override
+				public void keyPressed(KeyEvent e) {
+					
+					switch(e.getKeyCode()) {
+
+					//for player 1
+					case KeyEvent.VK_W:
+						System.out.println("W");
+						if(!isPaused && !endGame) {
+							//makes sure we don't poll more than 3 times
+							if(p1Direction.size() < MAX_KEYINPUT) {
+								//checks that the most recent direction is either EAST or WEST
+								Control last = p1Direction.peekLast();
+								if(last != Control.SOUTH && last != Control.NORTH) {
+									p1Direction.addLast(Control.NORTH);
+								}
+							}
+						}
+						break;
+
+						// for player 2
+					case KeyEvent.VK_UP:
+						if(!isPaused && !endGame) {
+							if(p2Direction.size() < MAX_KEYINPUT) {
+								Control last = p2Direction.peekLast();
+								if(last != Control.SOUTH && last != Control.NORTH) {
+									p2Direction.addLast(Control.NORTH);
+								}
+							}
+						}
+						break;
+
+						//for player 1
+					case KeyEvent.VK_S:
+						if(!isPaused && !endGame) {
+							//makes sure we don't poll more than 3 times
+							if(p1Direction.size() < MAX_KEYINPUT) {
+								Control last = p1Direction.peekLast();
+								//checks that the most recent direction is either EAST or WEST
+								if(last != Control.NORTH && last != Control.SOUTH) {
+									p1Direction.addLast(Control.SOUTH);
+								}
+							}
+						}
+						break;
+
+						// for player 2 
+					case KeyEvent.VK_DOWN:
+						if(!isPaused && !endGame) {
+							if(p2Direction.size() < MAX_KEYINPUT) {
+								Control last = p2Direction.peekLast();
+								if(last != Control.NORTH && last != Control.SOUTH) {
+									p2Direction.addLast(Control.SOUTH);
+								}
+							}
+						}
+						break;
+
+						//for player 1
+					case KeyEvent.VK_A:
+						if(!isPaused && !endGame) {
+							//makes sure we don't poll more than 3 times
+							if(p1Direction.size() < MAX_KEYINPUT) {
+								Control last = p1Direction.peekLast();
+								//checks that the most recent direction is either North or South
+								if(last != Control.WEST && last != Control.EAST) {
+									p1Direction.addLast(Control.WEST);
+								}
+							}
+						}
+						break;
+
+						//for player 2	
+					case KeyEvent.VK_LEFT:
+						if(!isPaused && !endGame) {
+							//makes sure we don't poll more than 3 times
+							if(p2Direction.size() < MAX_KEYINPUT) {
+								Control last = p2Direction.peekLast();
+								//checks that the most recent direction is either North or South
+								if(last != Control.WEST && last != Control.EAST) {
+									p2Direction.addLast(Control.WEST);
+								}
+							}
+						}
+						break;
+
+						//for player 1
+					case KeyEvent.VK_D:
+						if(!isPaused && !endGame) {
+							//makes sure we don't poll more than 3 times
+							if(p1Direction.size() < MAX_KEYINPUT) {
+								Control last = p1Direction.peekLast();
+								//checks that the most recent direction is either North or South
+								if(last != Control.WEST && last != Control.EAST) {
+									p1Direction.addLast(Control.EAST);
+								}
+							}
+						}
+						break;
+
+						//for player 2 
+					case KeyEvent.VK_RIGHT:
+						if(!isPaused && !endGame) {
+							//makes sure we don't poll more than 3 times
+							if(p2Direction.size() < MAX_KEYINPUT) {
+								Control last = p2Direction.peekLast();
+								//checks that the most recent direction is either North or South
+								if(last != Control.WEST && last != Control.EAST) {
+									p2Direction.addLast(Control.EAST);
+								}
+							}
+						}
+						break;
+
+					case KeyEvent.VK_P:
+						if(endGame) {
+							pauseGame();
+						}
+						break;
+
+						/*
+						 * Reset the game if one is not currently in progress.
+						 */
+					case KeyEvent.VK_ENTER:
+						if( endGame) {
+							resetGame();
+						}
+						break;
+					}
+				}
+			});
 		}
+	
 		
+
 		public static GamePanel getInstance(){
 			return gamePanelInstance;
 		}
@@ -253,10 +270,21 @@ import GameCore.*;
 
 		//when the thread start it runs this 
 		public void run() {
+			//some initialization for the players
+			Coordinate startingPosP1 = new Coordinate(28,1);
+			Coordinate startingPosP2 = new Coordinate(32,1);
+			player1 = new Player(startingPosP1);
+			player2 = new Player(startingPosP2);
 			p1Direction = new LinkedList<> ();
+			p1Direction.add(player1.getDirection());
+			p1Direction.add(player1.getDirection());
+			p1Direction.add(player1.getDirection());
 			p2Direction = new LinkedList<> ();
+			p2Direction.add(player2.getDirection());
+			p1Direction.add(player1.getDirection());
+			p1Direction.add(player1.getDirection());
+			
 			gameMap = new Map(); //right now, the constructor is set up so this will make a blank map
-			gameMapArray = gameMap.getMap();
 			//     gameMap.createMapFromFile() ...
 			//Coordinate staringCoordinateP1 = new Coordinate(0, 0);
 			//Coordinate staringCoordinateP2 = new Coordinate(100, 0);
@@ -264,9 +292,7 @@ import GameCore.*;
 			//player2 = new Player(startingCoordinateP2);
 			this.isPaused = false;
 			this.roundNumber = 0;
-			//onGameResume(player1, player2, Map);
-			this.isPaused = false;
-
+			
 			frames = 0;
 			updates = 0;
 			long timer = System.currentTimeMillis();
@@ -274,7 +300,7 @@ import GameCore.*;
 
 			//Timer variables ( limits the update rate to 60 times per second)
 			long lastTime = System.nanoTime();
-			double framesPerSecond = 60.0 ;
+			double framesPerSecond = 30.0 ;
 			//time of one frame
 			final double ns = 1000000000.0 / framesPerSecond;
 
@@ -304,7 +330,8 @@ import GameCore.*;
 		}
 
 		private void update() {
-			// TODO need to write changed to oneDmapArray
+			 movePlayers(p1Direction, player1, gameMap,  "player1Trail" , "player1Head");
+			 movePlayers(p2Direction, player2, gameMap,  "player2Trail" , "player2Head");
 		}
 
 
@@ -340,11 +367,10 @@ import GameCore.*;
 		//renderScreen draws the game
 		public void renderScreen( int[] pixels){
 
-			convertedMapArray = convert2Dto1D(gameMapArray);
 			//Render the map onto the screen
-			for (int i = 0 ; i < convertedMapArray.length ; i++){
+			for (int i = 0 ; i < gameMap.getMapSize(); i++){
 
-				switch(convertedMapArray[i]){
+				switch(gameMap.getOccupation1D(i)){
 				case EMPTY:
 					//grey color
 					tiles[i]= 0xBEC0C2;
@@ -355,11 +381,11 @@ import GameCore.*;
 					break;
 				case player1Trail:
 					//blue
-					tiles[i]= 0x2580CF;
+					tiles[i]= 0x00F0FC;
 					break;
 				case player2Trail:
 					//red
-					tiles[i]= 0xCF2550;
+					tiles[i]= 0xFC0000;
 					break;
 				case power1:
 					//green
@@ -369,6 +395,12 @@ import GameCore.*;
 					//orange
 					tiles[i]= 0xFF9100;
 					break;
+				case player1Head:
+					//light blue
+					tiles[i] = 0x7DB3E3;
+				case player2Head:
+					//light red
+					tiles[i] = 0xDE8181;
 				default:
 					break;
 				}
@@ -382,7 +414,7 @@ import GameCore.*;
 					if(xx < 0 || x >= width) break;
 					//updates pixels line by line from left to right and up to bottom
 					//each tiles has 16x16 pixels
-					int tileIndex = (x >> 4) + (y >> 4) * 64;
+					int tileIndex = (x >> bitshift) + (y >> bitshift) * tileSize;
 					pixels[x + y * width] = tiles[tileIndex];
 
 				}
@@ -397,30 +429,48 @@ import GameCore.*;
 			}
 		}
 		
-		private MapSign[] convert2Dto1D(MapSign[][] gameMapArray) {
-			MapSign[] convertedArray = new MapSign[gameMapArray.length * gameMapArray.length];
-			for (int i = 0 ; i < gameMapArray.length ; i++){
-				for( int j = 0 ; j < gameMapArray.length ; j++){
-					convertedArray[(i * gameMapArray.length) + j] = gameMapArray[i][j];
-				}
 
-			}
-			return convertedArray;
-
-		}
-
-		public void makeTurn(Player player, Control direction){ //TODO: fill in makeTurn
-			//takes old direction of p1 and updates it using button it gets from listener
-			//we can use a switch cases
-
-		}
+		
 		/**
 		 * puts newest player coordinate onto the gameMap
 		 * puts player1Trail and player2Trail on the gameMap
 		 */
-		public void movePlayers(Player player1, Player player2, Map gameMap){ 
-			//gameMap.setOccupation(player1.getPlayerLocation(), gameMap.MapSign.player1Trail);
-			//gameMap.setOccupation(player2.getPlayerLocation(), gameMap.MapSign.player2Trail);
+		public void movePlayers( LinkedList<Control> playerDirection, Player player,  Map mapArray , String trail , String head){ 
+			Control playerDir = playerDirection.peekFirst();
+			Coordinate playerCoords = player.getPlayerLocation();
+			mapArray.setOccupation(playerCoords, trail);
+			
+			 if(playerDirection.size() > 1) {
+	                playerDirection.poll();
+			}	
+			
+			switch(playerDir){
+			
+			case NORTH:
+				playerCoords.setY(playerCoords.getY()-1);
+				mapArray.setOccupation(playerCoords, head);
+				break;
+			
+			case SOUTH:
+				playerCoords.setY(playerCoords.getY()+1);
+				mapArray.setOccupation(playerCoords, head);
+				break;
+			
+			case WEST:
+				playerCoords.setX(playerCoords.getX()-1);
+				mapArray.setOccupation(playerCoords, head);
+				break;
+			
+			case EAST:
+				playerCoords.setX(playerCoords.getX()+1);
+				mapArray.setOccupation(playerCoords, head);
+				break;
+			 default:
+				break;
+				
+			
+			
+			}
 		}
 		public int getGameRoundNumber(){ 
 			return roundNumber;
@@ -453,7 +503,7 @@ import GameCore.*;
 			//makeTurn(player1, p1Direction);
 			//makeTurn(player2, p2Direction);
 			//handleCollisions(player1, player2, gameMap);
-			movePlayers(player1, player2, gameMap);
+			//movePlayers(player1, player2, gameMap);
 		}
 
 		

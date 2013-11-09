@@ -12,12 +12,14 @@ import java.util.LinkedList;
 public class Map implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int difficulty;
-	private int height = 64;
-	private int width = 64;
+	private int height = 128;
+	private int width = 128;
 	private MapSign[][] mapArray = new MapSign[width][height];
+	//exact copy of mapArray but in 1D
+	private MapSign[] convertedMapArray = new MapSign[mapArray.length * mapArray.length];
 	private String mapName;
 	public enum MapSign {
-		WALL, player1Trail, player2Trail, power1, power2, EMPTY
+		WALL, player1Trail, player2Trail, power1, power2, EMPTY, player1Head,player2Head
 	}
 	
 	public Map(String location) {
@@ -29,6 +31,10 @@ public class Map implements Serializable {
 		this.difficulty = 1;
 		this.mapName = "blankMap";
 		initializeJustEdges();
+		convert2Dto1D();
+		
+		
+		
 	}
 	public void initializeJustEdges(){
 		for(int i=0; i<width; i++){
@@ -75,19 +81,28 @@ public class Map implements Serializable {
 		int y = coordinate.getY();
 		return mapArray[x][y];
 	}
-	public void setOccupation(Coordinate coordinate, MapSign attribute){
+	
+	
+	public MapSign getOccupation1D(int i){
+		return convertedMapArray[i];
+	}
+	public void setOccupation(Coordinate coordinate, String attribute){
 		int x = coordinate.getX();
 		int y = coordinate.getY();
-		switch (attribute){
-			case WALL: mapArray[x][y] = MapSign.WALL;
-			case player1Trail: mapArray[x][y] = MapSign.player1Trail;
-			case player2Trail: mapArray[x][y] = MapSign.player2Trail;
-			case EMPTY: mapArray[x][y] = MapSign.EMPTY;
-				break;
+		MapSign enumAttribute = MapSign.valueOf(attribute);
+		switch (enumAttribute){
+			case WALL: mapArray[x][y] = MapSign.WALL; break;
+			case player1Trail: mapArray[x][y] = MapSign.player1Trail; break;
+			case player2Trail: mapArray[x][y] = MapSign.player2Trail; break;
+			case EMPTY: mapArray[x][y] = MapSign.EMPTY; break;
+			case player1Head : mapArray[x][y] = MapSign.player1Head; break;
+			case player2Head : mapArray[x][y] = MapSign.player2Head; break;
 			default: {
 				throw new IllegalArgumentException("Can't handle " + attribute);
 			}
 		}
+		convert2Dto1D();
+		
 	}
 	
 	//TODO there is repetition of code here. Ask TA what to do
@@ -143,5 +158,26 @@ public class Map implements Serializable {
 	public MapSign[][] getMap(){
 		return this.mapArray;
 	}
+	
+	public int getMapSize(){
+		return convertedMapArray.length;
+	}
+	
+	public void convert2Dto1D() {
+		for (int i = 0 ; i < mapArray.length ; i++){
+			for( int j = 0 ; j < mapArray.length ; j++){
+				convertedMapArray[(i * mapArray.length) + j] = mapArray[j][i];
+			}
+		}
+		
+	}
+		
+	
+	
+	
+	
+	
+	
+	
 	
 }

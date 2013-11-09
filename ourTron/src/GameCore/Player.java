@@ -9,11 +9,11 @@ public class Player {
  private char lastInput;
  
 public Player(Coordinate startingCoordinate) { 
-	Control startingDirection = Control.EAST;
+	Control startingDirection = Control.SOUTH;
 	int startingSpeed = 1;
 	this.coord = startingCoordinate;
 	this.direction = startingDirection;
-	this.username = convertFromUser();
+	//this.username = convertFromUser();
 	this.speed = startingSpeed;
 	this.powerUp = 0;
 }
