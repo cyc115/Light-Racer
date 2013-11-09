@@ -348,12 +348,13 @@ import GameCore.*;
 
 			//Creates a link between Graphics and buffer
 			Graphics g = bs.getDrawGraphics();
-
+			
 			//set the background to black
 			//g.setColor(Color.BLACK);
 			//g.fillRect(0,0,getWidth(),getHeight());
 
 			//draw tron image on top of the background
+			//comment this out if you don't want the awesome background,however you must set the background to black 
 			g.drawImage(bkgimg, 0, 0, getWidth(), getHeight(),null);
 			//draw the actual game on top of the tron image
 			g.drawImage(image, 0, 0, getWidth(), getHeight(),null);
@@ -400,9 +401,11 @@ import GameCore.*;
 				case player1Head:
 					//light blue
 					tiles[i] = 0x7DB3E3 | 0xFF000000;
+					break;
 				case player2Head:
-					//light red
+					//light red 
 					tiles[i] = 0xDE8181 | 0xFF000000;
+					break;
 				default:
 					break;
 				}
