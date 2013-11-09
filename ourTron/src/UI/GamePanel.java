@@ -1,6 +1,5 @@
 package UI;
 
-
 import java.awt.Canvas;
 import java.awt.Color;
 
@@ -29,14 +28,11 @@ import javax.imageio.ImageIO;
 
 import GameCore.*;
 
-
 /**
  * implement the game code here.
  * @author <put your name here,who ever's responsible of this class  > 
  *
  */
-
-
 	public class GamePanel extends Canvas implements Runnable{
 		public static int width = 1024;
 		public static int height = 1024;
@@ -46,7 +42,6 @@ import GameCore.*;
 		private static final int tileSize = 128;
 		private static final int bitshift = 3;
 
-		
 		private Player player1;
 		private Player player2;
 		private GameScore gamescore;
@@ -58,6 +53,7 @@ import GameCore.*;
 		final static int  MAX_KEYINPUT = 5;
 		private boolean isPaused = false;
 		private boolean endGame = false;
+		private boolean endRound = false;
 		public int[] tiles = new int [tileSize * tileSize];
 		private Map gameMap;
 		private MapSign[][] gameMapArray;
@@ -73,6 +69,7 @@ import GameCore.*;
 		public static int frames;
 
 		//  (creates an image)
+		private BufferedImage endimg = null;
 		private BufferedImage bkgimg = null;
 		private BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
 		//converts the image objects into an array of int (allows to draw things on the image)
@@ -83,11 +80,6 @@ import GameCore.*;
 		private char userKeyboardInputP2; 
 		//Some drawer object here with a lot of logic inside
 
-		
-   
-       
-        
-    
 		/**
 		 * this is the game panel object . only 1 copy exist per game ~!
 		 */
@@ -98,7 +90,11 @@ import GameCore.*;
 		
 		//Constructor
 		private GamePanel() {
-			
+			gamescore = new GameScore();
+			Coordinate startingPosP1 = new Coordinate(28,1);
+			Coordinate startingPosP2 = new Coordinate(32,1);
+			player1 = new Player(startingPosP1);
+			player2 = new Player(startingPosP2);
 			this.setSize(1024, 1024);
 			//addKeyListener(this);
 			try {
@@ -115,8 +111,7 @@ import GameCore.*;
 
 					//for player 1
 					case KeyEvent.VK_W:
-						System.out.println("W");
-						if(!isPaused && !endGame) {
+						if(!isPaused && !endGame && !endRound) {
 							//makes sure we don't poll more than 3 times
 							if(p1Direction.size() < MAX_KEYINPUT) {
 								//checks that the most recent direction is either EAST or WEST
@@ -241,7 +236,6 @@ import GameCore.*;
 			});
 		}
 	
-		
 		public static GamePanel getInstance(){
 			return gamePanelInstance;
 		}
@@ -252,10 +246,10 @@ import GameCore.*;
 	
 		//start() will be called to start a new thread start the game
 		public synchronized void start() {
+			
 			running = true;
 			thread = new Thread(this, "Tron");
 			thread.start();
-
 		}
 
 		public synchronized void stop() {
@@ -271,18 +265,13 @@ import GameCore.*;
 		//when the thread start it runs this 
 		public void run() {
 			//some initialization for the players
-			Coordinate startingPosP1 = new Coordinate(28,1);
-			Coordinate startingPosP2 = new Coordinate(32,1);
-			player1 = new Player(startingPosP1);
-			player2 = new Player(startingPosP2);
+			
 			p1Direction = new LinkedList<> ();
 			p1Direction.add(player1.getDirection());
 			
-			
 			p2Direction = new LinkedList<> ();
 			p2Direction.add(player2.getDirection());
-			
-			
+		
 			
 			gameMap = new Map(); //right now, the constructor is set up so this will make a blank map
 			//     gameMap.createMapFromFile() ...
@@ -291,14 +280,13 @@ import GameCore.*;
 			//player1 = new Player(startingCoordinateP1);
 			//player2 = new Player(startingCoordinateP2);
 			this.isPaused = false;
-			this.roundNumber = 0;
 			
 			frames = 0;
 			updates = 0;
 			long timer = System.currentTimeMillis();
 
 
-			//Timer variables ( limits the update rate to 60 times per second)
+			//Timer variables ( limits the update rate to 30 times per second)
 			long lastTime = System.nanoTime();
 			double framesPerSecond = 30.0 * playingspeed ;
 			//time of one frame
@@ -332,8 +320,12 @@ import GameCore.*;
 		private void update() {
 			 movePlayers(p1Direction, player1, gameMap,  "player1Trail" , "player1Head");
 			 movePlayers(p2Direction, player2, gameMap,  "player2Trail" , "player2Head");
+			 handleCollisions(player1, player2);			 
+			 if(p1Direction.size() > 1)
+				 p1Direction.poll();
+			 if(p2Direction.size()> 1)
+				 p2Direction.poll();
 		}
-
 
 		//render takes care of the graphical processing of the game
 		private void render() {
@@ -433,48 +425,47 @@ import GameCore.*;
 				pixels[i] = 0;
 			}
 		}
-		
-
-		
+				
 		/**
 		 * puts newest player coordinate onto the gameMap
 		 * puts player1Trail and player2Trail on the gameMap
+		 * paints player1Head and player2Head on the gameMap
+		 * Execute collision detection
 		 */
 		public void movePlayers( LinkedList<Control> playerDirection, Player player,  Map mapArray , String trail , String head){ 
 			Control playerDir = playerDirection.peekFirst();
 			Coordinate playerCoords = player.getPlayerLocation();
 			mapArray.setOccupation(playerCoords, trail);
 			
-			 if(playerDirection.size() > 1) {
-	                playerDirection.poll();
-			}	
-			
 			switch(playerDir){
 			
 			case NORTH:
-				playerCoords.setY(playerCoords.getY()-1);
+				playerCoords.setY(playerCoords.getY() -1 );
+				if(hasCollided(player, mapArray, playerCoords))
+					break;
 				mapArray.setOccupation(playerCoords, head);
 				break;
-			
+				
 			case SOUTH:
-				playerCoords.setY(playerCoords.getY()+1);
+				playerCoords.setY(playerCoords.getY() + 1 );
+				if(hasCollided(player, mapArray, playerCoords))
+					break;
 				mapArray.setOccupation(playerCoords, head);
 				break;
-			
 			case WEST:
-				playerCoords.setX(playerCoords.getX()-1);
+				playerCoords.setX(playerCoords.getX() -1 );
+				if(hasCollided(player, mapArray, playerCoords))
+					break;
 				mapArray.setOccupation(playerCoords, head);
 				break;
-			
 			case EAST:
-				playerCoords.setX(playerCoords.getX()+1);
+				playerCoords.setX(playerCoords.getX() + 1 );
+				if(hasCollided(player, mapArray, playerCoords))
+					break;
 				mapArray.setOccupation(playerCoords, head);
 				break;
 			 default:
 				break;
-				
-			
-			
 			}
 		}
 		public int getGameRoundNumber(){ 
@@ -483,18 +474,26 @@ import GameCore.*;
 		public void incrRoundNumber(){
 			this.roundNumber++;
 		}
+		
+		public void endRound(){
+			System.out.println("Round End");
+			System.out.println( "player 1 Score: " + gamescore.getPlayerOneScore() );
+			System.out.println( "player 2 Score: " + gamescore.getPlayerTwoScore() );
+			this.stop();
+		}
+		
+		
 		public boolean endGame(){
 			return true; //TODO: fill in endGame
 		}
 		
 	    private void pauseGame() {
 				// TODO Auto-generated method stub
-				
 	    }
 
 	    private void resetGame() {
-				// TODO Auto-generated method stub
-				
+			this.stop();
+			this.start();
 		}
 		
 	    public void onGameResume(Player player1, Player player2, Map map){ //TODO: fill in onGameResume
@@ -512,47 +511,60 @@ import GameCore.*;
 		}
 
 		
-		
 		/**
-		 * Checks is player has colided with anything on the gameMap
+		 * Checks is player has collided with anything on the gameMap
 		 */
-		/*public boolean hasCollided(Player player, Map gameMap){ //TODO: fill in hasCollided
-		//Coordinate playerLocation = player.getPlayerLocation();
-		if(gameMap.isOccupied(playerLocation)){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}*/
+	    public boolean hasCollided(Player player, Map gameMap, Coordinate nextLocation){ //TODO: fill in hasCollided
+	    	
+	    		if(gameMap.isOccupied(nextLocation)){
+	    			player.setCollision(true);
+	    			return true;
+	    		}
+	    		else{
+	    			return false;
+	    		}
+	    	
+	    	
+	    }
 		/**
 		 * handleCollision will first check if there are any collision, and then handle them.
 		 * If there are no collisions, then it will return
 		 * If there are collisions, then it will update the GameScore and end the game
 		 */
-		/*public void handleCollisions(Player player1, Player player2, Map gameMap){ //TODO: fill in handleCollissions collision 
-		boolean p1HasCollided = hasColided(player1, gameMap);
-		boolean p2HasCollided = hasColided(Player2, gameMap);
+		public boolean handleCollisions(Player player1, Player player2){ //TODO: fill in handleCollissions collision 
+			boolean p1HasCollided = player1.getCollision();
+			boolean p2HasCollided = player2.getCollision();
 
-		if ( (!p1HasCollided)&&(!p2HasCollided)){
-			//return;
+			if (!p2HasCollided && !p1HasCollided){
+				return false;
+			}
+			else if(p2HasCollided && p1HasCollided){
+				System.out.println("DRAW");
+				endRound();
+				return true;
+			}
+			else if( (!p1HasCollided) && (p2HasCollided)){ //p1 wins
+				this.gamescore.incrP1Win();
+				
+				incrRoundNumber();
+				
+			}
+			else if ( (p1HasCollided) && (!p2HasCollided) ){ //p2 wins
+				this.gamescore.incrP2Win();
+				
+				incrRoundNumber();
+			}
+			if(this.roundNumber <3){
+				endRound();
+				return true;
+			}
+			else{
+				endGame();
+				return true;
+			}
 		}
-		else if( (!p1HasCollided)&&(p2HasCollided)){ //p1 wins
-			GamePanel.gameScore.incrP1Win();
-		}
-		else( (!p1HasCollided)&&(p2HasCollided)){ //p2 wins
-			GampePanel.gameScore.incrP2Win();
-		}
-		incrRoundNumber();
-		if(GamePanel.roundNumber<3){
-			resetGame();
-		}
-		else{
-			endGame();
-		}
-	}*/
 		public void usePowerUp(Player player){ //TODO: fill in usePowerUp
-			
+
 		}
 		public void obtainPowerUp(){ //TODO: fill in
 		}

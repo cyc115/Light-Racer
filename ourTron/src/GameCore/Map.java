@@ -12,8 +12,9 @@ import java.util.LinkedList;
 public class Map implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int difficulty;
+	private int size = 128;
 	private int height = 128;
-	private int width = 128;
+	private int width = 128 ;
 	private MapSign[][] mapArray = new MapSign[width][height];
 	//exact copy of mapArray but in 1D
 	private MapSign[] convertedMapArray = new MapSign[mapArray.length * mapArray.length];
@@ -61,12 +62,16 @@ public class Map implements Serializable {
 	public boolean isOccupied(Coordinate coordinate){
 		int x = coordinate.getX();
 		int y = coordinate.getY();
-		if (mapArray[x][y] != MapSign.EMPTY){
+		if(x >= 0 && x < size && y >= 0 && y < size){
+			if (mapArray[x][y] != MapSign.EMPTY){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else
 			return true;
-		}
-		else{
-			return false;
-		}
 	}
 	public boolean isOccupied(int x, int y){
 		if (mapArray[x][y] != MapSign.EMPTY){
