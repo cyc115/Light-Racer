@@ -89,7 +89,7 @@ import GameCore.*;
 		 */
 		
 		//Constructor
-		private GamePanel() {
+		GamePanel() {
 			gamescore = new GameScore();
 			Coordinate startingPosP1 = new Coordinate(28,1);
 			Coordinate startingPosP2 = new Coordinate(32,1);
@@ -99,7 +99,7 @@ import GameCore.*;
 			//addKeyListener(this);
 			try {
 				//Change this to your own path
-			    bkgimg = ImageIO.read(new File("C:/Users/Bob/git/team-15-han/ourTron/src/Res/tron2.jpg"));
+			    bkgimg = ImageIO.read(new File("C:/Users/Acer-Han/git/team-15-han/tron2.jpg"));
 			} catch (IOException e) {}	
 				
 			addKeyListener(new KeyAdapter() {

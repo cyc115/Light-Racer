@@ -25,7 +25,7 @@ public class GameFrame extends UIElement {
 	 */
 	private static final long serialVersionUID = 1L;
 	//I've changed this to Canvas because Jpanel doesn't work well with BufferStrategy
-	private static Canvas canvas;
+	private static GamePanel gamePanel;
 
 	/**
 	 * Launch the application.
@@ -35,15 +35,15 @@ public class GameFrame extends UIElement {
 			public void run() {
 				try {
 					GameFrame frame = new GameFrame();
-					
+					gamePanel = new GamePanel();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					// I've moved everything here because otherwise canvas wasn't getting added to the frame
-					canvas = (GamePanel.getInstance());
-					frame.add(canvas);
+				
+					frame.add(gamePanel);
 					frame.pack();
-					((GamePanel) canvas).start();
+					(gamePanel).start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
