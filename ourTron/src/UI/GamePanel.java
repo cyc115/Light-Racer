@@ -3,10 +3,9 @@ package UI;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Dimension;
+
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
+
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -18,27 +17,15 @@ import GameCore.Player;
 import GameCore.Map.MapSign;
 
 
-
-
-
-
-
-
-
-
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
-import javax.swing.Timer;
-import javax.swing.JPanel;
+
 
 import GameCore.*;
 
@@ -51,7 +38,6 @@ import GameCore.*;
 
 
 	public class GamePanel extends Canvas implements Runnable{
-		private Color transparent= new Color(0f,0f,0f,.1f );
 		public static int width = 1024;
 		public static int height = 1024;
 		public static int scale = 1;
@@ -87,7 +73,7 @@ import GameCore.*;
 		public static int frames;
 
 		//  (creates an image)
-		private BufferedImage img = null;
+		private BufferedImage bkgimg = null;
 		private BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
 		//converts the image objects into an array of int (allows to draw things on the image)
 		private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -117,7 +103,7 @@ import GameCore.*;
 			//addKeyListener(this);
 			try {
 				//Change this to your own path
-			    img = ImageIO.read(new File("C:/Users/Bob/git/team-15-han/ourTron/src/Res/tron2.jpg"));
+			    bkgimg = ImageIO.read(new File("C:/Users/Bob/git/team-15-han/ourTron/src/Res/tron2.jpg"));
 			} catch (IOException e) {}	
 				
 			addKeyListener(new KeyAdapter() {
@@ -255,12 +241,7 @@ import GameCore.*;
 			});
 		}
 	
-		public void paint(Graphics g)
-	    {
-	        // Draws the img to the BackgroundPanel.
-	        g.drawImage(img, 0, 0, null);
-	    }
-
+		
 		public static GamePanel getInstance(){
 			return gamePanelInstance;
 		}
@@ -296,12 +277,12 @@ import GameCore.*;
 			player2 = new Player(startingPosP2);
 			p1Direction = new LinkedList<> ();
 			p1Direction.add(player1.getDirection());
-			p1Direction.add(player1.getDirection());
-			p1Direction.add(player1.getDirection());
+			
+			
 			p2Direction = new LinkedList<> ();
 			p2Direction.add(player2.getDirection());
-			p1Direction.add(player1.getDirection());
-			p1Direction.add(player1.getDirection());
+			
+			
 			
 			gameMap = new Map(); //right now, the constructor is set up so this will make a blank map
 			//     gameMap.createMapFromFile() ...
@@ -369,11 +350,12 @@ import GameCore.*;
 			Graphics g = bs.getDrawGraphics();
 
 			//set the background to black
-			g.setColor(Color.BLACK);
-			g.fillRect(0,0,getWidth(),getHeight());
+			//g.setColor(Color.BLACK);
+			//g.fillRect(0,0,getWidth(),getHeight());
 
-			//draw new image on top of the background
-			paint(g);
+			//draw tron image on top of the background
+			g.drawImage(bkgimg, 0, 0, getWidth(), getHeight(),null);
+			//draw the actual game on top of the tron image
 			g.drawImage(image, 0, 0, getWidth(), getHeight(),null);
 
 			//release system ressources, remove the current frame
