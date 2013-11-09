@@ -20,7 +20,7 @@ and you need to specify the path in the GamePanel constructor.
 8.Game may lag on your computer.The ups and fps are printed on the console. Ups should remain stable at around 30.
 Fps may change depeding on your computer's hardware.
 
-
+</pre>
 
 ##folder structure up to now (04/11/13)
 <pre>
