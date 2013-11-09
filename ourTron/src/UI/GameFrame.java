@@ -1,6 +1,8 @@
 package UI;
 
 import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -18,41 +20,55 @@ import UI.UIElement;
 // TODO check and implement the missing methods 
 
 public class GameFrame extends UIElement {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
+        //I've changed this to Canvas because Jpanel doesn't work well with BufferStrategy
+        private static Canvas canvas;
 
-	private JPanel contentPane;
+        /**
+         * Launch the application.
+         */
+        public static void main(String[] args) {
+                EventQueue.invokeLater(new Runnable() {
+                        public void run() {
+                                try {
+                                        GameFrame frame = new GameFrame();
+                                        
+                                        frame.setVisible(true);
+                                        frame.setLocationRelativeTo(null);
+                                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                        // I've moved everything here because otherwise canvas wasn't getting added to the frame
+                                        canvas = (GamePanel.getInstance());
+                                        frame.add(canvas);
+                                        frame.pack();
+                                        ((GamePanel) canvas).start();
+                                } catch (Exception e) {
+                                        e.printStackTrace();
+                                }
+                        }
+                });
+        }
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GameFrame frame = new GameFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+        /**
+         * Create the frame.
+         */
+        public GameFrame() {
+                this.setSize(1500,1500);
+                
+                //contentPane = GamePanel.getInstance();
+                //contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+                //contentPane.setLayout(new BorderLayout(0, 0));
+                
+                
+        }
 
-	/**
-	 * Create the frame.
-	 */
-	public GameFrame() {
-		setBounds(100, 100, 500, 550);
-		contentPane = GamePanel.getInstance();
-		GamePanel.init();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-	}
 
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-		
-	}
+        @Override
+        public void reset() {
+                // TODO Auto-generated method stub
+                
+        }
 
 }
