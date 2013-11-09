@@ -18,7 +18,8 @@ and you need to specify the path in the GamePanel constructor.
 7.There is a demo image on the drive.
 
 8.Game may lag on your computer.The ups and fps are printed on the console. Ups should remain stable at around 30.
-Fps may change depeding on your computer's hardware.
+Fps may change depeding on your computer's hardware.If you don't want to display the background, comment out paint(g) 
+in GamePanel
 
 </pre>
 
