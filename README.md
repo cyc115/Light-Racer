@@ -6,6 +6,20 @@ the ourTron folder contians the eclipse project of our current development.
 
 *if you want You can clone the 'develop' branch and import the 'ourTron' folder as eclipse project.*
 
+##Game status up to now(09/11/13)
+The Game is now playable (sorta)
+Everything is pushed under HanGameCore
+GameFrame and GamePanel can host a game.GamePanel can load Map from Map Class. Keylisteners have been implemented 
+and works with both players( WASD for player 1 and the arrows for player 2)
+There is currently no collison dectetion. This needs to be implemented before the demo.
+I've added a background image to the game (looks way cooler). However you need downlaod the image (tron2.jpg) from the Drive 
+and you need to specify the path in the GamePanel constructor. 
+There is a demo image on the drive.
+
+Game may lag on your computer.The ups and fps are printed on the console. Ups should remain stable at around 30.
+Fps may change depeding on your computer's hardware.
+
+
 
 ##folder structure up to now (04/11/13)
 <pre>
