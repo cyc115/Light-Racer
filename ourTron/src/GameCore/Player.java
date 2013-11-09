@@ -9,7 +9,7 @@ public class Player {
  private char lastInput;
  
 public Player(Coordinate startingCoordinate) { 
-	Control startingDirection = Control.RIGHT;
+	Control startingDirection = Control.EAST;
 	int startingSpeed = 1;
 	this.coord = startingCoordinate;
 	this.direction = startingDirection;
