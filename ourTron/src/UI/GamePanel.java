@@ -35,7 +35,7 @@ import GameCore.*;
  */
 
 
-	public class GamePanel extends JPanel implements KeyListener{
+	public class GamePanel extends Canvas implements  KeyListener,Runnable{
 		
 		public static int width = 1024;
 		public static int height = 1024;
@@ -70,25 +70,17 @@ import GameCore.*;
 		//converts the image objects into an array of int (allows to draw things on the image)
 		private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 
-		//private BufferedImage bkgimage = null;
-
 
 		private char userKeyboardInputP1;
 		private char userKeyboardInputP2; 
 		//Some drawer object here with a lot of logic inside
 
-	
-		public void paintComponenet(Graphics g) {
-			super.repaint();
-		}
-
-		
 		@Override
 		public void keyPressed(KeyEvent arg0) {
-			if()
-				userKeyboardInputP1 = //keypressed
-				else
-					userKeyboardInputP2 = //keypressed
+			//if()
+				//userKeyboardInputP1 = //keypressed
+				//else
+					//userKeyboardInputP2 = //keypressed
 		}
 
 		@Override
@@ -103,7 +95,6 @@ import GameCore.*;
 
 		}
 
-
 		/**
 		 * this is the game panel object . only 1 copy exist per game ~!
 		 */
@@ -111,18 +102,13 @@ import GameCore.*;
 		/**
 		 * Create the panel.
 		 */
-
+		
+		//Constructor
 		private GamePanel() {
-			//initalize the drawer object
-			//this.drawer = new Drawer();
 			this.setSize(500, 500);
 			addKeyListener(this);
-			//key = new KeyListener(drawer);
-
 		}
-
-
-		//TODO stub
+		
 		public static GamePanel getInstance(){
 			return gamePanelInstance;
 		}
@@ -132,9 +118,6 @@ import GameCore.*;
 		 */
 		public void reset(){
 		}
-
-
-
 
 		//start() will be called to start a new thread start the game
 		public synchronized void start() {
@@ -208,10 +191,6 @@ import GameCore.*;
 			// TODO need to write changed to oneDmapArray
 		}
 
-		public void onGamePause(){ //TODO: fill in onGamePause
-
-		}
-
 
 		//render takes care of the graphical processing of the game
 		private void render() {
@@ -223,7 +202,6 @@ import GameCore.*;
 			}	
 			clearScreen(pixels);
 			renderScreen(pixels);
-
 
 			//Creates a link between Graphics and buffer
 			Graphics g = bs.getDrawGraphics();
@@ -238,36 +216,12 @@ import GameCore.*;
 			//release system ressources, remove the current frame
 			g.dispose();
 
-			//swap buffer. Make the next available buffer visible.
+			//swap buffer. Make the next available buffer visible in the window.
 			bs.show();
 
 		}
 
-		//	public void onGamePause(){ //TODO: fill in onGamePause
-		//	}
-		//	public void onGameResume(Player player1, Player player2, Map){ //TODO: fill in onGameResume
-		//		while(!isPaused){
-
-		public void onGameResume(Player player1, Player player2, Map){ //TODO: fill in onGameResume
-			//			//listener stuff to get the new direction of player1 and player2
-
-			char p1Direction = userKeyboardInputP1;
-			char p2Direction = userKeyboardInputP2;
-			//			Control directionP1;
-			//			Control directionP2;
-			//TODO convert p1Direction and p2Direction to ControlEnum
-			makeTurn(player1, directionP1);
-			makeTurn(Player2, directionP2);
-			handleCollisions(player1, player2, gameMap);
-			movePlayers(player1, player2, gameMap);
-		}
-		//draw gameMap
-
-		//		}
-
-		// }
-
-
+		//renderScreen draws the game
 		public void renderScreen( int[] pixels){
 
 			convertedMapArray = convert2Dto1D(gameMapArray);
@@ -301,7 +255,6 @@ import GameCore.*;
 					break;
 				default:
 					break;
-
 				}
 			}
 
@@ -326,6 +279,20 @@ import GameCore.*;
 			for ( int i = 0 ; i < pixels.length ; i++){
 				pixels[i] = 0;
 			}
+		}
+		
+		public void onGameResume(Player player1, Player player2, Map map){ //TODO: fill in onGameResume
+			//			//listener stuff to get the new direction of player1 and player2
+
+			char p1Direction = userKeyboardInputP1;
+			char p2Direction = userKeyboardInputP2;
+			//			Control directionP1;
+			//			Control directionP2;
+			//TODO convert p1Direction and p2Direction to ControlEnum
+			//makeTurn(player1, p1Direction);
+			//makeTurn(player2, p2Direction);
+			//handleCollisions(player1, player2, gameMap);
+			movePlayers(player1, player2, gameMap);
 		}
 
 		private MapSign[] convert2Dto1D(MapSign[][] gameMapArray) {
@@ -401,9 +368,10 @@ import GameCore.*;
 		}
 	}*/
 		public void usePowerUp(Player player){ //TODO: fill in usePowerUp
+			
 		}
 		public void obtainPowerUp(){ //TODO: fill in
 		} 
 
-	}
 }
+
