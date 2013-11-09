@@ -17,6 +17,7 @@ ourTron
 ---->Res // resources for exp : pictures , sound, png files etc
 ---->UI 
 </pre>
+<<<<<<< HEAD
 the following are the plan for this week, please accomplish them :_
 ##Danielle
 back end 
@@ -40,3 +41,5 @@ back end
 
 ##yuechuan 
 1. all of the gui's besides han's (due monday )
+=======
+>>>>>>> Danielle'sBranch
