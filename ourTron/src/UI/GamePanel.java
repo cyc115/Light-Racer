@@ -34,13 +34,15 @@ import GameCore.*;
  *
  */
 	public class GamePanel extends Canvas implements Runnable{
-		public static int width = 1024;
-		public static int height = 1024;
+		public static int size = 512;
+		public static int width = size;
+		public static int height = size;
 		public static int scale = 1;
 		private static final long serialVersionUID = 1L;
 		private static final int BUFFER = 3;
 		private static final int tileSize = 128;
-		private static final int bitshift = 3;
+		//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
+		private static final int bitshift = 2;
 
 		private Player player1;
 		private Player player2;
@@ -95,7 +97,7 @@ import GameCore.*;
 			Coordinate startingPosP2 = new Coordinate(32,1);
 			player1 = new Player(startingPosP1);
 			player2 = new Player(startingPosP2);
-			this.setSize(1024, 1024);
+			this.setSize(size, size);
 			//addKeyListener(this);
 			try {
 				//Change this to your own path
