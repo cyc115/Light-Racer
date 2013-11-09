@@ -5,6 +5,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -20,13 +22,21 @@ import GameCore.Map.MapSign;
 
 
 
+
+
+
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import javax.swing.JPanel;
 
@@ -41,7 +51,7 @@ import GameCore.*;
 
 
 	public class GamePanel extends Canvas implements Runnable{
-		
+		private Color transparent= new Color(0f,0f,0f,.1f );
 		public static int width = 1024;
 		public static int height = 1024;
 		public static int scale = 1;
@@ -54,6 +64,7 @@ import GameCore.*;
 		private Player player1;
 		private Player player2;
 		private GameScore gamescore;
+		private int playingspeed = 1 ;
 		//	private MusicPlayer soundEffectPlayer
 		//keyboards input are stored in the the linkedlists
 		private LinkedList <Control> p1Direction;
@@ -76,7 +87,8 @@ import GameCore.*;
 		public static int frames;
 
 		//  (creates an image)
-		private BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
+		private BufferedImage img = null;
+		private BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
 		//converts the image objects into an array of int (allows to draw things on the image)
 		private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 
@@ -100,11 +112,14 @@ import GameCore.*;
 		
 		//Constructor
 		private GamePanel() {
-
+			
 			this.setSize(1024, 1024);
 			//addKeyListener(this);
-
-
+			try {
+				//Change this to your own path
+			    img = ImageIO.read(new File("C:/Users/Bob/git/team-15-han/ourTron/src/Res/tron2.jpg"));
+			} catch (IOException e) {}	
+				
 			addKeyListener(new KeyAdapter() {
 
 				@Override
@@ -240,7 +255,11 @@ import GameCore.*;
 			});
 		}
 	
-		
+		public void paint(Graphics g)
+	    {
+	        // Draws the img to the BackgroundPanel.
+	        g.drawImage(img, 0, 0, null);
+	    }
 
 		public static GamePanel getInstance(){
 			return gamePanelInstance;
@@ -300,7 +319,7 @@ import GameCore.*;
 
 			//Timer variables ( limits the update rate to 60 times per second)
 			long lastTime = System.nanoTime();
-			double framesPerSecond = 30.0 ;
+			double framesPerSecond = 30.0 * playingspeed ;
 			//time of one frame
 			final double ns = 1000000000.0 / framesPerSecond;
 
@@ -354,6 +373,7 @@ import GameCore.*;
 			g.fillRect(0,0,getWidth(),getHeight());
 
 			//draw new image on top of the background
+			paint(g);
 			g.drawImage(image, 0, 0, getWidth(), getHeight(),null);
 
 			//release system ressources, remove the current frame
@@ -372,35 +392,35 @@ import GameCore.*;
 
 				switch(gameMap.getOccupation1D(i)){
 				case EMPTY:
-					//grey color
-					tiles[i]= 0xBEC0C2;
+					//transparent
+					tiles[i]= 0x000000;
 					break;
 				case WALL:
-					//black
-					tiles[i]= 0x424242;
+					//orange
+					tiles[i]= 0xCCCCCC | 0xFF000000 ;
 					break;
 				case player1Trail:
-					//blue
-					tiles[i]= 0x00F0FC;
+					//blue 0x00F0FC
+					tiles[i]= 0x00F0FC | 0xD0000000;
 					break;
 				case player2Trail:
 					//red
-					tiles[i]= 0xFC0000;
+					tiles[i]= 0xFC0000 | 0xD0000000;
 					break;
 				case power1:
 					//green
-					tiles[i]= 0x3BBF3D;
+					tiles[i]= 0x3BBF3D | 0xFF000000;
 					break;
 				case power2:
 					//orange
-					tiles[i]= 0xFF9100;
+					tiles[i]= 0xFF9100 | 0xFF000000;
 					break;
 				case player1Head:
 					//light blue
-					tiles[i] = 0x7DB3E3;
+					tiles[i] = 0x7DB3E3 | 0xFF000000;
 				case player2Head:
 					//light red
-					tiles[i] = 0xDE8181;
+					tiles[i] = 0xDE8181 | 0xFF000000;
 				default:
 					break;
 				}
@@ -552,17 +572,6 @@ import GameCore.*;
 		public void obtainPowerUp(){ //TODO: fill in
 		}
 
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		} 
-
+	
 }
 
