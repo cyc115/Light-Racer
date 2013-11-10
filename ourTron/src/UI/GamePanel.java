@@ -373,7 +373,7 @@ import GameCore.*;
 					tiles[i]= 0x000000;
 					break;
 				case WALL:
-					//orange
+					//grey
 					tiles[i]= 0xCCCCCC | 0xFF000000 ;
 					break;
 				case player1Trail:
@@ -502,8 +502,7 @@ import GameCore.*;
 			//			//listener stuff to get the new direction of player1 and player2
 
 			char p1Direction = userKeyboardInputP1;
-			char p2Direction = userKeyboardInputP2;
-			//			Control directionP1;
+			char p2Direction = userKeyboardInputP2;			//			Control directionP1;
 			//			Control directionP2;
 			//TODO convert p1Direction and p2Direction to ControlEnum
 			//makeTurn(player1, p1Direction);
