@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Map implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -32,6 +33,8 @@ public class Map implements Serializable {
 		this.difficulty = 1;
 		this.mapName = "blankMap";
 		initializeJustEdges();
+//		int numberOfBlocks = 1;
+//		generateRandomWalls(numberOfBlocks);
 		convert2Dto1D();
 		
 		
@@ -50,6 +53,24 @@ public class Map implements Serializable {
 		for(int j=0; j<height; j++){
 			this.mapArray[0][j] = MapSign.WALL;
 			this.mapArray[width-1][j] = MapSign.WALL;
+		}
+	}
+	/**
+	 * this with generate random blocks of walls into the map
+	 */
+	public void generateRandomWalls(int numberOfBlocks){
+		Random randomGenerator = new Random();
+		for(int i=0; i<numberOfBlocks; i++){
+			int blockWidth = randomGenerator.nextInt(30)+1;
+			int randomX = randomGenerator.nextInt(128-blockWidth)+1;
+			
+			for(int j=randomX; j<blockWidth; j++){
+				 int blockHeight = randomGenerator.nextInt(30)+1;
+				 int randomY = randomGenerator.nextInt(128-blockHeight)+1;
+				for(int k=randomY; k<blockHeight; k++){
+				this.mapArray[j][k] = MapSign.WALL;
+				}
+			}
 		}
 	}
 	
