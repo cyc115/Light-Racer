@@ -101,7 +101,7 @@ import GameCore.*;
 			//addKeyListener(this);
 			try {
 				//Change this to your own path
-			    bkgimg = ImageIO.read(new File("C:/Users/Acer-Han/git/team-15-han/tron2.jpg"));
+			    bkgimg = ImageIO.read(new File("C:/Users/Owner/git/team-15/tron2.jpg"));
 			} catch (IOException e) {}	
 				
 			addKeyListener(new KeyAdapter() {
