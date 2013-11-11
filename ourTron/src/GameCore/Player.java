@@ -7,20 +7,21 @@ public class Player {
  private int speed;
  private int powerUp;
  private char lastInput;
+ private boolean hasCollided;
  
 public Player(Coordinate startingCoordinate) { 
-	Control startingDirection = Control.RIGHT;
+	Control startingDirection = Control.SOUTH;
 	int startingSpeed = 1;
 	this.coord = startingCoordinate;
 	this.direction = startingDirection;
-	this.username = convertFromUser();
+	//this.username = convertFromUser();
 	this.speed = startingSpeed;
 	this.powerUp = 0;
 }
 
-	public String convertFromUser(User user){ //TODO: convert from User
-		return User.getUsername();
-	}
+	//public String convertFromUser(User user){ //TODO: convert from User
+		//return User.getUsername();
+	//}
 	
 	public Coordinate getPlayerLocation() {
 		return coord;
@@ -57,5 +58,13 @@ public Player(Coordinate startingCoordinate) {
 	}
 	public void setLastInput(char lastInput){
 		this.lastInput = lastInput;
+	}
+	
+	public boolean getCollision(){
+		return hasCollided;
+	}
+	
+	public void setCollision(boolean collision){
+		hasCollided = collision;
 	}
 }
