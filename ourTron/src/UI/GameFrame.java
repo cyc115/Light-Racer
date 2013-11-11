@@ -20,13 +20,23 @@ import UI.UIElement;
 // TODO check and implement the missing methods 
 
 public class GameFrame extends UIElement {
+<<<<<<< HEAD
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	//I've changed this to Canvas because Jpanel doesn't work well with BufferStrategy
 	private static GamePanel gamePanel;
+=======
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
+        //I've changed this to Canvas because Jpanel doesn't work well with BufferStrategy
+        private static Canvas canvas;
+>>>>>>> refs/remotes/origin/develop
 
+<<<<<<< HEAD
 	/**
 	 * Launch the application.
 	 */
@@ -50,7 +60,33 @@ public class GameFrame extends UIElement {
 			}
 		});
 	}
+=======
+        /**
+         * Launch the application.
+         */
+        public static void main(String[] args) {
+                EventQueue.invokeLater(new Runnable() {
+                        public void run() {
+                                try {
+                                        GameFrame frame = new GameFrame();
+                                        
+                                        frame.setVisible(true);
+                                        frame.setLocationRelativeTo(null);
+                                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                        // I've moved everything here because otherwise canvas wasn't getting added to the frame
+                                        canvas = (GamePanel.getInstance());
+                                        frame.add(canvas);
+                                        frame.pack();
+                                        ((GamePanel) canvas).start();
+                                } catch (Exception e) {
+                                        e.printStackTrace();
+                                }
+                        }
+                });
+        }
+>>>>>>> refs/remotes/origin/develop
 
+<<<<<<< HEAD
 	/**
 	 * Create the frame.
 	 */
@@ -63,12 +99,26 @@ public class GameFrame extends UIElement {
 		
 		
 	}
+=======
+        /**
+         * Create the frame.
+         */
+        public GameFrame() {
+                this.setSize(1500,1500);
+                
+                //contentPane = GamePanel.getInstance();
+                //contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+                //contentPane.setLayout(new BorderLayout(0, 0));
+                
+                
+        }
+>>>>>>> refs/remotes/origin/develop
 
 
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-		
-	}
+        @Override
+        public void reset() {
+                // TODO Auto-generated method stub
+                
+        }
 
 }
