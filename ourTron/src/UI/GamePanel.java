@@ -40,14 +40,14 @@ import GameCore.*;
 		public static int scale = 1;
 		private static final long serialVersionUID = 1L;
 		private static final int BUFFER = 3;
-		private static final int tileSize = 128;
+		private static final int numberOfTiles = 128;
 		//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
 		private static final int bitshift = 2;
 
 		private Player player1;
 		private Player player2;
 		private GameScore gamescore;
-		private int playingspeed = 1 ;
+		private int playingspeed = 1 ; //TODO move this to a map class. 
 		//	private MusicPlayer soundEffectPlayer
 		//keyboards input are stored in the the linkedlists
 		private LinkedList <Control> p1Direction;
@@ -56,7 +56,7 @@ import GameCore.*;
 		private boolean isPaused = false;
 		private boolean endGame = false;
 		private boolean endRound = false;
-		public int[] tiles = new int [tileSize * tileSize];
+		public int[] tiles = new int [numberOfTiles * numberOfTiles];
 		private Map gameMap;
 		private MapSign[][] gameMapArray;
 		private MapSign[] convertedMapArray;
@@ -66,16 +66,16 @@ import GameCore.*;
 		private Thread thread;
 		private boolean running = false;
 		// number of ticks
-		public static int updates;
+		public static int updates; //TODO move this to map. 
 		//number of frames displayed on the screen
 		public static int frames;
 
 		//  (creates an image)
 		private BufferedImage endimg = null;
 		private BufferedImage bkgimg = null;
-		private BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
+		private BufferedImage gameImage = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
 		//converts the image objects into an array of int (allows to draw things on the image)
-		private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+		private int[] pixels = ((DataBufferInt)gameImage.getRaster().getDataBuffer()).getData();
 
 
 		private char userKeyboardInputP1;
@@ -93,8 +93,8 @@ import GameCore.*;
 		//Constructor
 		GamePanel() {
 			gamescore = new GameScore();
-			Coordinate startingPosP1 = new Coordinate(28,1);
-			Coordinate startingPosP2 = new Coordinate(32,1);
+			Coordinate startingPosP1 = new Coordinate(60,1);
+			Coordinate startingPosP2 = new Coordinate(65,1);
 			player1 = new Player(startingPosP1);
 			player2 = new Player(startingPosP2);
 			this.setSize(size, size);
@@ -300,7 +300,7 @@ import GameCore.*;
 				long now = System.nanoTime();
 				delta += (now-lastTime) / ns;
 				lastTime = now;
-				//this only happens 60 times per second
+				//this only happens 30 times per second
 				while (delta >=1 ){
 					update();
 					updates++;
@@ -351,7 +351,7 @@ import GameCore.*;
 			//comment this out if you don't want the awesome background,however you must set the background to black 
 			g.drawImage(bkgimg, 0, 0, getWidth(), getHeight(),null);
 			//draw the actual game on top of the tron image
-			g.drawImage(image, 0, 0, getWidth(), getHeight(),null);
+			g.drawImage(gameImage, 0, 0, getWidth(), getHeight(),null);
 
 			//release system ressources, remove the current frame
 			g.dispose();
@@ -374,7 +374,7 @@ import GameCore.*;
 					break;
 				case WALL:
 					//grey
-					tiles[i]= 0xFF9100 | 0xFF000000 ;
+					tiles[i]= 0xFF9100 | 0xB0000000 ;
 					break;
 				case player1Trail:
 					//blue 0x00F0FC
@@ -404,7 +404,7 @@ import GameCore.*;
 					break;
 				}
 			}
-
+			//This converts the tiles to pixels to be displayed on the screen
 			for (int y = 0; y < height ; y++){
 				int yy = y;
 				if(yy < 0 || y >= height) break;
@@ -413,7 +413,7 @@ import GameCore.*;
 					if(xx < 0 || x >= width) break;
 					//updates pixels line by line from left to right and up to bottom
 					//each tiles has 16x16 pixels
-					int tileIndex = (x >> bitshift) + (y >> bitshift) * tileSize;
+					int tileIndex = (x >> bitshift) + (y >> bitshift) * numberOfTiles;
 					pixels[x + y * width] = tiles[tileIndex];
 
 				}

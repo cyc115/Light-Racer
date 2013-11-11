@@ -26,7 +26,7 @@ public class Map implements Serializable {
 	
 	public Map(String location) {
 		super();
-		createMapFromFile(location);
+		loadMapFromFile(location);
 	}
 	
 	public Map() { //initializes blank Map with just the edges filled in as WALL  
@@ -60,7 +60,7 @@ public class Map implements Serializable {
 	 */
 	public void generateRandomWalls(){
 		Random randomGenerator = new Random();
-		int numberOfBlocks = randomGenerator.nextInt(8)+3;
+		int numberOfBlocks = randomGenerator.nextInt(3)+3;
 		
 		for(int i=0; i<numberOfBlocks; i++){
 			int blockWidth = randomGenerator.nextInt(30)+1;
@@ -135,7 +135,7 @@ public class Map implements Serializable {
 	
 	//TODO there is repetition of code here. Ask TA what to do
 	@SuppressWarnings("unchecked")
-	public void createMapFromFile(String filename) {
+	public void loadMapFromFile(String filename) { 
 		try {
 			FileInputStream fileIn = new FileInputStream(filename);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
