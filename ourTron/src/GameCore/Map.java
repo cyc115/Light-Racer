@@ -33,8 +33,7 @@ public class Map implements Serializable {
 		this.difficulty = 1;
 		this.mapName = "blankMap";
 		initializeJustEdges();
-		int numberOfBlocks = 1;
-		generateRandomWalls(numberOfBlocks);
+		generateRandomWalls();
 		convert2Dto1D();
 		
 		
@@ -56,18 +55,22 @@ public class Map implements Serializable {
 		}
 	}
 	/**
-	 * this with generate random blocks of walls into the map
+	 * This with generate random blocks of walls into the map.
+	 * It makes between 3-11 blocks
 	 */
-	public void generateRandomWalls(int numberOfBlocks){
+	public void generateRandomWalls(){
 		Random randomGenerator = new Random();
+		int numberOfBlocks = randomGenerator.nextInt(8)+3;
+		
 		for(int i=0; i<numberOfBlocks; i++){
 			int blockWidth = randomGenerator.nextInt(30)+1;
 			int blockHeight = randomGenerator.nextInt(30)+1;
 			int randomX = randomGenerator.nextInt(128-blockWidth)+1;
 			int randomY = randomGenerator.nextInt(128-blockHeight)+1;
-			for(int j=2; j<blockWidth; j++){
-				for(int k=2; k<blockHeight; k++){
-				this.mapArray[j][k] = MapSign.WALL;
+			for(int j=randomX; j<randomX+blockWidth; j++){
+				for(int k=randomY; k<randomY+blockHeight; k++){
+					this.mapArray[j][k] = MapSign.WALL;
+//					this.mapArray[k][j] = MapSign.WALL;
 				}
 			}
 		}
