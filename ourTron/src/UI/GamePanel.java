@@ -374,7 +374,7 @@ import GameCore.*;
 					break;
 				case WALL:
 					//grey
-					tiles[i]= 0xCCCCCC | 0xFF000000 ;
+					tiles[i]= 0xFF9100 | 0xFF000000 ;
 					break;
 				case player1Trail:
 					//blue 0x00F0FC
