@@ -1,5 +1,7 @@
 package GameCore; 
 
+import Backend.User;
+
 public class Player {
  private Coordinate coord;
  private Control direction;
@@ -8,18 +10,18 @@ public class Player {
  private int powerUp;
  private char lastInput;
  
-public Player(Coordinate startingCoordinate) { 
-	Control startingDirection = Control.RIGHT;
-	int startingSpeed = 1;
-	this.coord = startingCoordinate;
-	this.direction = startingDirection;
-	this.username = convertFromUser();
-	this.speed = startingSpeed;
-	this.powerUp = 0;
-}
+	public Player(Coordinate startingCoordinate, User user) {
+		Control startingDirection = Control.RIGHT;
+		int startingSpeed = 1;
+		this.coord = startingCoordinate;
+		this.direction = startingDirection;
+		this.username = convertFromUser(user);
+		this.speed = startingSpeed;
+		this.powerUp = 0;
+	}
 
 	public String convertFromUser(User user){ //TODO: convert from User
-		return User.getUsername();
+		return user.getUsername();
 	}
 	
 	public Coordinate getPlayerLocation() {
@@ -57,5 +59,13 @@ public Player(Coordinate startingCoordinate) {
 	}
 	public void setLastInput(char lastInput){
 		this.lastInput = lastInput;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }
