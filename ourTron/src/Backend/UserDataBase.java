@@ -23,21 +23,24 @@ public class UserDataBase implements Serializable {
 			this.library = dbWriter.readFromFile().getLibrary();
 	}
 	
-	/**Gets the library within the {@link UserDataBase} file. 
+	/**
+	 * Gets the library within the {@link UserDataBase} file. 
 	 * @return	A LinkedList of User objects corresponding to the library. 
 	 */
 	public LinkedList<User> getLibrary() {
 		return library;
 	}
 
-	/**Sets the library to an input.
+	/**
+	 * Sets the library to an input.
 	 * @param library	A linked list of Users. 
 	 */
 	public void setLibrary(LinkedList<User> library) {
 		this.library = library;
 	}
 
-	/**This method will return a {@link User} object corresponding to the user input in the method. 
+	/**
+	 * This method will return a {@link User} object corresponding to the user input in the method. 
 	 * If the user does not exist in the database, null is returned.
 	 * <p>
 	 * @param username	A string of the unique username
@@ -50,7 +53,8 @@ public class UserDataBase implements Serializable {
 		return null;
 	}
 	
-	/**This method will return a {@link User} object corresponding to the user input in the method. 
+	/**
+	 * This method will return a {@link User} object corresponding to the user input in the method. 
 	 * If that user does not exist in the database, null is returned
 	 * <p>
 	 * @param user	A user object 
@@ -63,7 +67,8 @@ public class UserDataBase implements Serializable {
 		return null;
 	}
 	
-	/**Adds a {@link User} object to the database and updates the file on the hard drive.
+	/**
+	 * Adds a {@link User} object to the database and updates the file on the hard drive.
 	 * Only does so if the username does not already exist in the database
 	 * <p>
 	 * @param user	The user to be added
@@ -79,15 +84,18 @@ public class UserDataBase implements Serializable {
 	}
 
 	//TODO log this method
-	/**This method takes in a {@link User} object and sets the entry in the database to that user object passed in.
+	/**
+	 * This method takes in a {@link User} object and sets the entry in the database to that user object passed in.
 	 * This will prove useful when updating user information. This method assumes the username is not changed. Therefore usernames cannot change.
 	 * @param user	A user object to be modified to
 	 */
 	public void modifyUser(User user) {
+		//get the user object
 		User oldEntry = retrieveUser(user.getUsername());
 		if(oldEntry == null) 
 			return;
 		else {
+			//reassign the pointer of that user to point to the input user.
 			oldEntry = user;
 			dbWriter.writeToFile(this);
 		}
