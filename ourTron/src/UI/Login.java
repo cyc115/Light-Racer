@@ -14,6 +14,7 @@ import javax.swing.JPasswordField;
 
 import Backend.User;
 import Backend.UserAuth;
+import Backend.UserDataBase;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -134,23 +135,38 @@ public class Login extends UIElement  {
 		b2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//check the user info.
-				if(!UserAuth.isRegistered(jtfUser.getSelectedText()) || !UserAuth.isRegistered(jtfUser2.getSelectedText())) {
+				if(!UserAuth.isRegistered(jtfUser.getText()) || !UserAuth.isRegistered(jtfUser2.getText())) {
 					System.err.println("A username was not entered correctly, please correct");
 				}
 				else {
-					User user1 = UserAuth.isValidInput(jtfUser.getSelectedText(), pwdPass.getSelectedText());
-					User user2 = UserAuth.isValidInput(jtfUser2.getSelectedText(), passwordField.getSelectedText());
+					String u1Password = "";
+					for(char c : passwordField.getPassword())
+						u1Password += c;
+					String u2Password = "";
+					for(char c : pwdPass.getPassword())
+						u2Password += c;
+					
+					UserDataBase uDB = new UserDataBase();
+					uDB.printDB();
+					
+					System.out.println(jtfUser.getText() + " "+u1Password);
+					System.out.println(jtfUser2.getText() + " "+u2Password);
+					
+					User user1 = UserAuth.isValidInput(jtfUser.getText(), u1Password);
+					User user2 = UserAuth.isValidInput(jtfUser2.getText(), u2Password);
 					
 					if(user1 == null || user2 == null) {
 						System.err.println("A password was entered incorrectly. Please come again.");
 					}
 					else {
+						GamePanel gamepnl = new GamePanel();
 						GamePanel.user1 = user1;
 						GamePanel.user2 = user2;
 						
 						loginInstance.setVisible(false);
-						MainMenu menu = MainMenu.getInstance();
-						menu.setVisible(true);
+						//TODO change the title
+						MapFileChooser choose = new MapFileChooser("Boss");
+						choose.setVisible(true);
 					}
 				}
 			}

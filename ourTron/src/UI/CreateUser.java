@@ -59,6 +59,7 @@ public class CreateUser extends UIElement {
 
 	/**
 	 * Create the frame.
+	 * @bug throws an exception when the UserDataBase.data does not exist in the working directory. Creates it however. 
 	 */
 	public CreateUser() {
 		setTitle("Create user dialog");
@@ -105,13 +106,13 @@ public class CreateUser extends UIElement {
 		contentPane.add(btnSubmitButton, "cell 2 4,aligny bottom");
 		btnSubmitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(jpfPassNew.getPassword().equals(jpfPassAgain.getPassword())) {
-					String pass = "";
-					for(char c : jpfPassNew.getPassword())
-						pass += c;
+				String pass = passwordToString(jpfPassNew.getPassword());
+				String passAgain = passwordToString(jpfPassAgain.getPassword());
+				if(pass.equals(passAgain)) {
 					UserDataBase userDB = new UserDataBase();
 					userDB.addUser(new User(txtUserName.getText(), pass));
-				}
+				} else
+					System.err.println("Passwords don't match, try again");
 			}
 		});
 		
@@ -132,5 +133,11 @@ public class CreateUser extends UIElement {
 	}
 
 
+	private static String passwordToString(char[] password) {
+		String out = "";
+		for(char c : password)
+			out += c;
+		return out;
+	}
 
 }

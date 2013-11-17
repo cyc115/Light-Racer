@@ -1,6 +1,7 @@
 package Backend;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -36,12 +37,14 @@ public class UserDataBaseWriter {
 			in.close();
 			fileIn.close();
 			return library;
-		} catch (IOException i) {
-			i.printStackTrace();
+		} catch(FileNotFoundException e) {
+			//if no file exists, just return null without error trace. 
 			return null;
 		} catch (ClassNotFoundException c) {
-			System.out.println("The location does not have a valid file");
-			c.printStackTrace();
+			System.err.println("The location does not have a valid file");
+			return null;
+		} catch (IOException i) {
+			i.printStackTrace();
 			return null;
 		}
 	}

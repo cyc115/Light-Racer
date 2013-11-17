@@ -15,10 +15,11 @@ public class UserDataBase implements Serializable {
 	private static UserDataBaseWriter dbWriter = new UserDataBaseWriter();
 
 	public UserDataBase() {
-		library = new LinkedList<User>();
-		//if the file does not exist, create it. Otherwise load it up. 
-		if(dbWriter.readFromFile() == null)
+		//if the file does not exist, create it. Otherwise load it up.
+		if(dbWriter.readFromFile() == null) {
+			this.library = new LinkedList<User>();
 			dbWriter.writeToFile(this);
+		}
 		else
 			this.library = dbWriter.readFromFile().getLibrary();
 	}
@@ -103,6 +104,11 @@ public class UserDataBase implements Serializable {
 				return;
 			}
 		return;
+	}
+	
+	public void printDB() {
+		for(User thisUser : library)
+			System.out.println(thisUser);
 	}
 
 }

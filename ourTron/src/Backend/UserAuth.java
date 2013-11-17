@@ -16,8 +16,10 @@ public class UserAuth {
 			System.out.println("retrieving user " + user);
 			return user;
 		}
-		else
+		else {
+			System.err.println("A incorrect user credential was entered");
 			return null;
+		}
 	}
 	
 	/**Returns whether the username exists in the database
@@ -25,10 +27,14 @@ public class UserAuth {
 	 * @return	A boolean variable which is true if the username exists in the database. Otherwise false. 
 	 */
 	public static boolean isRegistered(String username) {
-		if(userDB.retrieveUser(username) != null)
+		if(userDB.retrieveUser(username) != null) {
+			System.out.println("Both usernames are valid");
 			return true;
-		else
+		}
+		else {
+			System.err.println("A username was not entered correctly, please correct");
 			return false;
+		}
 	}
 
 }
