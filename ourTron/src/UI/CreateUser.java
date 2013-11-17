@@ -7,10 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+
 import net.miginfocom.swing.MigLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import Backend.User;
+import Backend.UserDataBase;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -95,8 +101,19 @@ public class CreateUser extends UIElement {
 		});
 		contentPane.add(btnNewButton, "cell 0 4,alignx center,aligny bottom");
 		
-		JButton btnNewButton_1 = new JButton("Submit");
-		contentPane.add(btnNewButton_1, "cell 2 4,aligny bottom");
+		JButton btnSubmitButton = new JButton("Submit");
+		contentPane.add(btnSubmitButton, "cell 2 4,aligny bottom");
+		btnSubmitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(jpfPassNew.getPassword().equals(jpfPassAgain.getPassword())) {
+					String pass = "";
+					for(char c : jpfPassNew.getPassword())
+						pass += c;
+					UserDataBase userDB = new UserDataBase();
+					userDB.addUser(new User(txtUserName.getText(), pass));
+				}
+			}
+		});
 		
 		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
