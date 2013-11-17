@@ -95,9 +95,9 @@ public class MapFileChooser extends JFrame
               public void actionPerformed(ActionEvent ae)
               {
                  GamePanel.gameMap = new Map();
-                 GamePanel game = GamePanel.getInstance();
+                 GamePanel game = new GamePanel();
                  game.setVisible(true);
-                 game.run();
+                 game.start();
                  setVisible(false);
               }
            };

@@ -124,7 +124,6 @@ public class Login extends UIElement  {
 				loginInstance.setVisible(false);
 				MainMenu menu = MainMenu.getInstance();
 				menu.setVisible(true);
-				
 			}
 		});
 		
@@ -139,12 +138,8 @@ public class Login extends UIElement  {
 					System.err.println("A username was not entered correctly, please correct");
 				}
 				else {
-					String u1Password = "";
-					for(char c : passwordField.getPassword())
-						u1Password += c;
-					String u2Password = "";
-					for(char c : pwdPass.getPassword())
-						u2Password += c;
+					String u1Password = passwordToString(passwordField.getPassword());
+					String u2Password = passwordToString(pwdPass.getPassword());
 					
 					UserDataBase uDB = new UserDataBase();
 					uDB.printDB();
@@ -180,5 +175,13 @@ public class Login extends UIElement  {
 			}
 		});
 		getContentPane().add(b3, "cell 4 7,aligny bottom");
+	}
+	
+	//static helper method.
+	private static String passwordToString(char[] pass) {
+		String password = "";
+		for(char c : pass)
+			password += c;
+		return password;
 	}
 }

@@ -140,7 +140,7 @@ public class Map implements Serializable {
 			out.writeObject(map);
 			out.close();
 			fileOut.close();
-			System.out.printf("Your map has been saved in " + filename);
+			System.out.println("Your map has been saved in " + filename);
 		} catch (IOException i) {
 			i.printStackTrace();
 		}
