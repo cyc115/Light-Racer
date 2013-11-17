@@ -2,29 +2,25 @@ package UI;
 
 import java.awt.Canvas;
 import java.awt.Color;
-
 import java.awt.Graphics;
-
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+import Backend.User;
 import GameCore.Control;
 import GameCore.GameScore;
 import GameCore.Map;
 import GameCore.Player;
 import GameCore.Map.MapSign;
 
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
-
 
 import GameCore.*;
 
@@ -44,6 +40,9 @@ import GameCore.*;
 		//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
 		private static final int bitshift = 2;
 
+		public static User user1 = new User();
+		public static User user2 = new User();
+		
 		private Player player1;
 		private Player player2;
 		private GameScore gamescore;
@@ -95,8 +94,8 @@ import GameCore.*;
 			gamescore = new GameScore();
 			Coordinate startingPosP1 = new Coordinate(60,1);
 			Coordinate startingPosP2 = new Coordinate(65,1);
-			player1 = new Player(startingPosP1);
-			player2 = new Player(startingPosP2);
+			player1 = new Player(startingPosP1, user1);
+			player2 = new Player(startingPosP2, user2);
 			this.setSize(size, size);
 			//addKeyListener(this);
 			try {
@@ -268,10 +267,10 @@ import GameCore.*;
 		public void run() {
 			//some initialization for the players
 			
-			p1Direction = new LinkedList<> ();
+			p1Direction = new LinkedList<Control> ();
 			p1Direction.add(player1.getDirection());
 			
-			p2Direction = new LinkedList<> ();
+			p2Direction = new LinkedList<Control> ();
 			p2Direction.add(player2.getDirection());
 		
 			
