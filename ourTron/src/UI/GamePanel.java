@@ -91,7 +91,7 @@ import GameCore.*;
 		 */
 		
 		//Constructor
-		GamePanel() {
+		public GamePanel() {
 			gamescore = new GameScore();
 			Coordinate startingPosP1 = new Coordinate(60,1);
 			Coordinate startingPosP2 = new Coordinate(65,1);
@@ -268,10 +268,10 @@ import GameCore.*;
 		public void run() {
 			//some initialization for the players
 			
-			p1Direction = new LinkedList<> ();
+			p1Direction = new LinkedList<Control> ();
 			p1Direction.add(player1.getDirection());
 			
-			p2Direction = new LinkedList<> ();
+			p2Direction = new LinkedList<Control> ();
 			p2Direction.add(player2.getDirection());
 		
 			

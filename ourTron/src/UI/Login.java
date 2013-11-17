@@ -74,7 +74,7 @@ public class Login extends UIElement  {
 	 * initialize login
 	 */
 	
-	private Login() {
+	public Login() {
 		setTitle("Log in ");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new MigLayout("", "[][grow][][][]", "[][][][][][][][][grow]10"));
