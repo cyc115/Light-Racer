@@ -5,11 +5,16 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 import net.miginfocom.swing.MigLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+
+import Backend.User;
+import Backend.UserAuth;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -126,6 +131,30 @@ public class Login extends UIElement  {
 		getContentPane().add(b1, "cell 1 7,aligny bottom"); //add the 3 buttons 
 		JButton b2 = new JButton("Submit");
 		getContentPane().add(b2, "cell 3 7,aligny bottom");
+		b2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//check the user info.
+				if(!UserAuth.isRegistered(jtfUser.getSelectedText()) || !UserAuth.isRegistered(jtfUser2.getSelectedText())) {
+					System.err.println("A username was not entered correctly, please correct");
+				}
+				else {
+					User user1 = UserAuth.isValidInput(jtfUser.getSelectedText(), pwdPass.getSelectedText());
+					User user2 = UserAuth.isValidInput(jtfUser2.getSelectedText(), passwordField.getSelectedText());
+					
+					if(user1 == null || user2 == null) {
+						System.err.println("A password was entered incorrectly. Please come again.");
+					}
+					else {
+						GamePanel.user1 = user1;
+						GamePanel.user2 = user2;
+						
+						loginInstance.setVisible(false);
+						MainMenu menu = MainMenu.getInstance();
+						menu.setVisible(true);
+					}
+				}
+			}
+		});
 		
 		//clear button
 		JButton b3 = new JButton("Clear");
