@@ -2,7 +2,6 @@ package UI;
 
 import java.awt.EventQueue;
 import java.awt.GridLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,6 +10,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import GameCore.Map;
 
 public class MapFileChooser extends JFrame
 {
@@ -87,6 +88,22 @@ public class MapFileChooser extends JFrame
       btn.addActionListener(al);
       pnl.add(btn);
 
+      JButton defaultMap = new JButton("Create default map");
+      al = new ActionListener()
+           {
+              @Override
+              public void actionPerformed(ActionEvent ae)
+              {
+                 GamePanel.gameMap = new Map();
+                 GamePanel game = GamePanel.getInstance();
+                 game.setVisible(true);
+                 game.run();
+                 setVisible(false);
+              }
+           };
+      defaultMap.addActionListener(al);
+      pnl.add(defaultMap);
+      
       setContentPane(pnl);
 
       pack();

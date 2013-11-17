@@ -35,7 +35,7 @@ public class Map implements Serializable {
 		initializeJustEdges();
 		generateRandomWalls();
 		convert2Dto1D();
-		
+		createMap(this, "defaultMap.map");
 		
 		
 	}
@@ -133,8 +133,20 @@ public class Map implements Serializable {
 		
 	}
 	
+	public void createMap(Map map, String filename) {
+		try {
+			FileOutputStream fileOut = new FileOutputStream(filename);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(map);
+			out.close();
+			fileOut.close();
+			System.out.printf("Your map has been saved in " + filename);
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
 	//TODO there is repetition of code here. Ask TA what to do
-	@SuppressWarnings("unchecked")
 	public void loadMapFromFile(String filename) { 
 		try {
 			FileInputStream fileIn = new FileInputStream(filename);
@@ -142,12 +154,14 @@ public class Map implements Serializable {
 			setMap( (Map) in.readObject() );
 			in.close();
 			fileIn.close();
-		} catch (IOException i) {
-			i.printStackTrace();
-			return;
+			System.out.printf("The following mapfile has been loaded " + filename);
 		} catch (ClassNotFoundException c) {
-			System.out.println("The location does not have a valid file");
+			System.err.println("The location does not have a valid file");
 			c.printStackTrace();
+			return;
+		} catch (IOException i) {
+			System.err.println("Something went wrong, exiting loading of map");
+			i.printStackTrace();
 			return;
 		}
 	}
