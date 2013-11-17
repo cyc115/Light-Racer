@@ -12,7 +12,7 @@ public class Player {
  
 	public Player(Coordinate startingCoordinate, User user) {
 		Control startingDirection = Control.RIGHT;
-		int startingSpeed = 1;
+		int startingSpeed = 1; //TODO what is this used for? -Danielle Mustillo
 		this.coord = startingCoordinate;
 		this.direction = startingDirection;
 		this.username = convertFromUser(user);
