@@ -14,7 +14,7 @@ public class UserDataBase implements Serializable {
 	private LinkedList<User> library;
 	private static UserDataBaseWriter dbWriter = new UserDataBaseWriter();
 
-	UserDataBase() {
+	public UserDataBase() {
 		library = new LinkedList<User>();
 		//if the file does not exist, create it. Otherwise load it up. 
 		if(dbWriter.readFromFile() == null)
