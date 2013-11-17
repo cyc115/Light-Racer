@@ -30,7 +30,7 @@ public class Coordinate{
 		}
 	}
 
-	public static void main(String[] args) {
-	        System.out.println("It works!");
-	}
+//	public static void main(String[] args) {
+//	        System.out.println("It works!");
+//	}
 }
