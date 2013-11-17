@@ -2,29 +2,25 @@ package UI;
 
 import java.awt.Canvas;
 import java.awt.Color;
-
 import java.awt.Graphics;
-
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+import Backend.User;
 import GameCore.Control;
 import GameCore.GameScore;
 import GameCore.Map;
 import GameCore.Player;
 import GameCore.Map.MapSign;
 
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
-
 
 import GameCore.*;
 
@@ -44,8 +40,12 @@ import GameCore.*;
 		//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
 		private static final int bitshift = 2;
 
+		public static User user1;
+		public static User user2;
+		
 		private Player player1;
 		private Player player2;
+		
 		private GameScore gamescore;
 		private int playingspeed = 1 ; //TODO move this to a map class. 
 		//	private MusicPlayer soundEffectPlayer
@@ -95,8 +95,8 @@ import GameCore.*;
 			gamescore = new GameScore();
 			Coordinate startingPosP1 = new Coordinate(60,1);
 			Coordinate startingPosP2 = new Coordinate(65,1);
-			player1 = new Player(startingPosP1);
-			player2 = new Player(startingPosP2);
+			player1 = new Player(startingPosP1, user1);
+			player2 = new Player(startingPosP2, user2);
 			this.setSize(size, size);
 			//addKeyListener(this);
 			try {
@@ -118,8 +118,8 @@ import GameCore.*;
 							if(p1Direction.size() < MAX_KEYINPUT) {
 								//checks that the most recent direction is either EAST or WEST
 								Control last = p1Direction.peekLast();
-								if(last != Control.SOUTH && last != Control.NORTH) {
-									p1Direction.addLast(Control.NORTH);
+								if(last != Control.DOWN && last != Control.UP) {
+									p1Direction.addLast(Control.UP);
 								}
 							}
 						}
@@ -130,8 +130,8 @@ import GameCore.*;
 						if(!isPaused && !endGame) {
 							if(p2Direction.size() < MAX_KEYINPUT) {
 								Control last = p2Direction.peekLast();
-								if(last != Control.SOUTH && last != Control.NORTH) {
-									p2Direction.addLast(Control.NORTH);
+								if(last != Control.DOWN && last != Control.UP) {
+									p2Direction.addLast(Control.UP);
 								}
 							}
 						}
@@ -144,8 +144,8 @@ import GameCore.*;
 							if(p1Direction.size() < MAX_KEYINPUT) {
 								Control last = p1Direction.peekLast();
 								//checks that the most recent direction is either EAST or WEST
-								if(last != Control.NORTH && last != Control.SOUTH) {
-									p1Direction.addLast(Control.SOUTH);
+								if(last != Control.UP && last != Control.DOWN) {
+									p1Direction.addLast(Control.DOWN);
 								}
 							}
 						}
@@ -156,8 +156,8 @@ import GameCore.*;
 						if(!isPaused && !endGame) {
 							if(p2Direction.size() < MAX_KEYINPUT) {
 								Control last = p2Direction.peekLast();
-								if(last != Control.NORTH && last != Control.SOUTH) {
-									p2Direction.addLast(Control.SOUTH);
+								if(last != Control.UP && last != Control.DOWN) {
+									p2Direction.addLast(Control.DOWN);
 								}
 							}
 						}
@@ -170,8 +170,8 @@ import GameCore.*;
 							if(p1Direction.size() < MAX_KEYINPUT) {
 								Control last = p1Direction.peekLast();
 								//checks that the most recent direction is either North or South
-								if(last != Control.WEST && last != Control.EAST) {
-									p1Direction.addLast(Control.WEST);
+								if(last != Control.RIGHT && last != Control.LEFT) {
+									p1Direction.addLast(Control.RIGHT);
 								}
 							}
 						}
@@ -184,8 +184,8 @@ import GameCore.*;
 							if(p2Direction.size() < MAX_KEYINPUT) {
 								Control last = p2Direction.peekLast();
 								//checks that the most recent direction is either North or South
-								if(last != Control.WEST && last != Control.EAST) {
-									p2Direction.addLast(Control.WEST);
+								if(last != Control.RIGHT && last != Control.LEFT) {
+									p2Direction.addLast(Control.RIGHT);
 								}
 							}
 						}
@@ -198,8 +198,8 @@ import GameCore.*;
 							if(p1Direction.size() < MAX_KEYINPUT) {
 								Control last = p1Direction.peekLast();
 								//checks that the most recent direction is either North or South
-								if(last != Control.WEST && last != Control.EAST) {
-									p1Direction.addLast(Control.EAST);
+								if(last != Control.RIGHT && last != Control.LEFT) {
+									p1Direction.addLast(Control.LEFT);
 								}
 							}
 						}
@@ -212,8 +212,8 @@ import GameCore.*;
 							if(p2Direction.size() < MAX_KEYINPUT) {
 								Control last = p2Direction.peekLast();
 								//checks that the most recent direction is either North or South
-								if(last != Control.WEST && last != Control.EAST) {
-									p2Direction.addLast(Control.EAST);
+								if(last != Control.RIGHT && last != Control.LEFT) {
+									p2Direction.addLast(Control.LEFT);
 								}
 							}
 						}
@@ -441,26 +441,26 @@ import GameCore.*;
 			
 			switch(playerDir){
 			
-			case NORTH:
+			case UP:
 				playerCoords.setY(playerCoords.getY() -1 );
 				if(hasCollided(player, mapArray, playerCoords))
 					break;
 				mapArray.setOccupation(playerCoords, head);
 				break;
 				
-			case SOUTH:
+			case DOWN:
 				playerCoords.setY(playerCoords.getY() + 1 );
 				if(hasCollided(player, mapArray, playerCoords))
 					break;
 				mapArray.setOccupation(playerCoords, head);
 				break;
-			case WEST:
+			case RIGHT:
 				playerCoords.setX(playerCoords.getX() -1 );
 				if(hasCollided(player, mapArray, playerCoords))
 					break;
 				mapArray.setOccupation(playerCoords, head);
 				break;
-			case EAST:
+			case LEFT:
 				playerCoords.setX(playerCoords.getX() + 1 );
 				if(hasCollided(player, mapArray, playerCoords))
 					break;
