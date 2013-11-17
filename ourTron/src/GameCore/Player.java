@@ -9,8 +9,7 @@ public class Player {
  private char lastInput;
  private boolean hasCollided;
  
-public Player(Coordinate startingCoordinate) { 
-	Control startingDirection = Control.SOUTH;
+public Player(Coordinate startingCoordinate, Control startingDirection) { 
 	int startingSpeed = 1;
 	this.coord = startingCoordinate;
 	this.direction = startingDirection;
