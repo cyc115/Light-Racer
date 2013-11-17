@@ -12,8 +12,10 @@ public class UserAuth {
 	 */
 	public static User isValidInput(String username, String password) {
 		User user = userDB.retrieveUser(username);
-		if(user.getUsername().equals(username) && user.getPassword().equals(password))
+		if(user.getUsername().equals(username) && user.getPassword().equals(password)) {
+			System.out.println("retrieving user " + user);
 			return user;
+		}
 		else
 			return null;
 	}

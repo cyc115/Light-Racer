@@ -48,8 +48,9 @@ public class UserDataBase implements Serializable {
 	 */
 	public User retrieveUser(String username) {
 		for(User thisUser : library)
-			if(thisUser.getUsername().equals(username))
+			if(thisUser.getUsername().equals(username)) {
 				return thisUser;
+			}
 		return null;
 	}
 	
@@ -62,9 +63,11 @@ public class UserDataBase implements Serializable {
 	 */
 	public User retrieveUser(User user) {
 		for(User thisUser : library)
-			if(thisUser.equals(user))
+			if(thisUser.equals(user)) {
 				return thisUser;
+			}
 		return null;
+		
 	}
 	
 	/**
@@ -77,13 +80,14 @@ public class UserDataBase implements Serializable {
 		// if the user is not found, add the user and write to file. 
 		if(retrieveUser(user) == null) {
 			library.add(user);
+			System.out.println("User added: " + user);
 			dbWriter.writeToFile(this);
 		} else {
-			System.err.print("User already exists in the Database. Exiting");
+			System.err.print("User already exists in the Database");
 		}
 	}
 
-	//TODO log this method
+	//TODO TEST THIS METHOD.
 	/**
 	 * This method takes in a {@link User} object and sets the entry in the database to that user object passed in.
 	 * This will prove useful when updating user information. This method assumes the username is not changed. Therefore usernames cannot change.
@@ -91,14 +95,14 @@ public class UserDataBase implements Serializable {
 	 */
 	public void modifyUser(User user) {
 		//get the user object
-		User oldEntry = retrieveUser(user.getUsername());
-		if(oldEntry == null) 
-			return;
-		else {
-			//reassign the pointer of that user to point to the input user.
-			oldEntry = user;
-			dbWriter.writeToFile(this);
-		}
+		for(User oldEntry : library)
+			if(oldEntry.getUsername().equals(user.getUsername())) {
+				library.remove(oldEntry);
+				library.add(user);
+				dbWriter.writeToFile(this);
+				return;
+			}
+		return;
 	}
 
 }

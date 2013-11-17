@@ -5,10 +5,12 @@
 
 package Backend;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 
-public class User {
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
 	private LinkedList<GameEntry> gameHistory;
@@ -66,6 +68,15 @@ public class User {
 		return userSame && passSame && gameHistorySame;
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + "]";
+	}
+
+
+
 	/**
 	 * A game entry object just contains the username and the result of the game.
 	 * @author danielle
