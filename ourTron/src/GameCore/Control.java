@@ -1,5 +1,5 @@
 package GameCore;
 
 public enum Control {
-	UP, DOWN, LEFT, RIGHT
+	UP, DOWN, RIGHT, LEFT
 }
