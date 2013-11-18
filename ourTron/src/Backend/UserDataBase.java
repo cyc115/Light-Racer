@@ -79,7 +79,7 @@ public class UserDataBase implements Serializable {
 	 */
 	public void addUser(User user) {
 		// if the user is not found, add the user and write to file. 
-		if(retrieveUser(user) == null) {
+		if(retrieveUser(user.getUsername()) == null) {
 			library.add(user);
 			System.out.println("User added: " + user);
 			dbWriter.writeToFile(this);

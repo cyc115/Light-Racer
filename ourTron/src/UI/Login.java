@@ -136,7 +136,8 @@ public class Login extends UIElement  {
 				//check the user info.
 				if(!UserAuth.isRegistered(jtfUser.getText()) || !UserAuth.isRegistered(jtfUser2.getText())) {
 					System.err.println("A username was not entered correctly, please correct");
-				}
+				} else if(jtfUser.getText().equals(jtfUser2.getText()))
+					System.err.println("You cannot log in the same user twice!");
 				else {
 					String u1Password = passwordToString(passwordField.getPassword());
 					String u2Password = passwordToString(pwdPass.getPassword());
@@ -160,7 +161,7 @@ public class Login extends UIElement  {
 						
 						loginInstance.setVisible(false);
 						//TODO change the title
-						MapFileChooser choose = new MapFileChooser("Boss");
+						MapSelect choose = MapSelect.getInstance();
 						choose.setVisible(true);
 					}
 				}
