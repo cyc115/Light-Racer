@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
@@ -15,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import Backend.User;
+import Backend.UserAuth;
 import Backend.UserDataBase;
 
 import java.awt.event.ActionListener;
@@ -108,11 +110,20 @@ public class CreateUser extends UIElement {
 			public void actionPerformed(ActionEvent e) {
 				String pass = passwordToString(jpfPassNew.getPassword());
 				String passAgain = passwordToString(jpfPassAgain.getPassword());
-				if(pass.equals(passAgain)) {
+				if(UserAuth.isRegistered(txtUserName.getText())) {
+	                JOptionPane.showMessageDialog(CreateUser.this, "User already exists in database",
+                            "ERROR",
+                            JOptionPane.OK_OPTION);
+				} else if(pass.equals(passAgain)) {
 					UserDataBase userDB = new UserDataBase();
 					userDB.addUser(new User(txtUserName.getText(), pass));
+					JOptionPane.showMessageDialog(CreateUser.this, "User created!",
+                            "Success",
+                            JOptionPane.INFORMATION_MESSAGE);
 				} else
-					System.err.println("Passwords don't match, try again");
+					 JOptionPane.showMessageDialog(CreateUser.this, "The password's don't match",
+	                            "ERROR",
+	                            JOptionPane.OK_OPTION);
 			}
 		});
 		
