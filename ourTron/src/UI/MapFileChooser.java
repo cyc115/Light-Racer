@@ -1,5 +1,6 @@
 package UI;
 
+//TODO What is the difference between this and MapSelect.java. Please explain. 
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -88,22 +89,6 @@ public class MapFileChooser extends JFrame
       btn.addActionListener(al);
       pnl.add(btn);
 
-      JButton defaultMap = new JButton("Create default map");
-      al = new ActionListener()
-           {
-              @Override
-              public void actionPerformed(ActionEvent ae)
-              {
-                 GamePanel.gameMap = new Map();
-                 GamePanel game = new GamePanel();
-                 game.setVisible(true);
-                 game.start();
-                 setVisible(false);
-              }
-           };
-      defaultMap.addActionListener(al);
-      pnl.add(defaultMap);
-      
       setContentPane(pnl);
 
       pack();

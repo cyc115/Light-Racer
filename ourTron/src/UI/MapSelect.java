@@ -63,6 +63,23 @@ public class MapSelect extends UIElement {
 	}
 
 
+//  JButton defaultMap = new JButton("Create default map");
+//  al = new ActionListener()
+//       {
+//          @Override
+//          public void actionPerformed(ActionEvent ae)
+//          {
+//             GamePanel.gameMap = new Map();
+//             GamePanel game = new GamePanel();
+////             game.setVisible(true);
+//             game.start();
+//             
+//             setVisible(false);
+//          }
+//       };
+//  defaultMap.addActionListener(al);
+//  pnl.add(defaultMap);
+//  
 	
 	/**
 	 * Create the frame.
@@ -90,7 +107,7 @@ public class MapSelect extends UIElement {
             @Override
             public String getDescription()
             {
-               return "map file for light racer game.";
+               return ".map file. Map file for light racer game.";
             }
          });
 		
