@@ -177,6 +177,7 @@ public class MapSelect extends UIElement {
 
 						frame.setVisible(true);
 						frame.setLocationRelativeTo(null);
+						frame.requestFocus();
 						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						// I've moved everything here because otherwise canvas
 						// wasn't getting added to the frame
