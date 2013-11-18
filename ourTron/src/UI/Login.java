@@ -8,6 +8,7 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -121,7 +122,7 @@ public class Login extends UIElement  {
 		JButton b1 = new JButton("Back");  //buttons 
 		b1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				loginInstance.setVisible(false);
+				setVisible(false);
 				MainMenu menu = MainMenu.getInstance();
 				menu.setVisible(true);
 			}
@@ -133,40 +134,51 @@ public class Login extends UIElement  {
 		getContentPane().add(b2, "cell 3 7,aligny bottom");
 		b2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//check the user info.
-				if(!UserAuth.isRegistered(jtfUser.getText()) || !UserAuth.isRegistered(jtfUser2.getText())) {
-					System.err.println("A username was not entered correctly, please correct");
-				} else if(jtfUser.getText().equals(jtfUser2.getText()))
-					System.err.println("You cannot log in the same user twice!");
-				else {
-					String u1Password = passwordToString(passwordField.getPassword());
+				// check the user info.
+				if (!UserAuth.isRegistered(jtfUser.getText()) || !UserAuth.isRegistered(jtfUser2.getText())) {
+					JOptionPane.showMessageDialog(
+									Login.this,"One of the usernames was entered incorrectly. Please correct.",
+									"Error",
+									JOptionPane.OK_OPTION);
+				} else if (jtfUser.getText().equals(jtfUser2.getText())) {
+					JOptionPane.showMessageDialog(Login.this,
+							"You cannot log in the same user twice!",  "Error",
+							JOptionPane.OK_OPTION);
+				} else {
+					String u1Password = passwordToString(passwordField
+							.getPassword());
 					String u2Password = passwordToString(pwdPass.getPassword());
-					
-					UserDataBase uDB = new UserDataBase();
-					uDB.printDB();
-					
-					System.out.println(jtfUser.getText() + " "+u1Password);
-					System.out.println(jtfUser2.getText() + " "+u2Password);
-					
-					User user1 = UserAuth.isValidInput(jtfUser.getText(), u1Password);
-					User user2 = UserAuth.isValidInput(jtfUser2.getText(), u2Password);
-					
-					if(user1 == null || user2 == null) {
-						System.err.println("A password was entered incorrectly. Please come again.");
-					}
-					else {
-						GamePanel gamepnl = new GamePanel();
-						GamePanel.user1 = user1;
-						GamePanel.user2 = user2;
-						
-						loginInstance.setVisible(false);
-						//TODO change the title
-						MapSelect choose = MapSelect.getInstance();
-						choose.setVisible(true);
+
+					System.out.println(jtfUser.getText() + " " + u1Password);
+					System.out.println(jtfUser2.getText() + " " + u2Password);
+
+					User user1 = UserAuth.isValidInput(jtfUser.getText(),
+							u1Password);
+					User user2 = UserAuth.isValidInput(jtfUser2.getText(),
+							u2Password);
+
+					if (user1 == null || user2 == null) {
+						if (!UserAuth.isRegistered(jtfUser.getText())
+								|| !UserAuth.isRegistered(jtfUser2.getText())) {
+							JOptionPane
+									.showMessageDialog(
+											Login.this,
+											
+											"A password was entered incorrectly. Please come again.","Error",
+											JOptionPane.OK_OPTION);
+						}} else {
+							GamePanel.user1 = user1;
+							GamePanel.user2 = user2;
+
+							setVisible(false);
+							// TODO change the title
+							MapSelect choose = MapSelect.getInstance();
+							choose.setVisible(true);
+						}
 					}
 				}
 			}
-		});
+		);
 		
 		//clear button
 		JButton b3 = new JButton("Clear");

@@ -57,6 +57,7 @@ import GameCore.*;
 		private boolean endRound = false;
 		public int[] tiles = new int [numberOfTiles * numberOfTiles];
 		public static Map gameMap;
+		public static Map[] allMaps = new Map[3];
 		private MapSign[][] gameMapArray;
 		private MapSign[] convertedMapArray;
 		private int roundNumber;

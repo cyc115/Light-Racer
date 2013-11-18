@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JFileChooser;
@@ -14,7 +15,10 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+
 import javax.swing.filechooser.FileFilter;
+
+import GameCore.Map;
 
 public class MapSelect extends UIElement {
 
@@ -24,6 +28,7 @@ public class MapSelect extends UIElement {
 	private JPanel contentPane;
 	private static MapSelect msInstance = new MapSelect();
 	private JFileChooser fileChooser = new JFileChooser();
+	private boolean[] mapSet ={false,false,false};
 	
 	
 	//title label 
@@ -101,7 +106,7 @@ public class MapSelect extends UIElement {
             @Override
             public boolean accept(File file)
             {
-               return file.getName().toUpperCase().equals(".MAP");
+               return file.getName().toUpperCase().endsWith(".MAP");
             }
 
             @Override
@@ -146,7 +151,7 @@ public class MapSelect extends UIElement {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainMenu.getInstance().setVisible(true);
-				MapSelect.getInstance().setVisible(false);
+				setVisible(false);
 			}
 		});
 		
@@ -165,6 +170,12 @@ public class MapSelect extends UIElement {
 		JButton btnNewButton_2 = new JButton("Submit");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(mapSet[0] && mapSet[1] && mapSet[2]) {
+					GamePanel gmpl = GamePanel.getInstance();
+					gmpl.start();
+					gmpl.setVisible(true);
+					setVisible(false);
+				}
 			}
 		});
 		contentPane.add(btnNewButton_2, "cell 1 6");
@@ -175,59 +186,16 @@ public class MapSelect extends UIElement {
 	 * action listener for the select file button
 	 */
 
-	ActionListener selectButtonListener3 = new ActionListener(){
-		@Override 
-		public void actionPerformed(ActionEvent ae){
-			switch (fileChooser.showOpenDialog(MapSelect.this)) {
-				case JFileChooser.APPROVE_OPTION:
-					lblPleaseSelectA_1.setText(shortenStr("" + fileChooser.getSelectedFile(), MAX_CHAR_SIZE));
-	                break;
-	
-	             case JFileChooser.CANCEL_OPTION:
-	                JOptionPane.showMessageDialog(MapSelect.this, "Cancelled",
-	                                              "MapFileChooser",
-	                                              JOptionPane.OK_OPTION);
-	                break;
-	          
-	             case JFileChooser.ERROR_OPTION:
-	                JOptionPane.showMessageDialog(MapSelect.this, "Error",
-	                                              "MapFileChooser",
-	                                              JOptionPane.OK_OPTION);
-                
-			}
-		}
-	};
-	
-	ActionListener selectButtonListener2 = new ActionListener(){
-		@Override 
-		public void actionPerformed(ActionEvent ae){
-			switch (fileChooser.showOpenDialog(MapSelect.this)) {
-				case JFileChooser.APPROVE_OPTION:
-					lblPleaseSelectA.setText(shortenStr("" + fileChooser.getSelectedFile(), MAX_CHAR_SIZE));
-	                break;
-	
-	             case JFileChooser.CANCEL_OPTION:
-	                JOptionPane.showMessageDialog(MapSelect.this, "Cancelled",
-	                                              "MapFileChooser",
-	                                              JOptionPane.OK_OPTION);
-	                break;
-	          
-	             case JFileChooser.ERROR_OPTION:
-	                JOptionPane.showMessageDialog(MapSelect.this, "Error",
-	                                              "MapFileChooser",
-	                                              JOptionPane.OK_OPTION);
-                
-			}
-		}
-	};
-	
-	
 	ActionListener selectButtonListener1 = new ActionListener(){
 		@Override 
 		public void actionPerformed(ActionEvent ae){
 			switch (fileChooser.showOpenDialog(MapSelect.this)) {
 				case JFileChooser.APPROVE_OPTION:
 					lblNewLabel_1.setText(shortenStr("" + fileChooser.getSelectedFile(), MAX_CHAR_SIZE)) ;
+					Map map = new Map();
+					map.loadMapFromFile(fileChooser.getSelectedFile().getName());
+					GamePanel.allMaps[0] = map;
+					mapSet[0] = true;
 	                break;
 	
 	             case JFileChooser.CANCEL_OPTION:
@@ -245,6 +213,63 @@ public class MapSelect extends UIElement {
 		}
 
 	};
+	
+	ActionListener selectButtonListener2 = new ActionListener(){
+		@Override 
+		public void actionPerformed(ActionEvent ae){
+			switch (fileChooser.showOpenDialog(MapSelect.this)) {
+				case JFileChooser.APPROVE_OPTION:
+					lblPleaseSelectA.setText(shortenStr("" + fileChooser.getSelectedFile(), MAX_CHAR_SIZE));
+					Map map = new Map();
+					map.loadMapFromFile(fileChooser.getSelectedFile().getName());
+					GamePanel.allMaps[1] = map;
+					mapSet[1] = true;
+	                break;
+	
+	             case JFileChooser.CANCEL_OPTION:
+	                JOptionPane.showMessageDialog(MapSelect.this, "Cancelled",
+	                                              "MapFileChooser",
+	                                              JOptionPane.OK_OPTION);
+	                break;
+	          
+	             case JFileChooser.ERROR_OPTION:
+	                JOptionPane.showMessageDialog(MapSelect.this, "Error",
+	                                              "MapFileChooser",
+	                                              JOptionPane.OK_OPTION);
+                
+			}
+		}
+	};
+	
+	ActionListener selectButtonListener3 = new ActionListener(){
+		@Override 
+		public void actionPerformed(ActionEvent ae){
+			switch (fileChooser.showOpenDialog(MapSelect.this)) {
+				case JFileChooser.APPROVE_OPTION:
+					lblPleaseSelectA_1.setText(shortenStr("" + fileChooser.getSelectedFile(), MAX_CHAR_SIZE));
+					Map map = new Map();
+					map.loadMapFromFile(fileChooser.getSelectedFile().getName());
+					GamePanel.allMaps[2] = map;
+					mapSet[2] = true;
+	                break;
+	
+	             case JFileChooser.CANCEL_OPTION:
+	                JOptionPane.showMessageDialog(MapSelect.this, "Cancelled",
+	                                              "MapFileChooser",
+	                                              JOptionPane.OK_OPTION);
+	                break;
+	          
+	             case JFileChooser.ERROR_OPTION:
+	                JOptionPane.showMessageDialog(MapSelect.this, "Error",
+	                                              "MapFileChooser",
+	                                              JOptionPane.OK_OPTION);
+                
+			}
+		}
+	};
+	
+	
+	
 	
 	public static MapSelect getInstance(){
 		return msInstance;
