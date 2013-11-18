@@ -13,11 +13,9 @@ public class UserAuth {
 	public static User isValidInput(String username, String password) {
 		User user = userDB.retrieveUser(username);
 		if(user.getUsername().equals(username) && user.getPassword().equals(password)) {
-			System.out.println("retrieving user " + user);
 			return user;
 		}
 		else {
-			System.err.println("A incorrect user credential was entered");
 			return null;
 		}
 	}
@@ -28,11 +26,9 @@ public class UserAuth {
 	 */
 	public static boolean isRegistered(String username) {
 		if(userDB.retrieveUser(username) != null) {
-			System.out.println("Both usernames are valid");
 			return true;
 		}
 		else {
-			System.err.println("A username was not entered correctly, please correct");
 			return false;
 		}
 	}

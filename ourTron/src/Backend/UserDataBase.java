@@ -81,10 +81,7 @@ public class UserDataBase implements Serializable {
 		// if the user is not found, add the user and write to file. 
 		if(retrieveUser(user.getUsername()) == null) {
 			library.add(user);
-			System.out.println("User added: " + user);
 			dbWriter.writeToFile(this);
-		} else {
-			System.err.print("User already exists in the Database");
 		}
 	}
 
@@ -106,9 +103,9 @@ public class UserDataBase implements Serializable {
 		return;
 	}
 	
-	public void printDB() {
-		for(User thisUser : library)
-			System.out.println(thisUser);
-	}
+//	public void printDB() {
+//		for(User thisUser : library)
+//			System.out.println(thisUser);
+//	}
 
 }

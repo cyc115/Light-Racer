@@ -69,7 +69,7 @@ public class User implements Serializable {
 	}
 	
 	
-	
+	//TODO remove for final project.
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + "]";
