@@ -274,8 +274,15 @@ import GameCore.*;
 			p2Direction = new LinkedList<Control> ();
 			p2Direction.add(player2.getDirection());
 		
-			
-			gameMap = new Map(); //right now, the constructor is set up so this will make a blank map
+			switch(roundNumber) {
+			case 0 : gameMap = allMaps[0];
+			break;
+			case 1 : gameMap = allMaps[1];
+			break;
+			case 2 : gameMap = allMaps[2];
+			break;
+			}
+			//right now, the constructor is set up so this will make a blank map
 			//     gameMap.createMapFromFile() ...
 			//Coordinate staringCoordinateP1 = new Coordinate(0, 0);
 			//Coordinate staringCoordinateP2 = new Coordinate(100, 0);
