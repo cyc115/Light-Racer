@@ -68,7 +68,6 @@ public class Player {
 	public void setCollision(boolean collision) {
 		hasCollided = collision;
 		// TODO Auto-generated method stub
-
 	}
 
 	public boolean getCollision() {

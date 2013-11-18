@@ -60,6 +60,25 @@ public class User implements Serializable {
 		userDB.modifyUser(this);
 	}
 	
+	public int getWinsVsOpponent(User opponent) {
+		int count = 0;
+		for(GameEntry entry : this.gameHistory)
+			//if the oppoent is that user and the entry is won
+			if(entry.opponent.equals(opponent) && entry.won)
+				count++;
+		return count;
+	}
+	
+	public int getTotalWins() {
+		int count = 0;
+		for(GameEntry entry : this.gameHistory)
+			//if the oppoent is that user and the entry is won
+			if(entry.won)
+				count++;
+		return count;
+	}
+	
+	
 	//TODO make sure equals works as it would be expected to here.
 	public boolean equals(User user){
 		boolean userSame = username.equals(user.username);

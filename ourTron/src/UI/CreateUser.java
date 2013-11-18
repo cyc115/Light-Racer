@@ -113,10 +113,11 @@ public class CreateUser extends UIElement {
 				String pass = passwordToString(jpfPassNew.getPassword());
 				String passAgain = passwordToString(jpfPassAgain.getPassword());
 
-				// TODO fix bug where same dialog is shown when the same
-				// username is added twice. Weird problem. Possibly with
-				// JOptionPane since the user is not doubly created. Works if
-				// you close and reopen the program though.
+				/* TODO fix bug where same dialog is shown when the same
+				 * username is added twice. Weird problem. Possibly with
+				 * JOptionPane since the user is not doubly created. Works if
+				 * you close and reopen the program though.
+				 */
 				if (UserAuth.isRegistered(txtUserName.getText())) {
 					JOptionPane.showMessageDialog(contentPane,
 							"User already exists in database", "ERROR",

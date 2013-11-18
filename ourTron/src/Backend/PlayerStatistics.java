@@ -1,3 +1,5 @@
+package Backend;
+
 /**
  * reviewed : Mike
  * TODO finish this class, and implement everything. right now everything is commented out 
@@ -156,3 +158,16 @@
 //	
 //	
 //}
+
+
+public class PlayerStatistics {
+	static UserDataBase userDB = new UserDataBase();
+	
+	public static int getWins(User user, User opponent) {
+		return user.getWinsVsOpponent(opponent);
+	}
+	
+	public static int getTotalWins(User user) {
+		return user.getTotalWins();
+	}
+}

@@ -486,6 +486,7 @@ import GameCore.*;
 		
 		
 		public boolean endGame(){
+			
 			return true; //TODO: fill in endGame
 		}
 		
@@ -560,6 +561,15 @@ import GameCore.*;
 				return true;
 			}
 			else{
+				//handle the game results. 
+				if(this.gamescore.getPlayerOneScore() > this.gamescore.getPlayerTwoScore()) {
+					user1.addGameResult(user2, true);
+					user2.addGameResult(user1, false);
+				} else {
+					user1.addGameResult(user2, false);
+					user2.addGameResult(user1, true);
+				}
+				this.gamescore.initialize();
 				endGame();
 				return true;
 			}
