@@ -36,9 +36,18 @@ public class Map implements Serializable {
 		generateRandomWalls();
 		convert2Dto1D();
 		createMap(this, "defaultMap.map");
-		
-		
 	}
+	
+	//TODO remove for final project, or incorporate in some way.
+	private static void generateThreeMaps() {
+		Map map1 = new Map();
+		Map.createMap(map1, "map1.map");
+		Map map2 = new Map();
+		Map.createMap(map2, "map2.map");
+		Map map3 = new Map();
+		Map.createMap(map3, "map3.map");
+	}
+	
 	public void initializeJustEdges(){
 		for(int i=0; i<width; i++){
 			for(int j=0; j<height; j++){
@@ -133,7 +142,7 @@ public class Map implements Serializable {
 		
 	}
 	
-	public void createMap(Map map, String filename) {
+	public static void createMap(Map map, String filename) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(filename);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
