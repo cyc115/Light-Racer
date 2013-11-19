@@ -22,9 +22,9 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
-/**
- * implement the game code here.
- * @author <put your name here,who ever's responsible of this class  > 
+/**This class has two main functions : Take in key inputs and displays the game on the screen
+ * 
+ * @author <Han Yang Zhao> 
  *
  */
 	public class GamePanel extends Canvas implements KeyListener, Runnable {
@@ -77,12 +77,17 @@ import javax.imageio.ImageIO;
 			this.setSize(size, size);
 			addKeyListener(this);
 			
+			//adds an background image
 			try {
 				//Change this to your own path
 			    bkgimg = ImageIO.read(new File("C:/Users/Owner/git/team-15/tron2.jpg"));
 			} catch (IOException e) {}	
 		}
 		
+		
+		/**
+		 * Takes key inputs and add them to player direction LinkedList in {@link GameLogic} 
+		 */
 		@Override
 		public synchronized void keyPressed(KeyEvent e) {
             
@@ -132,7 +137,9 @@ import javax.imageio.ImageIO;
 		 * reset gameMap and players
 		 */
 	
-		//start() will be called to start a new thread start the game
+		/**
+		 * start() will be called to start a new thread start the game
+		 */
 		public synchronized void start() {
 			suspendflag = false;
 			running = true;
@@ -140,16 +147,20 @@ import javax.imageio.ImageIO;
 			gameLogic.initializePlayers();
 			thread.start();
 		}
-
+		/**
+		 * Interrupts the thread after a round ends or the game ends
+		 */
 		public void stop() {
 			running = false;
-			gameLogic.reinitializeGame();
 			clearScreen(pixels);
 		}
-		
+		/**
+		 * Resume the game after a reinitializing players for a new round
+		 */
 		public synchronized void resume(){
 			updates = 0;
 			frames = 0;
+			gameLogic.reinitializeGame();
 			this.timer = System.currentTimeMillis();
 			this.lastTime = System.nanoTime();
 			running = true;
@@ -201,7 +212,11 @@ import javax.imageio.ImageIO;
 			
 		}
 
-		//render takes care of the graphical processing of the game
+		/**
+		 * Render() takes care of the graphical processing of the game.
+		 * We use a bufferStrategy to pre-render frames for smoother game.
+		 * It calls on renderScreen() to update each pixels in the game,then use g.draw to draw it in the canvas
+		 */
 		private void render() {
 			//Use bufferstrategy to pre-render new frames and reduce choppiness of the gameplay
 			BufferStrategy bs = getBufferStrategy();
@@ -234,11 +249,18 @@ import javax.imageio.ImageIO;
 
 		}
 
-		//renderScreen draws the game
+		/**
+		 * renderScreen() draws the game by updating each pixels in the game window
+		 * @param pixels
+		 */
 		public void renderScreen( int[] pixels){
 			gameLogic.renderScreen(pixels);
 		}
 
+		/**
+		 * clearScreen clears the game window
+		 * @param	pixels
+		 */
 		public void clearScreen(int[] pixels){
 			for ( int i = 0 ; i < pixels.length ; i++){
 				pixels[i] = 0;
@@ -255,6 +277,10 @@ import javax.imageio.ImageIO;
 			// TODO Auto-generated method stub
 		}
 	    
+		/**
+		 * Checks if the resetGame flag and the endGame flag are enabled and restart the game or end the game 
+		 * according to the situation
+		 */
 	    public void gameInterruptionCheck(){
 	    	if(resetGame && !endGame){
 	    		stop();
@@ -272,7 +298,9 @@ import javax.imageio.ImageIO;
 	    		//do something here
 	    	}
 	    }
-	    
+	    /**
+	     * shows message after round ends
+	     */
 	    private void showRoundEndMsg(){
 	    	
 	    	Object[] options = {"Next Round",
@@ -293,7 +321,9 @@ import javax.imageio.ImageIO;
 		public void obtainPowerUp(){ //TODO: fill in
 		}
 
-	    
+	    /**
+	     * show message after game ends
+	     */
 	    private void showGameEndMsg(){
 	    	
 	    	Object[] options = {"Return to menu",

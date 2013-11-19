@@ -26,7 +26,6 @@ public class GameFrame extends UIElement {
         private static final long serialVersionUID = 1L;
         //I've changed this to Canvas because Jpanel doesn't work well with BufferStrategy
         private static Canvas canvas;
-
         /**
          * Launch the application.
          */
@@ -62,8 +61,6 @@ public class GameFrame extends UIElement {
                 //contentPane = GamePanel.getInstance();
                 //contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
                 //contentPane.setLayout(new BorderLayout(0, 0));
-                
-                
         }
 
         public static void startGame() {
@@ -71,7 +68,6 @@ public class GameFrame extends UIElement {
                 public void run() {
                         try {
                                 GameFrame frame = new GameFrame();
-                                
                                 frame.setVisible(true);
                                 frame.setLocationRelativeTo(null);
                                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,7 +83,7 @@ public class GameFrame extends UIElement {
         });
         }
         
-
+        
         @Override
         public void reset() {
                 // TODO Auto-generated method stub

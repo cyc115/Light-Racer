@@ -4,7 +4,11 @@ import java.util.LinkedList;
 
 import UI.GamePanel;
 import Backend.User;
-
+/**
+ * This class contains all the logic for the LightRacer game
+ * @author Han Yang Zhao
+ *
+ */
 public class GameLogic {
 
 	public int size = 512;
@@ -45,7 +49,9 @@ public class GameLogic {
 		pixels = new int[size*size];
 		roundNumber = 0;
 	}
-	
+	/**
+	 * Initialize players for the 1st round
+	 */
 	public void initializePlayers(){
 		
 			player1 = new Player(startingPosP1, user1, Control.SOUTH);
@@ -60,7 +66,9 @@ public class GameLogic {
 			gameMap = allMaps[0];
 		
 	}
-	
+	/**
+	 * reinitialize players for round 2 and 3
+	 */
 	public void reinitializeGame(){
 		
 		player1.setCollision(false);
@@ -76,7 +84,10 @@ public class GameLogic {
 		p2Direction.add(Control.NORTH);
 		gameMap = allMaps[roundNumber];
 	}
-	
+
+	/**
+	 * Updates the game by determining players new direction and position, check if there is any collision
+	 */
 	public void update() {
 		 movePlayers(p1Direction, player1, gameMap,  "player1Trail" , "player1Head");
 		 movePlayers(p2Direction, player2, gameMap,  "player2Trail" , "player2Head");
@@ -87,6 +98,12 @@ public class GameLogic {
 			 p2Direction.poll();
 	}
 	
+	/**
+	 * This class takes in the {@link Map} array and converts them into pixels to be displayed on the screen.
+	 * We first get each tiles in {@link Map} array and assign them to a ARGB int value. This will determine the type of the tile.
+	 * Then we assign each pixels to be part of a tile
+	 * @param pixels
+	 */
 	public void renderScreen( int[] pixels){
 
 		//Render the map onto the screen
@@ -144,6 +161,15 @@ public class GameLogic {
 		}
 	}
 	
+	/**
+	 * This functions determines the players new position based on the playerDirection linkedList. It checks if there is an obstacle
+	 * in the new position. If not it will modify the mapArray with updated values about the players head position and tail.
+	 * @param playerDirection
+	 * @param player
+	 * @param mapArray
+	 * @param trail
+	 * @param head
+	 */
 	public void movePlayers( LinkedList<Control> playerDirection, Player player,  Map mapArray , String trail , String head){ 
 		Control playerDir = playerDirection.peekFirst();
 		Coordinate playerCoords = player.getPlayerLocation();
@@ -252,7 +278,10 @@ public class GameLogic {
 		}
 	}
 	
-	
+	/**
+	 * Add and direction to the player direction LinkedList 
+	 * @param direction
+	 */
 	public void addP1Direction(Control direction){
 		switch(direction){
 		
@@ -369,10 +398,7 @@ public class GameLogic {
 		} 
 	}
 		
-	public boolean endGame(){
-		return this.endGame;
-	}
-
+	
 	public void usePowerUp(Player player){ //TODO: fill in usePowerUp
 
 	}
