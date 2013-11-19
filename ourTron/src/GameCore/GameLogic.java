@@ -1,6 +1,8 @@
 package GameCore;
 
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import UI.GamePanel;
@@ -38,26 +40,44 @@ public class GameLogic {
 	public GameLogic(){
 		
 		pixels = new int[size*size];
-		
+		roundNumber = 0;
 	}
 	
 	
 	public void initializePlayers(){
 		
+			Coordinate startingPosP1 = new Coordinate(60,1);
+			Coordinate startingPosP2 = new Coordinate(65,126);
+			player1 = new Player(startingPosP1, user1, Control.SOUTH);
+			player2 = new Player(startingPosP2, user2, Control.NORTH);
+
+			p1Direction = new LinkedList<Control> ();
+			p1Direction.add(player1.getDirection());
+
+			p2Direction = new LinkedList<Control> ();
+			p2Direction.add(player2.getDirection());
+			gamescore = new GameScore();
+			gameMap = new Map();
+		
+	}
+	
+	public void reinitializeGame(){
+		
+		player1.setCollision(false);
+		player2.setCollision(false);
 		Coordinate startingPosP1 = new Coordinate(60,1);
-		Coordinate startingPosP2 = new Coordinate(65,1);
-		player1 = new Player(startingPosP1, user1);
-		player2 = new Player(startingPosP2, user2);
-		
-		p1Direction = new LinkedList<Control> ();
-		p1Direction.add(player1.getDirection());
-		
-		p2Direction = new LinkedList<Control> ();
-		p2Direction.add(player2.getDirection());
-		gamescore = new GameScore();
+		Coordinate startingPosP2 = new Coordinate(65,126);
+		player1.setPlayerLocation(startingPosP1);
+		player2.setPlayerLocation(startingPosP2);
+		p1Direction.clear();
+		p2Direction.clear();
+		p1Direction.add(Control.SOUTH);
+		p2Direction.add(Control.NORTH);
+		player1.setDirection(Control.SOUTH);
+		player2.setDirection(Control.NORTH);
 		gameMap = new Map();
-		
-		
+		Arrays.fill(pixels,0);
+		Arrays.fill(tiles,0);
 	}
 	
 	
@@ -208,28 +228,28 @@ public class GameLogic {
 		}
 		else if(p2HasCollided && p1HasCollided){
 			System.out.println("DRAW");
-			//GamePanel.endRound();
-			return true;
+			
 		}
 		else if( (!p1HasCollided) && (p2HasCollided)){ //p1 wins
 			System.out.println("P1 WINS");
 			gamescore.incrP1Win();
-			
 			incrRoundNumber();
+			GamePanel.winner = player1;
+			
 			
 		}
 		else if ( (p1HasCollided) && (!p2HasCollided) ){ //p2 wins
 			System.out.println("P2 WINS");
 			gamescore.incrP2Win();
-			
 			incrRoundNumber();
+			GamePanel.winner = player2;
 		}
 		if(roundNumber <3){
-			//GamePanel.endRound();
+			GamePanel.resetGame=true;
 			return true;
 		}
 		else{
-			//GamePanel.endGame();
+			GamePanel.endGame = true;
 			return true;
 		}
 	}
@@ -365,5 +385,9 @@ public class GameLogic {
 	
 	public int[] getPixels(){
 		return pixels;
+	}
+	
+	public int getRoundNumber(){
+		return roundNumber;
 	}
 }

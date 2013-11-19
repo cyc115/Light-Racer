@@ -7,32 +7,29 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
-import Backend.User;
+import javax.swing.*;
+
 import GameCore.Control;
 import GameCore.GameLogic;
-import GameCore.GameScore;
 import GameCore.Map;
 import GameCore.Player;
-import GameCore.Map.MapSign;
 
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
-import GameCore.*;
 
 /**
  * implement the game code here.
  * @author <put your name here,who ever's responsible of this class  > 
  *
  */
-	public class GamePanel extends Canvas implements KeyListener {
-		
+	public class GamePanel extends Canvas implements KeyListener, Runnable {
+		boolean suspendflag;
 		private static GameLogic gameLogic;
 		public static int size = 512;
 		public static int width = size;
@@ -42,14 +39,11 @@ import GameCore.*;
 		private static final int numberOfTiles = 128;
 		//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
 
-		public static User user1 = new User();
-		public static User user2 = new User();
-		
+	
 	
 		private int playingspeed = 1 ; //TODO move this to a map class. 
 		//	private MusicPlayer soundEffectPlayer
 		//keyboards input are stored in the the linkedlists
-		final static int  MAX_KEYINPUT = 5;
 		public int[] tiles = new int [numberOfTiles * numberOfTiles];
 		public static Map gameMap;
 	
@@ -59,7 +53,11 @@ import GameCore.*;
 		public static int updates; //TODO move this to map. 
 		//number of frames displayed on the screen
 		public static int frames;
-
+		
+		public static boolean resetGame = false;
+		public static boolean endGame = false;
+		public static Player winner;
+		
 		//  (creates an image)
 		private BufferedImage endimg = null;
 		private BufferedImage bkgimg = null;
@@ -79,7 +77,6 @@ import GameCore.*;
 		GamePanel() {
 			gameLogic = new GameLogic();
 			this.setSize(size, size);
-			
 			addKeyListener(this);
 			
 			
@@ -88,10 +85,50 @@ import GameCore.*;
 				//Change this to your own path
 			    bkgimg = ImageIO.read(new File("C:/Users/Owner/git/team-15/tron2.jpg"));
 			} catch (IOException e) {}	
-				
-			
-
 		}
+		
+		@Override
+		public synchronized void keyPressed(KeyEvent e) {
+            
+        	switch(e.getKeyCode()) {
+
+        	//for player 1
+        	case KeyEvent.VK_W:
+        		System.out.println("up");
+        		gameLogic.addP1Direction(Control.NORTH);
+        		break;
+        		// for player 2
+        	case KeyEvent.VK_UP:
+        		gameLogic.addP2Direction(Control.NORTH);
+        		break;
+        		//for player 1
+        	case KeyEvent.VK_S:
+        		gameLogic.addP1Direction(Control.SOUTH);
+        		break;
+        		// for player 2
+        	case KeyEvent.VK_DOWN:
+        		gameLogic.addP2Direction(Control.SOUTH);
+        		break;
+        		//for player 1
+        	case KeyEvent.VK_A:
+        		gameLogic.addP1Direction(Control.WEST);
+        		break;
+        		//for player 2        
+        	case KeyEvent.VK_LEFT:
+        		gameLogic.addP2Direction(Control.WEST);
+        		break;
+        	case KeyEvent.VK_D:
+        		gameLogic.addP1Direction(Control.EAST);
+        		break;
+
+        		//for player 2
+        	case KeyEvent.VK_RIGHT:
+        		gameLogic.addP2Direction(Control.EAST);
+        		break;
+        	}
+        }
+		
+		
 	
 		public static GamePanel getInstance(){
 			return gamePanelInstance;
@@ -103,10 +140,28 @@ import GameCore.*;
 	
 		//start() will be called to start a new thread start the game
 		public synchronized void start() {
-			
+			suspendflag = false;
 			running = true;
-			
+			thread = new Thread(this,"Tron");
 			gameLogic.initializePlayers();
+			thread.start();
+			
+			
+				
+		}
+
+		public void stop() {
+			gameLogic.reinitializeGame();
+			clearScreen(pixels);
+			suspendflag = true;
+		}
+		
+		public synchronized void resume(){
+			suspendflag = false;
+			notify();
+		}
+		//when the thread start it runs this 
+		public void run() {
 			
 			frames = 0;
 			updates = 0;
@@ -121,6 +176,17 @@ import GameCore.*;
 			double delta = 0.0;
 			//main game loop
 			while(running){
+				synchronized(this){
+					while(suspendflag){
+						try {
+							wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				gameInterruptionCheck();
 				long now = System.nanoTime();
 				delta += (now-lastTime) / ns;
 				lastTime = now;
@@ -140,58 +206,8 @@ import GameCore.*;
 					frames = 0;
 				}
 			}
-			stop();
 			
-				
 		}
-
-		public synchronized void stop() {
-			running = false;
-			try{
-				thread.join();
-			}
-			catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-
-		//when the thread start it runs this 
-//		public void run() {
-//			
-//			frames = 0;
-//			updates = 0;
-//			long timer = System.currentTimeMillis();
-//
-//			//Timer variables ( limits the update rate to 30 times per second)
-//			long lastTime = System.nanoTime();
-//			double framesPerSecond = 30.0 * playingspeed ;
-//			//time of one frame
-//			final double ns = 1000000000.0 / framesPerSecond;
-//
-//			double delta = 0.0;
-//			//main game loop
-//			while(running){
-//				long now = System.nanoTime();
-//				delta += (now-lastTime) / ns;
-//				lastTime = now;
-//				//this only happens 30 times per second
-//				while (delta >=1 ){
-//					gameLogic.update();
-//					updates++;
-//					delta--;
-//				}
-//				render();
-//				frames++;
-//
-//				if(System.currentTimeMillis() - timer > 1000){
-//					timer += 1000;
-//					System.out.println(updates + "ups, " + frames + " fps");
-//					updates = 0;
-//					frames = 0;
-//				}
-//			}
-//			stop();
-//		}
 
 	
 		//render takes care of the graphical processing of the game
@@ -239,25 +255,6 @@ import GameCore.*;
 			}
 		}
 		
-		public void endRound(){
-			System.out.println("Round End");
-			stop();
-		}
-		
-		
-		public boolean endGame(){
-			return true; //TODO: fill in endGame
-		}
-		
-	    private void pauseGame() {
-				// TODO Auto-generated method stub
-	    }
-
-	    private  void resetGame() {
-			stop();
-			start();
-		}
-		
 	    public void onGameResume(Player player1, Player player2, Map map){ //TODO: fill in onGameResume
 			//			//listener stuff to get the new direction of player1 and player2
 
@@ -271,61 +268,7 @@ import GameCore.*;
 			//movePlayers(player1, player2, gameMap);
 		}
 
-		@Override
-		 public void keyPressed(KeyEvent e) {
-            
-        	switch(e.getKeyCode()) {
-
-        	//for player 1
-        	case KeyEvent.VK_W:
-        		System.out.println("up");
-        		gameLogic.addP1Direction(Control.NORTH);
-        		break;
-        		// for player 2
-        	case KeyEvent.VK_UP:
-        		gameLogic.addP2Direction(Control.NORTH);
-        		break;
-        		//for player 1
-        	case KeyEvent.VK_S:
-        		gameLogic.addP1Direction(Control.SOUTH);
-        		break;
-        		// for player 2
-        	case KeyEvent.VK_DOWN:
-        		gameLogic.addP2Direction(Control.SOUTH);
-        		break;
-        		//for player 1
-        	case KeyEvent.VK_A:
-        		gameLogic.addP1Direction(Control.WEST);
-        		break;
-        		//for player 2        
-        	case KeyEvent.VK_LEFT:
-        		gameLogic.addP2Direction(Control.WEST);
-        		break;
-        	case KeyEvent.VK_D:
-        		gameLogic.addP1Direction(Control.EAST);
-        		break;
-
-        		//for player 2
-        	case KeyEvent.VK_RIGHT:
-        		gameLogic.addP2Direction(Control.EAST);
-
-        	case KeyEvent.VK_P:
-        		if(gameLogic.endGame()) {
-        			pauseGame();
-        		}
-        		break;
-
-        		/*
-        		 * Reset the game if one is not currently in progress.
-        		 */
-        	case KeyEvent.VK_ENTER:
-        		if( gameLogic.endGame()) {
-        			resetGame();
-        		}
-        		break;
-        	}
-        }
-
+		
 		@Override
 		public void keyReleased(KeyEvent arg0) {
 			// TODO Auto-generated method stub
@@ -338,7 +281,49 @@ import GameCore.*;
 			
 		}
 	    
+	    public void gameInterruptionCheck(){
+	    	if(resetGame){
+	    		//stop();
+	    		//do something here
+	    		//showRoundEndMsg();
+	    		stop();
+	    		resume();
+	    	}
+	    	else if (endGame){
+	    		showGameEndMsg();
+	    		stop();
+	    		//do something here
+	    	}
+	    }
 	    
+	    private void showRoundEndMsg(){
+	    	
+	    	Object[] options = {"Next Round",
+            };
+	    	JOptionPane.showOptionDialog (
+	    			   null, 
+	    			   "Round " +  gameLogic.getGameRoundNumber() + " Player 1 Wins",
+	    			   "Round End", JOptionPane.YES_OPTION,
+	    			   JOptionPane.QUESTION_MESSAGE,
+	    			   null,
+	    			   options,
+	    			   options[0]);
+	    }
+	    
+	    
+	    private void showGameEndMsg(){
+	    	
+	    	Object[] options = {"Return to menu",
+            };
+	    	JOptionPane.showOptionDialog (
+	    			   null, 
+	    			   "Player 1 Wins Game",
+	    			   "Game End", JOptionPane.YES_OPTION,
+	    			   JOptionPane.QUESTION_MESSAGE,
+	    			   null,
+	    			   options,
+	    			   options[0]);
+	    }
 	
 }
 
