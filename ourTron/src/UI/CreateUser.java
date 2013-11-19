@@ -38,7 +38,7 @@ public class CreateUser extends UIElement {
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
-		txtUserName.setText("user name");
+		txtUserName.setText("username");
 		jpfPassNew.setText("");
 		jpfPassAgain.setText("");
 	}
@@ -84,7 +84,7 @@ public class CreateUser extends UIElement {
 		JLabel lblNewUserName = new JLabel("New User Name:");
 		contentPane.add(lblNewUserName, "cell 0 1");
 		txtUserName = new JTextField();
-		txtUserName.setText("user name");
+		txtUserName.setText("username");
 		contentPane.add(txtUserName, "cell 1 1 4 1,grow");
 		txtUserName.setColumns(10);
 
@@ -112,27 +112,21 @@ public class CreateUser extends UIElement {
 			public void actionPerformed(ActionEvent e) {
 				String pass = passwordToString(jpfPassNew.getPassword());
 				String passAgain = passwordToString(jpfPassAgain.getPassword());
-
-				/* TODO fix bug where same dialog is shown when the same
-				 * username is added twice. Weird problem. Possibly with
-				 * JOptionPane since the user is not doubly created. Works if
-				 * you close and reopen the program though.
-				 */
-				if (UserAuth.isRegistered(txtUserName.getText())) {
+				
+				if (UserDataBase.doesUserExist(txtUserName.getText())) {
 					JOptionPane.showMessageDialog(contentPane,
 							"User already exists in database", "ERROR",
 							JOptionPane.OK_OPTION);
 					reset();
-				} else if (pass.equals(passAgain)) {
-					UserDataBase userDB = new UserDataBase();
-					userDB.addUser(new User(txtUserName.getText(), pass));
-					JOptionPane.showMessageDialog(contentPane, "User created!",
-							"Success", JOptionPane.INFORMATION_MESSAGE);
-					reset();
-				} else {
+				} else if (!pass.equals(passAgain)) {
 					JOptionPane.showMessageDialog(contentPane,
 							"The password's don't match", "ERROR",
 							JOptionPane.OK_OPTION);
+					reset();
+				} else {
+					UserDataBase.addUser(new User(txtUserName.getText(), pass));
+					JOptionPane.showMessageDialog(contentPane, "User created!",
+							"Success", JOptionPane.INFORMATION_MESSAGE);
 					reset();
 				}
 			}
