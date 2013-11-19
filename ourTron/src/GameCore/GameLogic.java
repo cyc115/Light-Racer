@@ -25,6 +25,8 @@ public class GameLogic {
 	public  User user2 = new User();
 	private GameScore gamescore;
 	private int roundNumber;
+	final Coordinate startingPosP1 = new Coordinate(60,1);
+	final Coordinate startingPosP2 = new Coordinate(65,126);
 	
 	private LinkedList <Control> p1Direction;
 	private LinkedList <Control> p2Direction;
@@ -46,8 +48,6 @@ public class GameLogic {
 	
 	public void initializePlayers(){
 		
-			Coordinate startingPosP1 = new Coordinate(60,1);
-			Coordinate startingPosP2 = new Coordinate(65,126);
 			player1 = new Player(startingPosP1, user1, Control.SOUTH);
 			player2 = new Player(startingPosP2, user2, Control.NORTH);
 
@@ -65,21 +65,17 @@ public class GameLogic {
 		
 		player1.setCollision(false);
 		player2.setCollision(false);
-		Coordinate startingPosP1 = new Coordinate(60,1);
-		Coordinate startingPosP2 = new Coordinate(65,126);
-		player1.setPlayerLocation(startingPosP1);
-		player2.setPlayerLocation(startingPosP2);
+		final Coordinate startingPos1 = new Coordinate(60,1);
+		final Coordinate startingPos2 = new Coordinate(65,126);
+		player1.setPlayerLocation(startingPos1);
+		player2.setPlayerLocation(startingPos2);
+		
 		p1Direction.clear();
 		p2Direction.clear();
 		p1Direction.add(Control.SOUTH);
 		p2Direction.add(Control.NORTH);
-		player1.setDirection(Control.SOUTH);
-		player2.setDirection(Control.NORTH);
 		gameMap = new Map();
-		Arrays.fill(pixels,0);
-		Arrays.fill(tiles,0);
 	}
-	
 	
 	public void update() {
 		 movePlayers(p1Direction, player1, gameMap,  "player1Trail" , "player1Head");

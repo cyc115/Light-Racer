@@ -40,7 +40,9 @@ import javax.imageio.ImageIO;
 		//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
 
 	
-	
+		
+		long timer;
+		long lastTime;
 		private int playingspeed = 1 ; //TODO move this to a map class. 
 		//	private MusicPlayer soundEffectPlayer
 		//keyboards input are stored in the the linkedlists
@@ -145,30 +147,31 @@ import javax.imageio.ImageIO;
 			thread = new Thread(this,"Tron");
 			gameLogic.initializePlayers();
 			thread.start();
-			
-			
-				
 		}
 
 		public void stop() {
+			running = false;
 			gameLogic.reinitializeGame();
 			clearScreen(pixels);
-			suspendflag = true;
 		}
 		
 		public synchronized void resume(){
-			suspendflag = false;
-			notify();
+			updates = 0;
+			frames = 0;
+			this.timer = System.currentTimeMillis();
+			this.lastTime = System.nanoTime();
+			running = true;
+			resetGame= false;
 		}
 		//when the thread start it runs this 
 		public void run() {
 			
 			frames = 0;
 			updates = 0;
-			long timer = System.currentTimeMillis();
+			this.timer = System.currentTimeMillis();
 
 			//Timer variables ( limits the update rate to 30 times per second)
-			long lastTime = System.nanoTime();
+			this.lastTime = System.nanoTime();
 			double framesPerSecond = 30.0 * playingspeed ;
 			//time of one frame
 			final double ns = 1000000000.0 / framesPerSecond;
@@ -176,16 +179,6 @@ import javax.imageio.ImageIO;
 			double delta = 0.0;
 			//main game loop
 			while(running){
-				synchronized(this){
-					while(suspendflag){
-						try {
-							wait();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
 				gameInterruptionCheck();
 				long now = System.nanoTime();
 				delta += (now-lastTime) / ns;
@@ -217,7 +210,8 @@ import javax.imageio.ImageIO;
 			if (bs == null){
 				createBufferStrategy(BUFFER);
 				return;
-			}	
+			}
+			
 			clearScreen(pixels);
 			renderScreen(pixels);
 
@@ -245,8 +239,6 @@ import javax.imageio.ImageIO;
 		//renderScreen draws the game
 		public void renderScreen( int[] pixels){
 			gameLogic.renderScreen(pixels);
-			pixels = (gameLogic.getPixels()).clone();
-			
 		}
 
 		public void clearScreen(int[] pixels){
@@ -254,20 +246,6 @@ import javax.imageio.ImageIO;
 				pixels[i] = 0;
 			}
 		}
-		
-	    public void onGameResume(Player player1, Player player2, Map map){ //TODO: fill in onGameResume
-			//			//listener stuff to get the new direction of player1 and player2
-
-			//char p1Direction = userKeyboardInputP1;
-			//char p2Direction = userKeyboardInputP2;			//			Control directionP1;
-			//			Control directionP2;
-			//TODO convert p1Direction and p2Direction to ControlEnum
-			//makeTurn(player1, p1Direction);
-			//makeTurn(player2, p2Direction);
-			//handleCollisions(player1, player2, gameMap);
-			//movePlayers(player1, player2, gameMap);
-		}
-
 		
 		@Override
 		public void keyReleased(KeyEvent arg0) {
@@ -283,13 +261,14 @@ import javax.imageio.ImageIO;
 	    
 	    public void gameInterruptionCheck(){
 	    	if(resetGame){
-	    		//stop();
-	    		//do something here
-	    		//showRoundEndMsg();
 	    		stop();
+	    		//do something here
+	    		showRoundEndMsg();
+	    		//stop();
 	    		resume();
 	    	}
 	    	else if (endGame){
+	    		
 	    		showGameEndMsg();
 	    		stop();
 	    		//do something here
@@ -309,7 +288,6 @@ import javax.imageio.ImageIO;
 	    			   options,
 	    			   options[0]);
 	    }
-	    
 	    
 	    private void showGameEndMsg(){
 	    	
