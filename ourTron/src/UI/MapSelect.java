@@ -172,23 +172,7 @@ public class MapSelect extends UIElement {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(mapSet[0] && mapSet[1] && mapSet[2]) {
-					try {
-						GameFrame frame = new GameFrame();
-
-						frame.setVisible(true);
-						frame.setLocationRelativeTo(null);
-						frame.requestFocus();
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-						// I've moved everything here because otherwise canvas
-						// wasn't getting added to the frame
-						GamePanel canvas = (GamePanel.getInstance());
-						frame.add(canvas);
-						frame.pack();
-						((GamePanel) canvas).start();
-					} catch (Exception excep) {
-						excep.printStackTrace();
-					}
-
+					GameFrame.startGame();
 					setVisible(false);
 				}
 			}

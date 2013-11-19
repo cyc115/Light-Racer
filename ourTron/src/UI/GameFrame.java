@@ -63,6 +63,27 @@ public class GameFrame extends UIElement {
                 
                 
         }
+        
+        public static void startGame() {
+            EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                            try {
+                                    GameFrame frame = new GameFrame();
+                                    
+                                    frame.setVisible(true);
+                                    frame.setLocationRelativeTo(null);
+                                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                    // I've moved everything here because otherwise canvas wasn't getting added to the frame
+                                    canvas = (GamePanel.getInstance());
+                                    frame.add(canvas);
+                                    frame.pack();
+                                    ((GamePanel) canvas).start();
+                            } catch (Exception e) {
+                                    e.printStackTrace();
+                            }
+                    }
+            });
+    }
 
 
         @Override

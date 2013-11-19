@@ -95,8 +95,10 @@ import GameCore.*;
 			gamescore = new GameScore();
 			Coordinate startingPosP1 = new Coordinate(60,1);
 			Coordinate startingPosP2 = new Coordinate(65,1);
-			player1 = new Player(startingPosP1, user1);
-			player2 = new Player(startingPosP2, user2);
+			Control startingDirectionP1 = Control.SOUTH;
+			Control startingDirectionP2 = Control.SOUTH;
+			player1 = new Player(startingPosP1, startingDirectionP1, user1);
+			player2 = new Player(startingPosP2, startingDirectionP2, user2);
 			this.setSize(size, size);
 			//addKeyListener(this);
 			try {
@@ -351,12 +353,12 @@ import GameCore.*;
 			Graphics g = bs.getDrawGraphics();
 			
 			//set the background to black
-			//g.setColor(Color.BLACK);
-			//g.fillRect(0,0,getWidth(),getHeight());
+			g.setColor(Color.BLACK);
+			g.fillRect(0,0,getWidth(),getHeight());
 
 			//draw tron image on top of the background
 			//comment this out if you don't want the awesome background,however you must set the background to black 
-			g.drawImage(bkgimg, 0, 0, getWidth(), getHeight(),null);
+			//g.drawImage(bkgimg, 0, 0, getWidth(), getHeight(),null);
 			//draw the actual game on top of the tron image
 			g.drawImage(gameImage, 0, 0, getWidth(), getHeight(),null);
 
