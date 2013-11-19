@@ -19,6 +19,7 @@ public class Player {
 		this.username = convertFromUser(user);
 		this.speed = startingSpeed;
 		this.powerUp = 0;
+		this.hasCollided = false;
 	}
 
 	public String convertFromUser(User user) { // TODO: convert from User
