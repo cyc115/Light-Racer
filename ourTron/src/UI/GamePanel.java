@@ -157,6 +157,13 @@ import javax.imageio.ImageIO;
 		}
 		//when the thread start it runs this 
 		public void run() {
+			
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	
 			frames = 0;
 			updates = 0;
@@ -249,7 +256,7 @@ import javax.imageio.ImageIO;
 		}
 	    
 	    public void gameInterruptionCheck(){
-	    	if(resetGame){
+	    	if(resetGame && !endGame){
 	    		stop();
 	    		//do something here
 	    		showRoundEndMsg();
@@ -260,6 +267,8 @@ import javax.imageio.ImageIO;
 	    		
 	    		showGameEndMsg();
 	    		stop();
+	    		setVisible(false);
+		    	MainMenu.getInstance().setVisible(true);
 	    		//do something here
 	    	}
 	    }
@@ -270,7 +279,7 @@ import javax.imageio.ImageIO;
             };
 	    	JOptionPane.showOptionDialog (
 	    			   null, 
-	    			   "Round " +  gameLogic.getGameRoundNumber() + winner.getUsername() + " Wins",
+	    			   "Round " +  gameLogic.getGameRoundNumber() + " " + winner.getUsername() + " Wins",
 	    			   "Round End", JOptionPane.YES_OPTION,
 	    			   JOptionPane.QUESTION_MESSAGE,
 	    			   null,
@@ -297,6 +306,7 @@ import javax.imageio.ImageIO;
 	    			   null,
 	    			   options,
 	    			   options[0]);
+	    	
 	    }	
 }
 

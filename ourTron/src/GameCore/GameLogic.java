@@ -235,6 +235,7 @@ public class GameLogic {
 			return true;
 		}
 		else{
+			GamePanel.endGame = true;
 			//handle the game results. 
 			if(this.gamescore.getPlayerOneScore() > this.gamescore.getPlayerTwoScore()) {
 				user1.addGameResult(user2, true);
@@ -246,7 +247,7 @@ public class GameLogic {
 				GamePanel.winner = player2;
 			}
 			this.gamescore.initialize();
-			GamePanel.endGame = true;
+			
 			return true;
 		}
 	}

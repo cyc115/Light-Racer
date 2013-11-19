@@ -86,11 +86,12 @@ public class UserDataBase {
 	}
 	
 	//TODO TEST THIS METHOD.
-	/**
+	/** 
 	 * This method takes in a {@link User} object and sets the entry in the database to that user object passed in.
 	 * This will prove useful when updating user information. This method assumes the username is not changed. Therefore usernames cannot change.
 	 * @param user	A user object to be modified to
 	 */
+	
 	public static void modifyUser(User user) {
 		//get the user object
 		LinkedList<User> db = UserDataBaseWriter.readFromFile();
@@ -101,6 +102,7 @@ public class UserDataBase {
 				UserDataBaseWriter.writeToFile(db);
 				return;
 			}
+		
 		return;
 	}
 	
@@ -113,6 +115,10 @@ public class UserDataBase {
 		 * read properly. 
 		 * <p>
 		 * @return A {@link UserDataBase} object corresponding to the database, or null if the input is invalid.
+		 */
+		
+		/*
+		 * FIXME this might not work with adding a win to the user, because of the IOException creating a new DB. This will be debugged when playerstatistics is implemented. 
 		 */
 		public static LinkedList<User> readFromFile() {
 			try {
@@ -127,8 +133,10 @@ public class UserDataBase {
 				writeToFile(new LinkedList<User>());
 				return readFromFile();
 			} catch (IOException i) {
-				return null;
+				writeToFile(new LinkedList<User>());
+				return readFromFile();
 			} catch (ClassNotFoundException c) {
+				System.err.println("Exception Thrown");
 				return null;
 			}
 		}
