@@ -11,7 +11,8 @@ public class Player {
 	private char lastInput;
 	private boolean hasCollided;
 
-	public Player(Coordinate startingCoordinate, Control startingDirection, User user) {
+	public Player(Coordinate startingCoordinate, User user) {
+		Control startingDirection = Control.SOUTH;
 		int startingSpeed = 1;
 		this.coord = startingCoordinate;
 		this.direction = startingDirection;
