@@ -1,8 +1,5 @@
 package GameCore;
 
-import java.awt.event.KeyEvent;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import UI.GamePanel;
@@ -44,7 +41,6 @@ public class GameLogic {
 		pixels = new int[size*size];
 		roundNumber = 0;
 	}
-	
 	
 	public void initializePlayers(){
 		
@@ -140,15 +136,10 @@ public class GameLogic {
 				//each tiles has 16x16 pixels
 				int tileIndex = (x >> bitshift) + (y >> bitshift) * numberOfTiles;
 				pixels[x + y * width] = tiles[tileIndex];
-
 			}
-
 		}
-
 	}
 	
-	
-		
 	public void movePlayers( LinkedList<Control> playerDirection, Player player,  Map mapArray , String trail , String head){ 
 		Control playerDir = playerDirection.peekFirst();
 		Coordinate playerCoords = player.getPlayerLocation();
@@ -191,10 +182,7 @@ public class GameLogic {
 	public void incrRoundNumber(){
 		roundNumber++;
 	}
-	
-	
-
-	
+		
 	/**
 	 * Checks is player has collided with anything on the gameMap
 	 */
@@ -207,8 +195,6 @@ public class GameLogic {
     		else{
     			return false;
     		}
-    	
-    	
     }
 	/**
 	 * handleCollision will first check if there are any collision, and then handle them.
@@ -307,7 +293,6 @@ public class GameLogic {
             break;
 
 		} 
-		
 	}
 	
 	public void addP2Direction(Control direction){
@@ -366,7 +351,6 @@ public class GameLogic {
             break;
 
 		} 
-		
 	}
 		
 	public boolean endGame(){

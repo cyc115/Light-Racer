@@ -22,7 +22,6 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
-
 /**
  * implement the game code here.
  * @author <put your name here,who ever's responsible of this class  > 
@@ -39,12 +38,9 @@ import javax.imageio.ImageIO;
 		private static final int numberOfTiles = 128;
 		//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
 
-	
-		
 		long timer;
 		long lastTime;
 		private int playingspeed = 1 ; //TODO move this to a map class. 
-		//	private MusicPlayer soundEffectPlayer
 		//keyboards input are stored in the the linkedlists
 		public int[] tiles = new int [numberOfTiles * numberOfTiles];
 		public static Map gameMap;
@@ -80,8 +76,6 @@ import javax.imageio.ImageIO;
 			gameLogic = new GameLogic();
 			this.setSize(size, size);
 			addKeyListener(this);
-			
-			
 			
 			try {
 				//Change this to your own path
@@ -130,8 +124,6 @@ import javax.imageio.ImageIO;
         	}
         }
 		
-		
-	
 		public static GamePanel getInstance(){
 			return gamePanelInstance;
 		}
@@ -202,7 +194,6 @@ import javax.imageio.ImageIO;
 			
 		}
 
-	
 		//render takes care of the graphical processing of the game
 		private void render() {
 			//Use bufferstrategy to pre-render new frames and reduce choppiness of the gameplay
@@ -250,13 +241,11 @@ import javax.imageio.ImageIO;
 		@Override
 		public void keyReleased(KeyEvent arg0) {
 			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
 		public void keyTyped(KeyEvent arg0) {
 			// TODO Auto-generated method stub
-			
 		}
 	    
 	    public void gameInterruptionCheck(){
