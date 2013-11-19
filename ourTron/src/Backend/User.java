@@ -16,10 +16,11 @@ public class User implements Serializable {
 	private LinkedList<GameEntry> gameHistory;
 	
 	public User() {
+		//this user will always be rejected
 		this.username=null;
 		this.password=null;
 		this.gameHistory=new LinkedList<GameEntry>();
-		UserDataBase.addUser(this);
+//		UserDataBase.addUser(this);
 	}
 	
 	public User(User user) {

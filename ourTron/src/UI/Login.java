@@ -135,22 +135,19 @@ public class Login extends UIElement  {
 		b2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// check the user info.
-				if (!UserAuth.isRegistered(jtfUser.getText()) || !UserAuth.isRegistered(jtfUser2.getText())) {
-					JOptionPane.showMessageDialog(
-									Login.this,"One of the usernames was entered incorrectly. Please correct.",
-									"Error",
-									JOptionPane.OK_OPTION);
+				if (!UserAuth.isRegistered(jtfUser.getText())
+						|| !UserAuth.isRegistered(jtfUser2.getText())) {
+					String message = "One of the users do not exist in the database.";
+					JOptionPane.showMessageDialog(Login.this, message, "Error",
+							JOptionPane.OK_OPTION);
 				} else if (jtfUser.getText().equals(jtfUser2.getText())) {
-					JOptionPane.showMessageDialog(Login.this,
-							"You cannot log in the same user twice!",  "Error",
+					String message = "You cannot log in the same user twice!";
+					JOptionPane.showMessageDialog(Login.this, message, "Error",
 							JOptionPane.OK_OPTION);
 				} else {
 					String u1Password = passwordToString(passwordField
 							.getPassword());
 					String u2Password = passwordToString(pwdPass.getPassword());
-
-					System.out.println(jtfUser.getText() + " " + u1Password);
-					System.out.println(jtfUser2.getText() + " " + u2Password);
 
 					User user1 = UserAuth.isValidInput(jtfUser.getText(),
 							u1Password);
@@ -158,27 +155,21 @@ public class Login extends UIElement  {
 							u2Password);
 
 					if (user1 == null || user2 == null) {
-						if (!UserAuth.isRegistered(jtfUser.getText())
-								|| !UserAuth.isRegistered(jtfUser2.getText())) {
-							JOptionPane
-									.showMessageDialog(
-											Login.this,
-											
-											"A password was entered incorrectly. Please come again.","Error",
-											JOptionPane.OK_OPTION);
-						}} else {
-							GamePanel.user1 = user1;
-							GamePanel.user2 = user2;
-
-							setVisible(false);
-							// TODO change the title
-							MapSelect choose = MapSelect.getInstance();
-							choose.setVisible(true);
-						}
+						String message = "A password was entered incorrectly.";
+						JOptionPane.showMessageDialog(Login.this, message,
+								"Error", JOptionPane.OK_OPTION);
+					} else {
+						GamePanel.user1 = user1;
+						GamePanel.user2 = user2;
+						
+						setVisible(false);
+						// TODO change the title
+						MapSelect choose = MapSelect.getInstance();
+						choose.setVisible(true);
 					}
 				}
 			}
-		);
+		});
 		
 		//clear button
 		JButton b3 = new JButton("Clear");

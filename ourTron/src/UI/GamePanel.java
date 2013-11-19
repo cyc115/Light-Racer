@@ -95,8 +95,8 @@ import GameCore.*;
 			gamescore = new GameScore();
 			Coordinate startingPosP1 = new Coordinate(60,1);
 			Coordinate startingPosP2 = new Coordinate(65,1);
-			player1 = new Player(startingPosP1, user1);
-			player2 = new Player(startingPosP2, user2);
+			player1 = new Player(startingPosP1, Control.SOUTH, user1);
+			player2 = new Player(startingPosP2, Control.SOUTH, user2);
 			this.setSize(size, size);
 			//addKeyListener(this);
 			try {

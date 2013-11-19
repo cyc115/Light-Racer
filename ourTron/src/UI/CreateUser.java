@@ -123,6 +123,12 @@ public class CreateUser extends UIElement {
 							"The password's don't match", "ERROR",
 							JOptionPane.OK_OPTION);
 					reset();
+				} else if (!UserDataBase.isValidPassword(pass)) {
+					String message = "The password is not valid. \n"
+							+ "1. A password must be at least 6 characters long \n"
+							+ "2. A password may contain only letters or numbers. ";
+					JOptionPane.showMessageDialog(contentPane, message,
+							"ERROR", JOptionPane.OK_OPTION);
 				} else {
 					UserDataBase.addUser(new User(txtUserName.getText(), pass));
 					JOptionPane.showMessageDialog(contentPane, "User created!",

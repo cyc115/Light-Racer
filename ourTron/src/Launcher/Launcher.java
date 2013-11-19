@@ -1,7 +1,5 @@
 package Launcher;
 
-import UI.GamePanel;
-import UI.Login;
 import UI.MainMenu;
 
 public class Launcher {
