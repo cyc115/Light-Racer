@@ -11,15 +11,15 @@ import java.util.LinkedList;
 //TODO move the writing to this class!!
 //This class will need to change name
 public class UserDataBaseWriter {
-	private String location;
+	private static String location = "UserDataBase.data";
 
-	public UserDataBaseWriter() {
-		this.location = "UserDataBase.data";
+
+	public static String getLocation() {
+		return location;
 	}
 
-	public UserDataBaseWriter(String location) {
-		// this.library = new LinkedList<User>();
-		this.location = location;
+	public static void setLocation(String location) {
+		UserDataBaseWriter.location = location;
 	}
 
 	/**
@@ -29,22 +29,21 @@ public class UserDataBaseWriter {
 	 * <p>
 	 * @return A {@link UserDataBase} object corresponding to the database, or null if the input is invalid.
 	 */
-	public UserDataBase readFromFile() {
+	public static LinkedList<User> readFromFile() {
 		try {
 			FileInputStream fileIn = new FileInputStream(location);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
-			UserDataBase library = (UserDataBase) in.readObject();
+			@SuppressWarnings("unchecked")
+			LinkedList<User> db = (LinkedList<User>) in.readObject();
 			in.close();
 			fileIn.close();
-			return library;
-		} catch(FileNotFoundException e) {
-			//if no file exists, just return null without error trace. 
+			return db;
+		} catch (FileNotFoundException e) {
+			writeToFile(new LinkedList<User>());
+			return readFromFile();
+		} catch (IOException i) {
 			return null;
 		} catch (ClassNotFoundException c) {
-			System.err.println("The location does not have a valid file");
-			return null;
-		} catch (IOException i) {
-			i.printStackTrace();
 			return null;
 		}
 	}
@@ -56,16 +55,15 @@ public class UserDataBaseWriter {
 	 * @param db
 	 *            A {@link UserDataBase} object that must be written to a file.
 	 */
-	public void writeToFile(UserDataBase db) {
+	public static void writeToFile(LinkedList<User> db) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(location);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(db);
 			out.close();
 			fileOut.close();
-			System.out.printf("Your data has been saved in " + location);
 		} catch (IOException i) {
-			i.printStackTrace();
+			//IOException not expected. 
 		}
 	}
 }

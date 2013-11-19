@@ -11,7 +11,7 @@ public class UserAuth {
 	 * @return	A user object associated to the username if and only if the password is also correct. Otherwise null is returned. 
 	 */
 	public static User isValidInput(String username, String password) {
-		User user = userDB.retrieveUser(username);
+		User user = UserDataBase.retrieveUser(username);
 		if(user.getUsername().equals(username) && user.getPassword().equals(password)) {
 			return user;
 		}
@@ -25,7 +25,7 @@ public class UserAuth {
 	 * @return	A boolean variable which is true if the username exists in the database. Otherwise false. 
 	 */
 	public static boolean isRegistered(String username) {
-		if(userDB.retrieveUser(username) != null) {
+		if(UserDataBase.retrieveUser(username) != null) {
 			return true;
 		}
 		else {

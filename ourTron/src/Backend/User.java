@@ -14,13 +14,12 @@ public class User implements Serializable {
 	private String username;
 	private String password;
 	private LinkedList<GameEntry> gameHistory;
-	private UserDataBase userDB;
 	
 	public User() {
 		this.username=null;
 		this.password=null;
 		this.gameHistory=new LinkedList<GameEntry>();
-		this.userDB = new UserDataBase();
+		UserDataBase.addUser(this);
 	}
 	
 	public User(User user) {
@@ -29,14 +28,14 @@ public class User implements Serializable {
 		this.gameHistory = new LinkedList<GameEntry>();
 		for(GameEntry entry : user.gameHistory)
 			this.gameHistory.add(entry.clone());
-		this.userDB = new UserDataBase();
+		UserDataBase.addUser(this);
 	}
 	
 	public User(String username, String password) {
 		this.username=username;
 		this.password=password;
 		this.gameHistory=new LinkedList<GameEntry>();
-		this.userDB = new UserDataBase();
+		UserDataBase.addUser(this);
 	}
 
 	public String getUsername() {
@@ -57,7 +56,7 @@ public class User implements Serializable {
 	
 	public void addGameResult(User opponent, boolean won) {
 		gameHistory.add(new GameEntry(opponent.username, won));
-		userDB.modifyUser(this);
+		UserDataBase.modifyUser(this);
 	}
 	
 	public int getWinsVsOpponent(User opponent) {
