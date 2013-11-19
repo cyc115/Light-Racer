@@ -1,6 +1,7 @@
 package GameCore; 
 
 
+import java.awt.Point;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,23 +30,47 @@ public class Map implements Serializable {
 		loadMapFromFile(location);
 	}
 	
-	public Map() { //initializes blank Map with just the edges filled in as WALL  
+	public Map(String name, boolean generate) {
 		this.difficulty = 1;
-		this.mapName = "blankMap";
+		this.mapName = name;
+		for(MapSign[] a : mapArray)
+			for(int i = 0; i < a.length; i++)
+				a[i] = MapSign.EMPTY;
+		convert2Dto1D();
+	}
+	
+	public Map() {
+		this.difficulty = 1;
+		this.mapName = "blankMap.map";
 		initializeJustEdges();
 		generateRandomWalls();
 		convert2Dto1D();
 		createMap(this, "defaultMap.map");
 	}
+	public static void main(String[] args) {
+		generateDefaultMaps();
+	}
 	
-	//TODO remove for final project, or incorporate in some way.
-	private static void generateThreeMaps() {
-		Map map1 = new Map();
-		Map.createMap(map1, "map1.map");
-		Map map2 = new Map();
-		Map.createMap(map2, "map2.map");
-		Map map3 = new Map();
-		Map.createMap(map3, "map3.map");
+	private static void generateDefaultMaps() {
+		Map map1 = new Map("basicMap1", true);
+		map1.height=50;
+		map1.width=75;
+		Map.createMap(map1, "basicMap1.map");
+		
+		Map map2 = new Map("basicMap2", true);
+		map2.height=50;
+		map2.width=75;
+		map2.generateWalls(new Point(15,20), new Point(25, 30));
+		map2.generateWalls(new Point(50,20), new Point(60, 30));
+		Map.createMap(map2, "basicMap2.map");
+		
+		Map map3 = new Map("basicMap3", true);
+		map3.height=50;
+		map3.width=75;
+		map3.generateWalls(new Point(05,05), new Point(25, 25));
+		map3.generateWalls(new Point(30,20), new Point(45, 30));
+		map3.generateWalls(new Point(50,25), new Point(70, 45));
+		Map.createMap(map3, "basicMap3.map");
 	}
 	
 	public void initializeJustEdges(){
@@ -63,6 +88,14 @@ public class Map implements Serializable {
 			this.mapArray[width-1][j] = MapSign.WALL;
 		}
 	}
+	
+	private void generateWalls(Point bottomLeft, Point topRight) {
+		for(int i = bottomLeft.x; i <= topRight.x; ++i)
+			for(int j = bottomLeft.y; j < topRight.y; ++j) {
+				this.mapArray[i][j] = MapSign.WALL;
+			}
+	}
+	
 	/**
 	 * This with generate random blocks of walls into the map.
 	 * It makes between 3-11 blocks
