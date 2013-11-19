@@ -16,6 +16,7 @@ import javax.swing.JPasswordField;
 import Backend.User;
 import Backend.UserAuth;
 import Backend.UserDataBase;
+import GameCore.GameLogic;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -159,8 +160,8 @@ public class Login extends UIElement  {
 						JOptionPane.showMessageDialog(Login.this, message,
 								"Error", JOptionPane.OK_OPTION);
 					} else {
-						GamePanel.user1 = user1;
-						GamePanel.user2 = user2;
+						GameLogic.user1 = user1;
+						GameLogic.user2 = user2;
 						
 						setVisible(false);
 						// TODO change the title

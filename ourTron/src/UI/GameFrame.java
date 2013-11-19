@@ -43,6 +43,8 @@ public class GameFrame extends UIElement {
                                         canvas = (GamePanel.getInstance());
                                         frame.add(canvas);
                                         frame.pack();
+                                        //frame.requestFocusInWindow();
+                            			frame.setFocusable(true);
                                         ((GamePanel) canvas).start();
                                 } catch (Exception e) {
                                         e.printStackTrace();

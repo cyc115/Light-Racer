@@ -19,6 +19,7 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
+import GameCore.GameLogic;
 import GameCore.Map;
 
 public class MapSelect extends UIElement {
@@ -209,7 +210,7 @@ public class MapSelect extends UIElement {
 					lblNewLabel_1.setText(shortenStr("" + fileChooser.getSelectedFile(), MAX_CHAR_SIZE)) ;
 					Map map = new Map();
 					map.loadMapFromFile(fileChooser.getSelectedFile().getName());
-					GamePanel.allMaps[0] = map;
+					GameLogic.allMaps[0] = map;
 					mapSet[0] = true;
 	                break;
 	
@@ -237,7 +238,7 @@ public class MapSelect extends UIElement {
 					lblPleaseSelectA.setText(shortenStr("" + fileChooser.getSelectedFile(), MAX_CHAR_SIZE));
 					Map map = new Map();
 					map.loadMapFromFile(fileChooser.getSelectedFile().getName());
-					GamePanel.allMaps[1] = map;
+					GameLogic.allMaps[1] = map;
 					mapSet[1] = true;
 	                break;
 	
@@ -264,7 +265,7 @@ public class MapSelect extends UIElement {
 					lblPleaseSelectA_1.setText(shortenStr("" + fileChooser.getSelectedFile(), MAX_CHAR_SIZE));
 					Map map = new Map();
 					map.loadMapFromFile(fileChooser.getSelectedFile().getName());
-					GamePanel.allMaps[2] = map;
+					GameLogic.allMaps[2] = map;
 					mapSet[2] = true;
 	                break;
 	

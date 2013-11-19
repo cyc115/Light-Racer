@@ -11,13 +11,16 @@ public class Player {
 	private char lastInput;
 	private boolean hasCollided;
 
-	public Player(Coordinate startingCoordinate, Control startingDirection, User user) {
+
+	public Player(Coordinate startingCoordinate, User user, Control startingDirection) {
+
 		int startingSpeed = 1;
 		this.coord = startingCoordinate;
 		this.direction = startingDirection;
 		this.username = convertFromUser(user);
 		this.speed = startingSpeed;
 		this.powerUp = 0;
+		this.hasCollided = false;
 	}
 
 	public String convertFromUser(User user) { // TODO: convert from User
@@ -71,5 +74,9 @@ public class Player {
 
 	public boolean getCollision() {
 		return hasCollided;
+	}
+	
+	public String getUsername(){
+		return this.username;
 	}
 }
