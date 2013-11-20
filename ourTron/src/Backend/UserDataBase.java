@@ -106,7 +106,16 @@ public class UserDataBase {
 		return;
 	}
 	
-	private static class UserDataBaseWriter {
+	@SuppressWarnings("null")
+	public static LinkedList<User> getAllUsers() {
+		LinkedList<User> allUsers = null;
+		for(User thisUser: UserDataBaseWriter.readFromFile()){
+			allUsers.add(thisUser);
+			}
+		return allUsers;
+		
+	}
+	public static class UserDataBaseWriter {
 		private static String location = "UserDataBase.data";
 
 		/**

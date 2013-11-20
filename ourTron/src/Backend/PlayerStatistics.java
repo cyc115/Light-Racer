@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.LinkedList;
+
 
 //public class PlayerStatistics {
 //	private LinkedList<PlayerStatisticsEntry> stats;
@@ -184,25 +186,42 @@ public class PlayerStatistics {
 		
 		String toDisplay = user1.getUsername() + "'s Wins/Losses: " + String.valueOf(user1Wins) + "/" + String.valueOf(user2Wins)
 				+ "    " + user2.getUsername() + "'s Wins/Losses: " + String.valueOf(user2Wins) + "/" + String.valueOf(user1Wins);
-		return toDisplay;
+		return toDisplay; //TODO: write this out in html
 	}
 	/**
 	 * Calculates the top 10 Users (determined from who has the most wins)
-	 * @return a String[] filled with a String with the name and score of each user in order from best to worst
+	 * @return a String of top 10 users according to most wins
 	 */
-	public static String[] top10Users(){
+	public static String top10Users(User user1){
+		String toDisplay = null;
 
 		//fill top10[] with null
 		int numberOfUsers = 10;
+		
 		String[] top10 = new String[numberOfUsers-1];
 		for(int i=0; i<(numberOfUsers-1); i++){
 			top10[i] = null;
 		}
+
+		LinkedList<User> allUsers = UserDataBase.getAllUsers();
+		//sort all the users into top scores according to user.getTotalWins
+		Collections.sort(allUsers, User.Comparators.Wins);
 		
 		
-		String toDisplay;
-		return top10;
+		//Write username and number of wins in the String toDisplay
+		for(int i=1; i<=10; i++){
+			
+		}
+		
+		
+		for(User u: allUsers){
+			for(int i=1; i<=10; i++){
+				toDisplay = toDisplay + String.valueOf(i) + ". " + u.getUsername() + ": " + u.getTotalWins() + "/n"; //TODO: write this out in html
+			}
+		}
+		
+		
+		return toDisplay;
 	}
-	
 }
 
