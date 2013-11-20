@@ -19,7 +19,7 @@ public class MainMenu extends UIElement {
 
 	//stub
 	public void reset() {
-
+		
 	}
 	
 	
