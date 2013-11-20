@@ -11,11 +11,15 @@ import java.awt.event.ActionEvent;
 
 public class MainMenu extends UIElement {
 
-	public static MainMenu menuInstance = new MainMenu();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static MainMenu menuInstance = new MainMenu();
 
+	//stub
 	public void reset() {
-		menuInstance = new MainMenu();
-		
+
 	}
 	
 	
@@ -23,16 +27,7 @@ public class MainMenu extends UIElement {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainMenu frame = menuInstance;
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		MainMenu.getInstance().setVisible(true);
 	}
 
 	/**
