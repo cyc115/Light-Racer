@@ -291,9 +291,10 @@ import javax.imageio.ImageIO;
 	    	}
 	    	else if (endGame){
 	    		
-	    		showGameEndMsg();
 	    		stop();
-	    		setVisible(false);
+	    		showGameEndMsg();
+	    		this.setVisible(false);
+	    		GameFrame.getInstance().setVisible(false);
 		    	MainMenu.getInstance().setVisible(true);
 	    		//do something here
 	    	}
