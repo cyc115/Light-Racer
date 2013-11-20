@@ -9,8 +9,12 @@ public class Player {
  private char lastInput;
  private boolean hasCollided;
  
+<<<<<<< HEAD
 public Player(Coordinate startingCoordinate) { 
 	Control startingDirection = Control.SOUTH;
+=======
+public Player(Coordinate startingCoordinate, Control startingDirection) { 
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 	int startingSpeed = 1;
 	this.coord = startingCoordinate;
 	this.direction = startingDirection;
@@ -59,12 +63,24 @@ public Player(Coordinate startingCoordinate) {
 	public void setLastInput(char lastInput){
 		this.lastInput = lastInput;
 	}
+<<<<<<< HEAD
+=======
+
+	public void setCollision(boolean collision) {
+		hasCollided = collision;
+		// TODO Auto-generated method stub
+		
+	}
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 	
 	public boolean getCollision(){
 		return hasCollided;
 	}
+<<<<<<< HEAD
 	
 	public void setCollision(boolean collision){
 		hasCollided = collision;
 	}
+=======
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 }

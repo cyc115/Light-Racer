@@ -1,6 +1,11 @@
 package UI;
 
 import java.awt.Canvas;
+<<<<<<< HEAD
+=======
+import java.awt.Color;
+
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 import java.awt.Graphics;
 
 import java.awt.image.BufferStrategy;
@@ -16,13 +21,24 @@ import GameCore.Map.MapSign;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+<<<<<<< HEAD
 
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
+=======
 
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
+
+import javax.imageio.ImageIO;
+
+
+import GameCore.*;
 
 import GameCore.*;
 
@@ -38,14 +54,22 @@ import GameCore.*;
 		public static int scale = 1;
 		private static final long serialVersionUID = 1L;
 		private static final int BUFFER = 3;
+<<<<<<< HEAD
 		private static final int tileSize = 128;
+=======
+		private static final int numberOfTiles = 128;
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 		//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
 		private static final int bitshift = 2;
 
 		private Player player1;
 		private Player player2;
 		private GameScore gamescore;
+<<<<<<< HEAD
 		private int playingspeed = 1 ;
+=======
+		private int playingspeed = 1 ; //TODO move this to a map class. 
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 		//	private MusicPlayer soundEffectPlayer
 		//keyboards input are stored in the the linkedlists
 		private LinkedList <Control> p1Direction;
@@ -54,7 +78,11 @@ import GameCore.*;
 		private boolean isPaused = false;
 		private boolean endGame = false;
 		private boolean endRound = false;
+<<<<<<< HEAD
 		public int[] tiles = new int [tileSize * tileSize];
+=======
+		public int[] tiles = new int [numberOfTiles * numberOfTiles];
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 		private Map gameMap;
 		private MapSign[][] gameMapArray;
 		private MapSign[] convertedMapArray;
@@ -64,16 +92,26 @@ import GameCore.*;
 		private Thread thread;
 		private boolean running = false;
 		// number of ticks
+<<<<<<< HEAD
 		public static int updates;
+=======
+		public static int updates; //TODO move this to map. 
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 		//number of frames displayed on the screen
 		public static int frames;
 
 		//  (creates an image)
 		private BufferedImage endimg = null;
 		private BufferedImage bkgimg = null;
+<<<<<<< HEAD
 		private BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
 		//converts the image objects into an array of int (allows to draw things on the image)
 		private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+=======
+		private BufferedImage gameImage = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
+		//converts the image objects into an array of int (allows to draw things on the image)
+		private int[] pixels = ((DataBufferInt)gameImage.getRaster().getDataBuffer()).getData();
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 
 
 		private char userKeyboardInputP1;
@@ -91,15 +129,28 @@ import GameCore.*;
 		//Constructor
 		GamePanel() {
 			gamescore = new GameScore();
+<<<<<<< HEAD
 			Coordinate startingPosP1 = new Coordinate(28,1);
 			Coordinate startingPosP2 = new Coordinate(32,1);
 			player1 = new Player(startingPosP1);
 			player2 = new Player(startingPosP2);
+=======
+			Coordinate startingPosP1 = new Coordinate(60,1);
+			Coordinate startingPosP2 = new Coordinate(65,1);
+			Control startingDirectionP1 = Control.SOUTH;
+			Control startingDirectionP2 = Control.SOUTH;
+			player1 = new Player(startingPosP1, startingDirectionP1);
+			player2 = new Player(startingPosP2, startingDirectionP2);
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 			this.setSize(size, size);
 			//addKeyListener(this);
 			try {
 				//Change this to your own path
+<<<<<<< HEAD
 			    bkgimg = ImageIO.read(new File("C:/Users/Acer-Han/git/team-15-han/tron2.jpg"));
+=======
+			    bkgimg = ImageIO.read(new File("C:/Users/Owner/git/team-15/tron2.jpg"));
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 			} catch (IOException e) {}	
 				
 			addKeyListener(new KeyAdapter() {
@@ -298,7 +349,11 @@ import GameCore.*;
 				long now = System.nanoTime();
 				delta += (now-lastTime) / ns;
 				lastTime = now;
+<<<<<<< HEAD
 				//this only happens 60 times per second
+=======
+				//this only happens 30 times per second
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 				while (delta >=1 ){
 					update();
 					updates++;
@@ -342,6 +397,7 @@ import GameCore.*;
 			Graphics g = bs.getDrawGraphics();
 			
 			//set the background to black
+<<<<<<< HEAD
 			//g.setColor(Color.BLACK);
 			//g.fillRect(0,0,getWidth(),getHeight());
 
@@ -350,6 +406,16 @@ import GameCore.*;
 			g.drawImage(bkgimg, 0, 0, getWidth(), getHeight(),null);
 			//draw the actual game on top of the tron image
 			g.drawImage(image, 0, 0, getWidth(), getHeight(),null);
+=======
+			g.setColor(Color.BLACK);
+			g.fillRect(0,0,getWidth(),getHeight());
+
+			//draw tron image on top of the background
+			//comment this out if you don't want the awesome background,however you must set the background to black 
+			//g.drawImage(bkgimg, 0, 0, getWidth(), getHeight(),null);
+			//draw the actual game on top of the tron image
+			g.drawImage(gameImage, 0, 0, getWidth(), getHeight(),null);
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 
 			//release system ressources, remove the current frame
 			g.dispose();
@@ -371,8 +437,13 @@ import GameCore.*;
 					tiles[i]= 0x000000;
 					break;
 				case WALL:
+<<<<<<< HEAD
 					//orange
 					tiles[i]= 0xCCCCCC | 0xFF000000 ;
+=======
+					//grey
+					tiles[i]= 0xFF9100 | 0xB0000000 ;
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 					break;
 				case player1Trail:
 					//blue 0x00F0FC
@@ -402,7 +473,11 @@ import GameCore.*;
 					break;
 				}
 			}
+<<<<<<< HEAD
 
+=======
+			//This converts the tiles to pixels to be displayed on the screen
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 			for (int y = 0; y < height ; y++){
 				int yy = y;
 				if(yy < 0 || y >= height) break;
@@ -411,7 +486,11 @@ import GameCore.*;
 					if(xx < 0 || x >= width) break;
 					//updates pixels line by line from left to right and up to bottom
 					//each tiles has 16x16 pixels
+<<<<<<< HEAD
 					int tileIndex = (x >> bitshift) + (y >> bitshift) * tileSize;
+=======
+					int tileIndex = (x >> bitshift) + (y >> bitshift) * numberOfTiles;
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 					pixels[x + y * width] = tiles[tileIndex];
 
 				}
@@ -500,8 +579,12 @@ import GameCore.*;
 			//			//listener stuff to get the new direction of player1 and player2
 
 			char p1Direction = userKeyboardInputP1;
+<<<<<<< HEAD
 			char p2Direction = userKeyboardInputP2;
 			//			Control directionP1;
+=======
+			char p2Direction = userKeyboardInputP2;			//			Control directionP1;
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 			//			Control directionP2;
 			//TODO convert p1Direction and p2Direction to ControlEnum
 			//makeTurn(player1, p1Direction);

@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Map implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -25,13 +26,17 @@ public class Map implements Serializable {
 	
 	public Map(String location) {
 		super();
-		createMapFromFile(location);
+		loadMapFromFile(location);
 	}
 	
 	public Map() { //initializes blank Map with just the edges filled in as WALL  
 		this.difficulty = 1;
 		this.mapName = "blankMap";
 		initializeJustEdges();
+<<<<<<< HEAD
+=======
+		generateRandomWalls();
+>>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
 		convert2Dto1D();
 		
 		
@@ -50,6 +55,27 @@ public class Map implements Serializable {
 		for(int j=0; j<height; j++){
 			this.mapArray[0][j] = MapSign.WALL;
 			this.mapArray[width-1][j] = MapSign.WALL;
+		}
+	}
+	/**
+	 * This with generate random blocks of walls into the map.
+	 * It makes between 3-11 blocks
+	 */
+	public void generateRandomWalls(){
+		Random randomGenerator = new Random();
+		int numberOfBlocks = randomGenerator.nextInt(3)+3;
+		
+		for(int i=0; i<numberOfBlocks; i++){
+			int blockWidth = randomGenerator.nextInt(30)+1;
+			int blockHeight = randomGenerator.nextInt(30)+1;
+			int randomX = randomGenerator.nextInt(128-blockWidth)+1;
+			int randomY = randomGenerator.nextInt(128-blockHeight)+1;
+			for(int j=randomX; j<randomX+blockWidth; j++){
+				for(int k=randomY; k<randomY+blockHeight; k++){
+					this.mapArray[j][k] = MapSign.WALL;
+//					this.mapArray[k][j] = MapSign.WALL;
+				}
+			}
 		}
 	}
 	
@@ -112,7 +138,7 @@ public class Map implements Serializable {
 	
 	//TODO there is repetition of code here. Ask TA what to do
 	@SuppressWarnings("unchecked")
-	public void createMapFromFile(String filename) {
+	public void loadMapFromFile(String filename) { 
 		try {
 			FileInputStream fileIn = new FileInputStream(filename);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
