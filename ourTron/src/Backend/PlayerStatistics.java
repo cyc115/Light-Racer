@@ -6,14 +6,14 @@ package Backend;
  */
 
 
-//import java.io.FileInputStream;
-//import java.io.FileOutputStream;
-//import java.io.IOException;
-//import java.io.ObjectInputStream;
-//import java.io.ObjectOutputStream;
-//import java.io.Serializable;
-//import java.util.LinkedList;
-//
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.LinkedList;
+
 //public class PlayerStatistics {
 //	private LinkedList<PlayerStatisticsEntry> stats;
 //	private PlayerStatisticsWriter playerStatsWriter;
@@ -163,11 +163,32 @@ package Backend;
 public class PlayerStatistics {
 	static UserDataBase userDB = new UserDataBase();
 	
-	public static int getWins(User user, User opponent) {
-		return user.getWinsVsOpponent(opponent);
+//	public static int getWins(User user, User opponent) {
+//		return user.getWinsVsOpponent(opponent);
+//	}
+//	
+//	public static int getTotalWins(User user) {
+//		return user.getTotalWins();
+//	}
+	
+	public static int[] player1Vsplayer2Score(){
+		int scores[] = new int[]{0,0};
+		
+		scores[0] = 0;
+		scores[1] = 0;
+		
+		return scores;
+	}
+	public static String[] top10Players(){
+
+		//fill top10[] with null
+		String[] top10 = new String[10];
+		for(int i=0; i<10; i++){
+			top10[i] = null;
+		}
+		
+		return top10;
 	}
 	
-	public static int getTotalWins(User user) {
-		return user.getTotalWins();
-	}
 }
+
