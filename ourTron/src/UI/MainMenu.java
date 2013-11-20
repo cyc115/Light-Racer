@@ -47,7 +47,7 @@ public class MainMenu extends UIElement {
 			public void actionPerformed(ActionEvent e) {
 				Login loginFrame = Login.getInstance();
 				loginFrame.setVisible(true);
-				MainMenu.getInstance().setVisible(false);
+				setVisible(false);
 			}
 		});
 		getContentPane().add(btnNewButton, "cell 1 1,alignx center");
@@ -59,7 +59,7 @@ public class MainMenu extends UIElement {
 			public void actionPerformed(ActionEvent e) {
 				CreateUser createUserFrame = CreateUser.getInstance();
 				createUserFrame.setVisible(true);
-				MainMenu.getInstance().setVisible(false);
+				setVisible(false);
 			}
 		});
 		getContentPane().add(button, "cell 1 3,alignx center");
