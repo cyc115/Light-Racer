@@ -74,8 +74,6 @@ public class MainMenu extends UIElement {
 		
 	}
 
-
-
 	public static MainMenu getInstance() {
 		// TODO Auto-generated method stub
 		return menuInstance;
