@@ -183,16 +183,23 @@ public class PlayerStatistics {
 		int user1Wins = user1.getWinsVsOpponent(user2);
 		int user2Wins = user2.getWinsVsOpponent(user1);
 		
-		
+		//TODO: delete toDisplay
 		String toDisplay = user1.getUsername() + "'s Wins/Losses: " + String.valueOf(user1Wins) + "/" + String.valueOf(user2Wins)
-				+ "    " + user2.getUsername() + "'s Wins/Losses: " + String.valueOf(user2Wins) + "/" + String.valueOf(user1Wins);
-		return toDisplay; //TODO: write this out in html
+				+ "            " + user2.getUsername() + "'s Wins/Losses: " + String.valueOf(user2Wins) + "/" + String.valueOf(user1Wins);
+		
+		String htmlDisplay = "<h1><center>Head-To-Head Scores</center></h1>"
+				+ "<p><table align='center'>"
+				+ "<tr><td>" + user1.getUsername() + "</td><td>-------------------</td><td>" + user2.getUsername() + "</td></tr>"
+				+ "<tr><td><center>" + String.valueOf(user1Wins) + "</center></td><td> </td><td><center>" + String.valueOf(user2Wins) + "</center</td></tr>"
+				+ "</table><br/><br/></p>";
+		
+		return htmlDisplay; //TODO: write this out in html
 	}
 	/**
 	 * Calculates the top 10 Users (determined from who has the most wins)
-	 * @return a String of top 10 users according to most wins
+	 * @return a String in html format of top 10 users
 	 */
-	public static String top10Users(User user1){
+	public static String top10Users(){
 		String toDisplay = null;
 
 		//fill top10[] with null
@@ -213,15 +220,14 @@ public class PlayerStatistics {
 			
 		}
 		
-		
 		for(User u: allUsers){
 			for(int i=1; i<=10; i++){
-				toDisplay = toDisplay + String.valueOf(i) + ". " + u.getUsername() + ": " + u.getTotalWins() + "/n"; //TODO: write this out in html
+				toDisplay = toDisplay + String.valueOf(i) + ". " + u.getUsername() + ": " + u.getTotalWins() + "<br/>";
 			}
 		}
+		String htmlDisplay = "<html><h1><center>Top 10 Users</center></h1><p>" + toDisplay + "</p></html>";
 		
-		
-		return toDisplay;
+		return htmlDisplay;
 	}
 }
 
