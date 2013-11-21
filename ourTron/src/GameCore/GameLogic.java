@@ -40,9 +40,9 @@ public class GameLogic {
 	//right now, the constructor is set up so this will make a blank map
 	//     gameMap.createMapFromFile() ...
 	
-	private boolean isPaused = false;
-	private boolean endGame = false;
-	private boolean endRound = false;
+	private boolean gameStop = false;
+	private boolean gamePause = false;
+	
 	
 	public GameLogic(){
 		
@@ -71,6 +71,8 @@ public class GameLogic {
 	 */
 	public void reinitializeGame(){
 		
+		gameStop= false;
+		gamePause = false;
 		player1.setCollision(false);
 		player2.setCollision(false);
 		final Coordinate startingPos1 = new Coordinate(1,1);
@@ -89,13 +91,15 @@ public class GameLogic {
 	 * Updates the game by determining players new direction and position, check if there is any collision
 	 */
 	public void update() {
-		 movePlayers(p1Direction, player1, gameMap,  "player1Trail" , "player1Head");
-		 movePlayers(p2Direction, player2, gameMap,  "player2Trail" , "player2Head");
-		 handleCollisions(player1, player2);			 
-		 if(p1Direction.size() > 1)
-			 p1Direction.poll();
-		 if(p2Direction.size()> 1)
-			 p2Direction.poll();
+		if(!gameStop){
+			movePlayers(p1Direction, player1, gameMap,  "player1Trail" , "player1Head");
+			movePlayers(p2Direction, player2, gameMap,  "player2Trail" , "player2Head");
+			handleCollisions(player1, player2);			 
+			if(p1Direction.size() > 1)
+				p1Direction.poll();
+			if(p2Direction.size()> 1)
+				p2Direction.poll();
+		}
 	}
 	
 	/**
@@ -246,10 +250,12 @@ public class GameLogic {
 			return false;
 		}
 		else if(p2HasCollided && p1HasCollided){
+			gameStop = true;
 			System.out.println("DRAW");
 			
 		}
 		else if( (!p1HasCollided) && (p2HasCollided)){ //p1 wins
+			gameStop = true;
 			System.out.println("P1 WINS");
 			gamescore.incrP1Win();
 			incrRoundNumber();
@@ -258,6 +264,7 @@ public class GameLogic {
 			
 		}
 		else if ( (p1HasCollided) && (!p2HasCollided) ){ //p2 wins
+			gameStop = true;
 			System.out.println("P2 WINS");
 			gamescore.incrP2Win();
 			incrRoundNumber();
@@ -293,7 +300,7 @@ public class GameLogic {
 		switch(direction){
 		
 		case NORTH:
-			if(!isPaused && !endGame && !endRound) {
+			if(!gamePause && !gameStop) {
 				//makes sure we don't poll more than 3 times
 				if(p1Direction.size() < MAX_KEYINPUT) {
 					//checks that the most recent direction is either EAST or WEST
@@ -306,7 +313,7 @@ public class GameLogic {
 			break;
 		
 		 case SOUTH:
-             if(!isPaused && !endGame) {
+             if(!gameStop && !gamePause) {
                      //makes sure we don't poll more than 3 times
                      if(p1Direction.size() < MAX_KEYINPUT) {
                              Control last = p1Direction.peekLast();
@@ -319,7 +326,7 @@ public class GameLogic {
              break;	
 			
 		 case WEST:
-             if(!isPaused && !endGame) {
+             if(!gameStop && !gamePause) {
                      //makes sure we don't poll more than 3 times
                      if(p1Direction.size() < MAX_KEYINPUT) {
                              Control last = p1Direction.peekLast();
@@ -332,7 +339,7 @@ public class GameLogic {
              break;	
 		//for player 1
     	case EAST:
-            if(!isPaused && !endGame) {
+            if(!gameStop && !gamePause) {
                     //makes sure we don't poll more than 3 times
                     if(p1Direction.size() < MAX_KEYINPUT) {
                             Control last = p1Direction.peekLast();
@@ -351,7 +358,7 @@ public class GameLogic {
 		switch(direction){
 		
 		case NORTH:
-			if(!isPaused && !endGame && !endRound) {
+			if(!gamePause && !gameStop) {
 				//makes sure we don't poll more than 3 times
 				if(p2Direction.size() < MAX_KEYINPUT) {
 					//checks that the most recent direction is either EAST or WEST
@@ -364,7 +371,7 @@ public class GameLogic {
 			break;
 		
 		 case SOUTH:
-             if(!isPaused && !endGame) {
+             if(!gameStop && !gamePause) {
                      //makes sure we don't poll more than 3 times
                      if(p2Direction.size() < MAX_KEYINPUT) {
                              Control last = p2Direction.peekLast();
@@ -377,7 +384,7 @@ public class GameLogic {
              break;	
 			
 		 case WEST:
-             if(!isPaused && !endGame) {
+             if(!gameStop && !gamePause) {
                      //makes sure we don't poll more than 3 times
                      if(p2Direction.size() < MAX_KEYINPUT) {
                              Control last = p2Direction.peekLast();
@@ -390,7 +397,7 @@ public class GameLogic {
              break;	
 		//for player 1
     	case EAST:
-            if(!isPaused && !endGame) {
+            if(!gameStop && !gamePause) {
                     //makes sure we don't poll more than 3 times
                     if(p2Direction.size() < MAX_KEYINPUT) {
                             Control last = p2Direction.peekLast();
