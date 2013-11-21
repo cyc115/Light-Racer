@@ -11,8 +11,8 @@ public class Player {
 	private char lastInput;
 	private boolean hasCollided;
 
-
-	public Player(Coordinate startingCoordinate, User user, Control startingDirection) {
+	public Player(Coordinate startingCoordinate, User user,
+			Control startingDirection) {
 
 		int startingSpeed = 1;
 		this.coord = startingCoordinate;
@@ -67,16 +67,15 @@ public class Player {
 		this.lastInput = lastInput;
 	}
 
-	public void setCollision(boolean collision) {
-		hasCollided = collision;
-		// TODO Auto-generated method stub
-	}
-
 	public boolean getCollision() {
 		return hasCollided;
 	}
-	
-	public String getUsername(){
+
+	public void setCollision(boolean collision) {
+		hasCollided = collision;
+	}
+
+	public String getUsername() {
 		return this.username;
 	}
 }

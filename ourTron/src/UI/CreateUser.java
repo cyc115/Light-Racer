@@ -146,6 +146,8 @@ public class CreateUser extends UIElement {
 		});
 		contentPane.add(btnClear, "cell 4 4,aligny bottom");
 
+		//set the default button 
+		this.getRootPane().setDefaultButton(btnSubmitButton);
 	}
 
 	public static CreateUser getInstance() {

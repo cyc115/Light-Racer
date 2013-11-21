@@ -52,12 +52,12 @@ import javax.imageio.ImageIO;
 		public static int frames;
 		
 		public static boolean resetGame = false;
-		public static boolean endGame = false;
+		public static boolean endGame = false;  
 		public static Player winner;
 		
 		//  (creates an image)
-		private BufferedImage endimg = null;
-		private BufferedImage bkgimg = null;
+		private BufferedImage endimg = null;  //TODO not used 
+		private BufferedImage bkgimg = null;  //TODO not used 
 		private BufferedImage gameImage = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
 		//converts the image objects into an array of int (allows to draw things on the image)
 		private int[] pixels = ((DataBufferInt)gameImage.getRaster().getDataBuffer()).getData();
@@ -282,18 +282,19 @@ import javax.imageio.ImageIO;
 		 * according to the situation
 		 */
 	    public void gameInterruptionCheck(){
-	    	if(resetGame && !endGame){
+	    	if(resetGame && !endGame){ //when each match ends do :
 	    		stop();
 	    		//do something here
 	    		showRoundEndMsg();
 	    		//stop();
 	    		resume();
 	    	}
-	    	else if (endGame){
+	    	else if (endGame){	//when all 3 matches do : 
 	    		
-	    		showGameEndMsg();
 	    		stop();
-	    		setVisible(false);
+	    		showGameEndMsg();
+	    		this.setVisible(false);
+	    		GameFrame.getInstance().setVisible(false);
 		    	MainMenu.getInstance().setVisible(true);
 	    		//do something here
 	    	}
@@ -339,4 +340,3 @@ import javax.imageio.ImageIO;
 	    	
 	    }	
 }
-

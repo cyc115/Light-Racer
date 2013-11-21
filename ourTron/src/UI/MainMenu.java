@@ -2,6 +2,7 @@ package UI;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import net.miginfocom.swing.MigLayout;
@@ -11,10 +12,14 @@ import java.awt.event.ActionEvent;
 
 public class MainMenu extends UIElement {
 
-	public static MainMenu menuInstance = new MainMenu();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static MainMenu menuInstance = new MainMenu();
 
+	//stub
 	public void reset() {
-		menuInstance = new MainMenu();
 		
 	}
 	
@@ -23,16 +28,7 @@ public class MainMenu extends UIElement {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainMenu frame = menuInstance;
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		MainMenu.getInstance().setVisible(true);
 	}
 
 	/**
@@ -41,8 +37,10 @@ public class MainMenu extends UIElement {
 	public MainMenu() {
 		setTitle("Menu");
 		getContentPane().setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][][][][][][]"));
-		
-		JLabel lblLightRacer = new JLabel("Light Racer @TODO add logo");
+
+		JLabel lblLightRacer = new JLabel();
+		lblLightRacer.setIcon(new ImageIcon(MainMenu.class.getResource("/Res/tron.png")));//location of the icon 
+		lblLightRacer.setVisible(true);
 		getContentPane().add(lblLightRacer, "cell 1 0,alignx center");
 		
 		//start game bottom
@@ -50,9 +48,8 @@ public class MainMenu extends UIElement {
 		JButton btnNewButton = new JButton("Start Game");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login loginFrame = Login.getInstance();
-				loginFrame.setVisible(true);
-				setVisible(false);
+				Login.getInstance().setVisible(true);
+				MainMenu.getInstance().setVisible(false);
 			}
 		});
 		getContentPane().add(btnNewButton, "cell 1 1,alignx center");
@@ -78,8 +75,6 @@ public class MainMenu extends UIElement {
 		getContentPane().add(button_1, "cell 1 5,alignx center");
 		
 	}
-
-
 
 	public static MainMenu getInstance() {
 		// TODO Auto-generated method stub

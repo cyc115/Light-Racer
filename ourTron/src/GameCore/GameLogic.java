@@ -26,8 +26,8 @@ public class GameLogic {
 	public static  User user2 = new User();
 	private GameScore gamescore;
 	private int roundNumber;
-	final Coordinate startingPosP1 = new Coordinate(60,1);
-	final Coordinate startingPosP2 = new Coordinate(65,126);
+	final Coordinate startingPosP1 = new Coordinate(1,1);
+	final Coordinate startingPosP2 = new Coordinate(126,126);
 	
 	private LinkedList <Control> p1Direction;
 	private LinkedList <Control> p2Direction;
@@ -73,8 +73,8 @@ public class GameLogic {
 		
 		player1.setCollision(false);
 		player2.setCollision(false);
-		final Coordinate startingPos1 = new Coordinate(60,1);
-		final Coordinate startingPos2 = new Coordinate(65,126);
+		final Coordinate startingPos1 = new Coordinate(1,1);
+		final Coordinate startingPos2 = new Coordinate(126,126);
 		player1.setPlayerLocation(startingPos1);
 		player2.setPlayerLocation(startingPos2);
 		
@@ -170,7 +170,14 @@ public class GameLogic {
 	 * @param trail
 	 * @param head
 	 */
-	public void movePlayers( LinkedList<Control> playerDirection, Player player,  Map mapArray , String trail , String head){ 
+	public void movePlayers(
+			LinkedList<Control> playerDirection, 
+			Player player,
+			Map mapArray ,
+			String trail ,
+			String head){ 
+		
+		
 		Control playerDir = playerDirection.peekFirst();
 		Coordinate playerCoords = player.getPlayerLocation();
 		mapArray.setOccupation(playerCoords, trail);
