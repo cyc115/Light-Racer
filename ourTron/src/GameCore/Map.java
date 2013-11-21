@@ -51,10 +51,10 @@ public class Map implements Serializable {
 		this.difficulty = 1;
 		this.mapName = "blankMap.map";
 		initializeJustEdges();
-<<<<<<< HEAD
-=======
+		
+		//merge conflict : donno if this line should be kept 
 		generateRandomWalls();
->>>>>>> 63dadb9b6ae801893e45b9ac0c75c4f4ee887b52
+
 		convert2Dto1D();
 		createMap(this, "defaultMap.map");
 	}
