@@ -170,7 +170,14 @@ public class GameLogic {
 	 * @param trail
 	 * @param head
 	 */
-	public void movePlayers( LinkedList<Control> playerDirection, Player player,  Map mapArray , String trail , String head){ 
+	public void movePlayers(
+			LinkedList<Control> playerDirection, 
+			Player player,
+			Map mapArray ,
+			String trail ,
+			String head){ 
+		
+		
 		Control playerDir = playerDirection.peekFirst();
 		Coordinate playerCoords = player.getPlayerLocation();
 		mapArray.setOccupation(playerCoords, trail);
