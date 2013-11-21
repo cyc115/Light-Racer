@@ -2,6 +2,7 @@ package UI;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import net.miginfocom.swing.MigLayout;
@@ -36,8 +37,10 @@ public class MainMenu extends UIElement {
 	public MainMenu() {
 		setTitle("Menu");
 		getContentPane().setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][][][][][][]"));
-		
-		JLabel lblLightRacer = new JLabel("Light Racer @TODO add logo");
+
+		JLabel lblLightRacer = new JLabel();
+		lblLightRacer.setIcon(new ImageIcon(MainMenu.class.getResource("/Res/tron.png")));//location of the icon 
+		lblLightRacer.setVisible(true);
 		getContentPane().add(lblLightRacer, "cell 1 0,alignx center");
 		
 		//start game bottom

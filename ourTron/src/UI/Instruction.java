@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class Instruction extends JFrame {
+public class Instruction extends UIElement {
 
 	private JPanel contentPane;
 	private static Instruction instructPanel = new Instruction();

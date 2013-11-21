@@ -1,20 +1,15 @@
 package UI;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
+
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JButton;
 
 public class OptionMenu extends UIElement {
 
 	private static OptionMenu omInstance = new OptionMenu();
-
-	
-	private JPanel contentPane;
 
 	static OptionMenu getInstance(){
 		return omInstance;
@@ -39,14 +34,10 @@ public class OptionMenu extends UIElement {
 	 * Create the frame.
 	 */
 	public OptionMenu() {
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		getContentPane().setLayout(new MigLayout("", "[][grow][]", "[][][][][grow]"));
 		
-		JLabel lblOptionMenuStub = DefaultComponentFactory.getInstance().createLabel("option menu stub");
-		contentPane.add(lblOptionMenuStub, BorderLayout.CENTER);
+		JButton btnNewButton = new JButton("New button");
+		getContentPane().add(btnNewButton, "cell 1 4,alignx center,aligny bottom");
 	}
 
 	@Override
