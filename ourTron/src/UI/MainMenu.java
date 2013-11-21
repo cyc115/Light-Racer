@@ -19,7 +19,7 @@ public class MainMenu extends UIElement {
 
 	//stub
 	public void reset() {
-
+		
 	}
 	
 	
@@ -45,9 +45,8 @@ public class MainMenu extends UIElement {
 		JButton btnNewButton = new JButton("Start Game");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login loginFrame = Login.getInstance();
-				loginFrame.setVisible(true);
-				setVisible(false);
+				Login.getInstance().setVisible(true);
+				MainMenu.getInstance().setVisible(false);
 			}
 		});
 		getContentPane().add(btnNewButton, "cell 1 1,alignx center");

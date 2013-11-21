@@ -95,7 +95,7 @@ public abstract class UIElement extends JFrame {
 		panel.setPreferredSize(new Dimension(contentPane.getWidth(), 16));
 		this.setResizable(false);
 	}
-	
+
 
 	
 
