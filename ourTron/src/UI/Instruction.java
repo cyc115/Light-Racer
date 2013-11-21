@@ -17,6 +17,7 @@ public class Instruction extends JFrame {
 
 	private JPanel contentPane;
 	private static Instruction instructPanel = new Instruction();
+	//TODO possibly make this read from a external html file 
 	private final static String INSTRUCTION_STR = 
 			"<h1><center>this is a sample instruction page</center></h1> \n" + 
 			"<h2><center>Goal of game</center></h2>\n" +

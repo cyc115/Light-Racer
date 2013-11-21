@@ -45,8 +45,7 @@ public class MainMenu extends UIElement {
 		JButton btnNewButton = new JButton("Start Game");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login loginFrame = Login.getInstance();
-				loginFrame.setVisible(true);
+				Login.getInstance().setVisible(true);
 				MainMenu.getInstance().setVisible(false);
 			}
 		});
