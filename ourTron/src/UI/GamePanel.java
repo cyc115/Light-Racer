@@ -25,6 +25,7 @@ import javax.imageio.ImageIO;
 /**This class has two main functions : Take in key inputs and displays the game on the screen
  * 
  * @author <Han Yang Zhao> 
+ * @version 1.0
  *
  */
 	public class GamePanel extends Canvas implements KeyListener, Runnable {

@@ -21,21 +21,27 @@ import javax.swing.filechooser.FileFilter;
 
 import GameCore.GameLogic;
 import GameCore.Map;
-
+/**
+ * Map selection GUI 
+ * @author yuechuan
+ *
+ */
 public class MapSelect extends UIElement {
-
-	// TODO make the fileChooser select only map files (filters)
-	
 	
 	private JPanel contentPane;
 	private static MapSelect msInstance = new MapSelect();
 	private JFileChooser fileChooser = new JFileChooser();
 	private boolean[] mapSet ={false,false,false};
+	private String playerName [] = new String [2]; //contains the 2 player's user name to display in lblWelcomePAnd
 	
+
+    //get the user name of user 1 and user 2
+	String welcomeMsg = "welcome " +
+			 GameLogic.getUser(1).getUsername() + 
+			" and " + GameLogic.getUser(2).getUsername();
 	
 	//title label 
-	//TODO lbl will have to be dynamic based on the user name 
-	JLabel lblWelcomePAnd = new JLabel("welcome P1 and P2 @TODO access player name");
+	JLabel lblWelcomePAnd = new JLabel(welcomeMsg);
 	
 	//labels to be updated by map file chooser 
 	private JLabel lblNewLabel_1 = new JLabel("please select a map file");
@@ -69,24 +75,6 @@ public class MapSelect extends UIElement {
 		});
 	}
 
-
-//  JButton defaultMap = new JButton("Create default map");
-//  al = new ActionListener()
-//       {
-//          @Override
-//          public void actionPerformed(ActionEvent ae)
-//          {
-//             GamePanel.gameMap = new Map();
-//             GamePanel game = new GamePanel();
-////             game.setVisible(true);
-//             game.start();
-//             
-//             setVisible(false);
-//          }
-//       };
-//  defaultMap.addActionListener(al);
-//  pnl.add(defaultMap);
-//  
 	
 	/**
 	 * Create the frame.
@@ -221,7 +209,9 @@ public class MapSelect extends UIElement {
 		}
 
 	};
-	
+	/**
+	 * action listener for the select file button2
+	 */
 	ActionListener selectButtonListener2 = new ActionListener(){
 		@Override 
 		public void actionPerformed(ActionEvent ae){
@@ -249,6 +239,9 @@ public class MapSelect extends UIElement {
 		}
 	};
 	
+	/**
+	 * action listener for the select file button3
+	 */
 	ActionListener selectButtonListener3 = new ActionListener(){
 		@Override 
 		public void actionPerformed(ActionEvent ae){
@@ -278,7 +271,10 @@ public class MapSelect extends UIElement {
 	
 	
 	
-	
+	/**
+	 * obtain a static instance of Map Selection menu 
+	 * @return a static instance of Map Selection menu 
+	 */
 	public static MapSelect getInstance(){
 		return msInstance;
 	}

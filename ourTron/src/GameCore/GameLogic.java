@@ -22,8 +22,8 @@ public class GameLogic {
 	
 	private Player player1;
 	private Player player2;
-	public static  User user1 = new User();
-	public static  User user2 = new User();
+	private static  User user1 = new User();
+	private static  User user2 = new User();
 	private GameScore gamescore;
 	private int roundNumber;
 	final Coordinate startingPosP1 = new Coordinate(1,1);
@@ -425,5 +425,13 @@ public class GameLogic {
 	
 	public int getRoundNumber(){
 		return roundNumber;
+	}
+	public static User getUser(int i){
+		if (i == 1 ) return user1 ;
+		else return user2;
+	}
+	public static void setUser(int i, User u){
+	if (i == 1 ) user1 = u ;
+	else user2 = u ;
 	}
 }

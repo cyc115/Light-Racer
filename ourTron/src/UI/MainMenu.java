@@ -9,16 +9,21 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * MainMenu is the first JFrame that the user sees when starting the game.
+ * It contains Buttons to login, create account and exit game.
+ * @author yuechuan
+ *
+ */
 public class MainMenu extends UIElement {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static MainMenu menuInstance = new MainMenu();
 
-	//stub
+	/**
+	 * 
+	 * @deprecated MainMenu is immutable.
+	 */
 	public void reset() {
 		
 	}
@@ -75,7 +80,11 @@ public class MainMenu extends UIElement {
 		getContentPane().add(button_1, "cell 1 5,alignx center");
 		
 	}
-
+	
+	/**
+	 * 
+	 * @return a static instance of the MainMenu 
+	 */
 	public static MainMenu getInstance() {
 		// TODO Auto-generated method stub
 		return menuInstance;

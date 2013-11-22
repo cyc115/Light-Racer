@@ -21,10 +21,14 @@ import GameCore.GameLogic;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
+/**
+ * JFrame that displays the login dialog.
+ * @author yuechuan
+ *
+ */
 public class Login extends UIElement  {
 	
-	//following are filds that need to be reset during reset() call 
+	//following are fields that need to be reset during reset() call 
 	private JTextField jtfUser = new JTextField();
 	private JTextField jtfUser2 = new JTextField();
 	private JPasswordField pwdPass;
@@ -34,8 +38,7 @@ public class Login extends UIElement  {
 	private static Login loginInstance = new Login(); 
 	
 	/**
-	 * reinitialize the login dialog ,why does this not reset the form ? 
-	 * @TODO find a way to reset form 
+	 * reinitialize the login dialog.
 	 */
 	public void reset(){
 		jtfUser.setText("");
@@ -64,7 +67,7 @@ public class Login extends UIElement  {
 	
 	/**
 	 * use this to obtain a unique instance of the login dialog
-	 * @return
+	 * @return static instance of the Login dialog
 	 */
 	public static Login getInstance(){
 		return loginInstance;
@@ -75,6 +78,7 @@ public class Login extends UIElement  {
 
 	/**
 	 * initialize login
+	 * @deprecated call getInstance() instead 
 	 */
 	
 	public Login() {
@@ -160,8 +164,8 @@ public class Login extends UIElement  {
 						JOptionPane.showMessageDialog(Login.this, message,
 								"Error", JOptionPane.OK_OPTION);
 					} else {
-						GameLogic.user1 = user1;
-						GameLogic.user2 = user2;
+						GameLogic.setUser(1,user1);
+						GameLogic.setUser(2, user2);
 						
 						setVisible(false);
 						// TODO change the title
@@ -183,10 +187,12 @@ public class Login extends UIElement  {
 	}
 	
 	//static helper method.
+	/**
+	 * convert a char array of password to string 
+	 * @param pass 
+	 * @return String.valueOf(pass) 
+	 */
 	private static String passwordToString(char[] pass) {
-		String password = "";
-		for(char c : pass)
-			password += c;
-		return password;
+		return String.valueOf(pass);
 	}
 }

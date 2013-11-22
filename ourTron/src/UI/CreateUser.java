@@ -170,10 +170,7 @@ public class CreateUser extends UIElement {
  * @return String object equivalent to char given char array 
  */
 	private static String passwordToString(char[] password) {
-		String out = "";
-		for (char c : password)
-			out += c;
-		return out;
+		return String.valueOf(password);
 	}
 
 }
