@@ -16,6 +16,12 @@ public class User implements Serializable, Comparable<User> {
 	private String password;
 	private LinkedList<GameEntry> gameHistory;
 	
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password
+				+ ", gameHistory=" + gameHistory + "]";
+	}
+	
 	public User() {
 		//this user will always be rejected
 		this.username=null;
@@ -65,7 +71,7 @@ public class User implements Serializable, Comparable<User> {
 		int count = 0;
 		for(GameEntry entry : this.gameHistory)
 			//if the oppoent is that user and the entry is won
-			if(entry.opponent.equals(opponent) && entry.won)
+			if(entry.opponent.equals(opponent.getUsername()) && entry.won)
 				count++;
 		return count;
 	}
@@ -90,10 +96,8 @@ public class User implements Serializable, Comparable<User> {
 	
 	
 	//TODO remove for final project.
-	@Override
-	public String toString() {
-		return "User [username=" + username + ", password=" + password + "]";
-	}
+	
+	
 
 
 
@@ -101,19 +105,26 @@ public class User implements Serializable, Comparable<User> {
 	 * A game entry object just contains the username and the result of the game.
 	 * @author danielle
 	 */
-	public class GameEntry {
+	public class GameEntry implements Serializable {
+		private static final long serialVersionUID = 1L;
 		private String opponent;
 		private boolean won;
 		
+		@Override
+		public String toString() {
+			return "GameEntry (opponent=" + opponent + ", won=" + won + ")";
+		}
+
 		public GameEntry(String opponentUsername, boolean won) {
 			this.opponent = opponentUsername;
 			this.won = won;
 		}
 		
+		
 		public GameEntry clone() {
 			return new GameEntry(this.opponent, this.won);
 		}
-		
+
 		public boolean equals(GameEntry entry) {
 			boolean opponentSame = this.opponent.equals(entry.opponent);
 			boolean resultSame = this.won == entry.won;
