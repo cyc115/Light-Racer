@@ -6,10 +6,11 @@
 package Backend;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 
-public class User implements Serializable {
+public class User implements Serializable, Comparable<User> {
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
@@ -135,4 +136,23 @@ public class User implements Serializable {
 			this.won = won;
 		}
 	}
+
+
+
+	@Override
+	public int compareTo(User arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	public static class Comparators {
+
+	    public static Comparator<User> Wins = new Comparator<User>() {
+	        @Override
+	        public int compare(User user1, User user2) {
+	            return user2.getTotalWins() - user1.getTotalWins();
+	        }
+	    };
+	}
 }
+
