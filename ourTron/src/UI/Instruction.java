@@ -54,7 +54,7 @@ public class Instruction extends UIElement {
 	}
 
 	/**
-	 * depreciated, use getInstance instead.
+	 * @deprecated use getInstance instead.
 	 */
 	public Instruction() {
 		setTitle("Instruction");
