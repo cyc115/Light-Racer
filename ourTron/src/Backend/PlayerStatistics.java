@@ -187,11 +187,11 @@ public class PlayerStatistics {
 		String toDisplay = user1.getUsername() + "'s Wins/Losses: " + String.valueOf(user1Wins) + "/" + String.valueOf(user2Wins)
 				+ "            " + user2.getUsername() + "'s Wins/Losses: " + String.valueOf(user2Wins) + "/" + String.valueOf(user1Wins);
 		
-		String htmlDisplay = "<h1><center>Head-To-Head Scores</center></h1>"
-				+ "<p><table align='center'>"
+		String htmlDisplay = "<h1 style='text-align: center;'><font color='#b22222' face='trebuchet ms, helvetica, sans-serif'>Head-To-Head Scores</font></h1>"
+				+ "<p><span style='font-family:trebuchet ms,helvetica,sans-serif;'><table align='center'>"
 				+ "<tr><td>" + user1.getUsername() + "</td><td>-------------------</td><td>" + user2.getUsername() + "</td></tr>"
 				+ "<tr><td><center>" + String.valueOf(user1Wins) + "</center></td><td> </td><td><center>" + String.valueOf(user2Wins) + "</center</td></tr>"
-				+ "</table><br/><br/></p>";
+				+ "</table><br/><br/></span></p>";
 		
 		return htmlDisplay; //TODO: write this out in html
 	}
@@ -225,7 +225,8 @@ public class PlayerStatistics {
 				toDisplay = toDisplay + String.valueOf(i) + ". " + u.getUsername() + ": " + u.getTotalWins() + "<br/>";
 			}
 		}
-		String htmlDisplay = "<html><h1><center>Top 10 Users</center></h1><p>" + toDisplay + "</p></html>";
+		String htmlDisplay = "<h1 style='text-align: center;'><font color='#b22222' face='trebuchet ms, helvetica, sans-serif'>Top 10 Users</font></h1>"
+				+ "<p><span style='font-family:trebuchet ms,helvetica,sans-serif;'>" + toDisplay + "</span></p>";
 		
 		return htmlDisplay;
 	}

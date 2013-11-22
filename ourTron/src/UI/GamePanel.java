@@ -68,6 +68,7 @@ import javax.imageio.ImageIO;
 		private static GamePanel gamePanelInstance = new GamePanel();
 		/**
 		 * Create the panel.
+		 * @deprecated use getInstance() to obtain a static instance of GamePanel
 		 */
 		
 		//Constructor
@@ -129,14 +130,14 @@ import javax.imageio.ImageIO;
         	}
         }
 		
+		/**
+		 * 
+		 * @return  returns a static instance of the GamePanel Class
+		 */
 		public static GamePanel getInstance(){
 			return gamePanelInstance;
 		}
-		//TODO fill in reset()
-		/**5
-		 * reset gameMap and players
-		 */
-	
+
 		/**
 		 * start() will be called to start a new thread start the game
 		 */
@@ -166,7 +167,9 @@ import javax.imageio.ImageIO;
 			running = true;
 			resetGame= false;
 		}
-		//when the thread start it runs this 
+		/**
+		 * called at the beginning of the Game match.
+		 */
 		public void run() {
 			
 			try {
@@ -315,15 +318,26 @@ import javax.imageio.ImageIO;
 	    			   options,
 	    			   options[0]);
 	    }
-		
-		public void usePowerUp(Player player){ //TODO: fill in usePowerUp
-
+		/**
+		 * Behavior when player has used power up.
+		 * @param player 
+		 * @throws UnimplementedException the class has not yet been implemented for the final project.
+		 * May have time and interest to implement and expand game in the future.
+		 */
+		public void usePowerUp(Player player) throws UnimplementedException{ //TODO: fill in usePowerUp
+			throw new UnimplementedException();
 		}
-		public void obtainPowerUp(){ //TODO: fill in
+		/**
+		 * The class defines the behavior when player has obtained a power up 
+		 * @throws UnimplementedException the class has not yet been implemented for the final project.
+		 * May have time and interest to implement and expand game in the future.
+		 */
+		public void obtainPowerUp() throws UnimplementedException{
+			throw new UnimplementedException();
 		}
 
 	    /**
-	     * show message after game ends
+	     * display winning message when game ends
 	     */
 	    private void showGameEndMsg(){
 	    	

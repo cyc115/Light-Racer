@@ -22,7 +22,11 @@ import Backend.UserDataBase;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * UI dialog to guide new users to create account
+ *  @author yuechuan Chen
+ *
+ */
 public class CreateUser extends UIElement {
 
 	private JPanel contentPane;
@@ -36,6 +40,9 @@ public class CreateUser extends UIElement {
 	private JPasswordField jpfPassAgain = new JPasswordField();
 
 	@Override
+	/**
+	 * resets the panel to its devault text 
+	 */
 	public void reset() {
 		// TODO Auto-generated method stub
 		txtUserName.setText("username");
@@ -61,9 +68,9 @@ public class CreateUser extends UIElement {
 
 	/**
 	 * Create the frame.
-	 * 
 	 * @bug throws an exception when the UserDataBase.data does not exist in the
 	 *      working directory. Creates it however.
+	 * @deprecated use getInstance() to obtain a static Object 
 	 */
 	public CreateUser() {
 		setTitle("Create user dialog");
@@ -149,11 +156,19 @@ public class CreateUser extends UIElement {
 		//set the default button 
 		this.getRootPane().setDefaultButton(btnSubmitButton);
 	}
-
+	/**
+	 * returns a static instance of the CreateUser dialog,
+	 * this is used to access the sigleton object
+	 * @return  static instance of the CreateUser dialog.
+	 */
 	public static CreateUser getInstance() {
 		return cuInstance;
 	}
-
+/**
+ * strinify password.
+ * @param password
+ * @return String object equivalent to char given char array 
+ */
 	private static String passwordToString(char[] password) {
 		String out = "";
 		for (char c : password)
