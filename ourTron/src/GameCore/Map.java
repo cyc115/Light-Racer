@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class Map implements Serializable {
@@ -84,7 +86,9 @@ public class Map implements Serializable {
 		map3.generateWalls(new Point(50, 25), new Point(70, 45));
 		Map.createMap(map3, "basicMap3.map");
 	}
-
+	/**
+	 * sets the edges of the map to walls
+	 */
 	public void initializeJustEdges() {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
@@ -137,7 +141,11 @@ public class Map implements Serializable {
 	public void setDifficulty(int difficulty) { // added a setter
 		this.difficulty = difficulty;
 	}
-
+	/**
+	 * checks if the tile in 2D mapArray is occupied (not Empty)
+	 * 	@param {@link Coordinate} coordinate
+	 *	@return {@link boolean}
+	 */
 	public boolean isOccupied(Coordinate coordinate) {
 		int x = coordinate.getX();
 		int y = coordinate.getY();
@@ -150,7 +158,12 @@ public class Map implements Serializable {
 		} else
 			return true;
 	}
-
+	/**
+	 * checks if the tile in 2D mapArray is occupied ( not Empty)
+	 * 	@param {@link int} x : x coordinate 
+	 * 	@param {@link int} y : y coordinate 
+	 * 	@return {@link boolean}
+	 */
 	public boolean isOccupied(int x, int y) {
 		if (mapArray[x][y] != MapSign.EMPTY) {
 			return true;
@@ -158,17 +171,29 @@ public class Map implements Serializable {
 			return false;
 		}
 	}
-
+	/**
+	 * returns the MapSign Enum that is contained in each tile from the 2D mapArray
+	 * 	@param {@link Coordinate} coordinate
+	 * 	@return {@link MapSign}
+	 */
 	public MapSign getOccupation(Coordinate coordinate) {
 		int x = coordinate.getX();
 		int y = coordinate.getY();
 		return mapArray[x][y];
 	}
-
+	/**
+	 * returns the MapSign Enum that is contained in each tile from the 1D convertedMapArray
+	 * 	@param  {@link int} i : position of the tile in the array
+	 * 	@return {@link MapSign}
+	 */
 	public MapSign getOccupation1D(int i) {
 		return convertedMapArray[i];
 	}
-
+	/**
+	 * sets what each tile of the mapArray contains.
+	 * 	@param {@link Coordinate} coordinate : location of the tile ( x,y position)
+	 * 	@param {@link MapSign} attribute  : what is contained in the tile
+	 */
 	public void setOccupation(Coordinate coordinate, String attribute) {
 		int x = coordinate.getX();
 		int y = coordinate.getY();
@@ -250,35 +275,65 @@ public class Map implements Serializable {
 			i.printStackTrace();
 		}
 	}
-
+	/**
+	 * return the map's name
+	 *	@return String
+	 */
 	public String getMapName() {
 		return mapName;
 	}
-
+	/**
+	 * sets the map's name
+	 *	@param mapName
+	 */
 	public void setMapName(String mapName) {
 		this.mapName = mapName;
 	}
-
+	/*
+	 * sets the Map
+	 */
 	private void setMap(Map map) {
 		this.difficulty = map.difficulty;
 		this.mapArray = map.mapArray;
 		this.mapName = map.mapName;
 	}
-
+	/**
+	 * return the 2D mapArray
+	 *	@return MapSign[][] 
+	 */
 	public MapSign[][] getMap() {
 		return this.mapArray;
 	}
-
+	/**
+	 * gets the size of the map
+	 *	@return int
+	 */
 	public int getMapSize() {
 		return convertedMapArray.length;
 	}
 
+	/**
+	 * Converts the 2D mapArray into a 1D mapArray
+	 * the result is stored in convertedMapArray
+	 */
 	public void convert2Dto1D() {
-		for (int i = 0; i < mapArray.length; i++) {
-			for (int j = 0; j < mapArray.length; j++) {
-				convertedMapArray[(i * mapArray.length) + j] = mapArray[j][i];
+		
+		List <MapSign> tempList =new ArrayList<MapSign>();
+		for(int i = 0 ; i <mapArray.length ; i++){
+			for(int j = 0 ; j < mapArray[i].length ; j++){
+				tempList.add( mapArray[j][i]);
 			}
 		}
+		
+		for(int i = 0 ; i < convertedMapArray.length ; i++){
+			convertedMapArray[i] = tempList.get(i);
+		}
+		
+//		for (int i = 0; i < mapArray.length; i++) {
+//			for (int j = 0; j < mapArray.length; j++) {
+//				convertedMapArray[(i * mapArray.length) + j] = mapArray[j][i];
+//			}
+//		}
 
 	}
 
