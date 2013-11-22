@@ -13,12 +13,11 @@ import java.awt.event.ActionEvent;
 
 
 /**
- * need to be done 
- * @author yuechuan
+ * This is the about page, message is stored in the string ABOUT_MESSAGE.
+ * Only the static object 'about' of the about class should be called through getInstance() method 
+ * @author Yuechuan Chen
  *
  */
-
-
 
 public class About extends UIElement {
 
@@ -26,20 +25,20 @@ public class About extends UIElement {
 	private static About about = new About();
 	//TODO possibly make this read from a external html file 
 	private final static String ABOUT_MESSAGE = "<h1><center> about us</center> </h1> <p> this is  a new paragraph </p>";
-	
-
+		
 	/**
-	 * Launch the application.
+	 * returns a static instance of About
+	 * @return About object
 	 */
-	public static void main(String[] args) {
-		getInstance().setVisible(true);
-	}
 	public static About getInstance (){
 		return about;
 	}
 	
+	
 	/**
-	 * Create the frame.
+	 * Instantiate a new object.
+	 * @deprecated
+	 * 
 	 */
 	public About() {
 		this.setTitle("About us");
@@ -81,8 +80,11 @@ public class About extends UIElement {
 	}
 
 	@Override
+	/**
+	 * resets the About panel to its original text
+	 * @deprecated 
+	 */
 	public void reset() {
-		// TODO Auto-generated method stub
 		
 	}
 
