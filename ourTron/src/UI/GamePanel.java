@@ -31,18 +31,19 @@ import javax.imageio.ImageIO;
 		boolean suspendflag;
 		private static GameLogic gameLogic;
 		public static int size = 512;
-		public static int width = size;
-		public static int height = size;
+		public static int width = 300;
+		public static int height = 200;
 		private static final long serialVersionUID = 1L;
 		private static final int BUFFER = 3;
-		private static final int numberOfTiles = 128;
+		private static final int tilesWidth = 75;
+		private static final int tilesHeight = 50;
 		//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
 
 		long timer;
 		long lastTime;
 		private int playingspeed = 1 ; //TODO move this to a map class. 
 		//keyboards input are stored in the the linkedlists
-		public int[] tiles = new int [numberOfTiles * numberOfTiles];
+		public int[] tiles = new int [tilesWidth * tilesHeight];
 
 		private Thread thread;
 		private static boolean running = false;
@@ -75,7 +76,7 @@ import javax.imageio.ImageIO;
 		GamePanel() {
 
 			gameLogic = new GameLogic();
-			this.setSize(size, size);
+			this.setSize(width, height);
 			addKeyListener(this);
 			
 			//adds an background image

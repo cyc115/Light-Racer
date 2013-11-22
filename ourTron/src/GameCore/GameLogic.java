@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import UI.GamePanel;
 import Backend.User;
+import Backend.UserDataBase;
 /**
  * This class contains all the logic for the LightRacer game
  * @author Han Yang Zhao
@@ -12,10 +13,11 @@ import Backend.User;
 public class GameLogic {
 
 	public int size = 512;
-	public int width = size;
-	public int height = size;
+	public int width = 300;
+	public int height = 200;
 	public int scale = 1;
-	private final int numberOfTiles = 128;
+	private final int tilesWidth = 75;
+	private final int  tilesHeight = 50;
 	private int[] pixels;
 	//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
 	private final int bitshift = 2;
@@ -27,13 +29,13 @@ public class GameLogic {
 	private GameScore gamescore;
 	private int roundNumber;
 	final Coordinate startingPosP1 = new Coordinate(1,1);
-	final Coordinate startingPosP2 = new Coordinate(126,126);
+	final Coordinate startingPosP2 = new Coordinate(74,49);
 	
 	private LinkedList <Control> p1Direction;
 	private LinkedList <Control> p2Direction;
 	private final int  MAX_KEYINPUT = 5;
 	
-	public int[] tiles = new int [numberOfTiles * numberOfTiles];
+	public int[] tiles = new int [tilesWidth * tilesHeight];
 	public Map gameMap;
 	public static Map[] allMaps = new Map[3];
 	
@@ -46,7 +48,7 @@ public class GameLogic {
 	
 	public GameLogic(){
 		
-		pixels = new int[size*size];
+		pixels = new int[width*height];
 		roundNumber = 0;
 	}
 	/**
@@ -76,7 +78,7 @@ public class GameLogic {
 		player1.setCollision(false);
 		player2.setCollision(false);
 		final Coordinate startingPos1 = new Coordinate(1,1);
-		final Coordinate startingPos2 = new Coordinate(126,126);
+		final Coordinate startingPos2 = new Coordinate(74,49);
 		player1.setPlayerLocation(startingPos1);
 		player2.setPlayerLocation(startingPos2);
 		
@@ -159,8 +161,8 @@ public class GameLogic {
 				if(xx < 0 || x >= width) break;
 				//updates pixels line by line from left to right and up to bottom
 				//each tiles has 16x16 pixels
-				int tileIndex = (x >> bitshift) + (y >> bitshift) * numberOfTiles;
-				pixels[x + y * width] = tiles[tileIndex];
+				int tileIndex = (x >> bitshift) + (y >> bitshift) * tilesHeight;
+				pixels[x + y * height] = tiles[tileIndex];
 			}
 		}
 	}
@@ -286,6 +288,10 @@ public class GameLogic {
 				user2.addGameResult(user1, true);
 				GamePanel.winner = player2;
 			}
+			user1 = UserDataBase.retrieveUser(user1.getUsername());
+			user2 = UserDataBase.retrieveUser(user2.getUsername());
+			System.out.println(user1.getWinsVsOpponent(user2));
+			System.out.println(user2.getWinsVsOpponent(user1));
 			this.gamescore.initialize();
 			
 			return true;

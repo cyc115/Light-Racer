@@ -23,12 +23,11 @@ public class Map implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int difficulty;
 	private int size = 128;
-	private int height = 128;
-	private int width = 128;
+	private int height = 50;
+	private int width = 75;
 	private MapSign[][] mapArray = new MapSign[width][height];
 	// exact copy of mapArray but in 1D
-	private MapSign[] convertedMapArray = new MapSign[mapArray.length
-			* mapArray.length];
+	private MapSign[] convertedMapArray = new MapSign[width * height];
 	private String mapName;
 
 	public enum MapSign {
@@ -123,8 +122,8 @@ public class Map implements Serializable {
 		for (int i = 0; i < numberOfBlocks; i++) {
 			int blockWidth = randomGenerator.nextInt(30) + 1;
 			int blockHeight = randomGenerator.nextInt(30) + 1;
-			int randomX = randomGenerator.nextInt(128 - blockWidth) + 1;
-			int randomY = randomGenerator.nextInt(128 - blockHeight) + 1;
+			int randomX = randomGenerator.nextInt(75 - blockWidth) + 1;
+			int randomY = randomGenerator.nextInt(50 - blockHeight) + 1;
 			for (int j = randomX; j < randomX + blockWidth; j++) {
 				for (int k = randomY; k < randomY + blockHeight; k++) {
 					this.mapArray[j][k] = MapSign.WALL;
@@ -149,7 +148,7 @@ public class Map implements Serializable {
 	public boolean isOccupied(Coordinate coordinate) {
 		int x = coordinate.getX();
 		int y = coordinate.getY();
-		if (x >= 0 && x < size && y >= 0 && y < size) {
+		if (x >= 0 && x < width && y >= 0 && y < height) {
 			if (mapArray[x][y] != MapSign.EMPTY) {
 				return true;
 			} else {
@@ -319,9 +318,9 @@ public class Map implements Serializable {
 	public void convert2Dto1D() {
 		
 		List <MapSign> tempList =new ArrayList<MapSign>();
-		for(int i = 0 ; i <mapArray.length ; i++){
-			for(int j = 0 ; j < mapArray[i].length ; j++){
-				tempList.add( mapArray[j][i]);
+		for(int i = 0 ; i < 75 ; i++){
+			for(int j = 0 ; j < 50 ; j++){
+				tempList.add( mapArray[i][j]);
 			}
 		}
 		
