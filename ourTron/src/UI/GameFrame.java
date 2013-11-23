@@ -51,9 +51,12 @@ public class GameFrame extends UIElement {
         }
 
 		@Override
+		
 		/**
-		 * @deprecated not implemented , use init() instead to reinitialize 
+		 * resets the Game frame and set visibility to false 
 		 */
 		public void reset() {
+			init();
+			getInstance().setVisible(false);
 		}
 }

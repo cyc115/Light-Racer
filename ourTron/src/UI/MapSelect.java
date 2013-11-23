@@ -52,10 +52,11 @@ public class MapSelect extends UIElement {
 	
 	@Override
 	public void reset() {
-		
-		//TODO make the reset 
-		//Make this last since it need to interact with the background.
-		System.out.println("stub in MapSelect reset()");
+		 lblNewLabel_1 = new JLabel("please select a map file");
+		 lblPleaseSelectA_1 = new JLabel("please select a map file");
+		 lblPleaseSelectA = new JLabel("please select a map file");
+		 welcomeMsg = null;
+		 playerName = new String [2] ;
 	}
 	
 	

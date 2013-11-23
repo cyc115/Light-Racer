@@ -1,10 +1,5 @@
 package Backend;
 
-/**
- * reviewed : Mike
- * TODO finish this class, and implement everything. right now everything is commented out 
- */
-
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -173,6 +168,9 @@ public class PlayerStatistics {
 //		return user.getTotalWins();
 //	}
 	
+	public static void main(){
+//		System.out.print(top10Users());
+	}
 /**
  * Calculates the wins between 2 users
  * @param user1 
@@ -195,6 +193,9 @@ public class PlayerStatistics {
 		
 		return htmlDisplay; //TODO: write this out in html
 	}
+	
+	
+
 	/**
 	 * Calculates the top 10 Users (determined from who has the most wins)
 	 * @return a String in html format of top 10 users

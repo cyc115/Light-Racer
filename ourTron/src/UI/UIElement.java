@@ -9,6 +9,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import Backend.PlayerStatistics;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 /**
@@ -86,11 +88,31 @@ public abstract class UIElement extends JFrame {
 		JMenuItem mntmHellOfFame = new JMenuItem("Hell Of Fame");
 		mntmHellOfFame.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e){
-				InfoPage hellOfFame = new InfoPage("Hell Of Fame ", INSTRUCTION_STR, "Back");	//TODO get johanna's class 
+				InfoPage hellOfFame = new InfoPage("Hell Of Fame ", PlayerStatistics.top10Users(), "Back");	//TODO get johanna's class 
 				hellOfFame.setVisible(true);
 				
 			}
 		});
+		
+		JMenuItem mntmLogOut = new JMenuItem("Log out");
+		mntmLogOut.addActionListener(new ActionListener(){
+			public void actionPerformed (ActionEvent e){
+				//redisplay 
+				MainMenu.getInstance().setVisible(true);
+				CreateUser.getInstance().setVisible(false);
+				GameFrame.getInstance().setVisible(false);
+				GamePanel.getInstance().setVisible(false);
+				Login.getInstance().setVisible(false);
+				MapSelect.getInstance().setVisible(false);
+				
+				
+				CreateUser.getInstance().reset();
+				GameFrame.getInstance().reset();
+				Login.getInstance().reset();
+				MapSelect.getInstance().reset();
+			}
+		});
+		mnGame.add(mntmLogOut);
 		mnGame.add(mntmHellOfFame);
 		
 		JMenuItem mntmInstruction = new JMenuItem("Instruction");
