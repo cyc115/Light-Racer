@@ -24,15 +24,15 @@ import javax.imageio.ImageIO;
 
 /**This class has two main functions : Take in key inputs and displays the game on the screen
  * 
- * @author <Han Yang Zhao> 
+ * 	@author Han Yang Zhao
  *
  */
 	public class GamePanel extends Canvas implements KeyListener, Runnable {
 		boolean suspendflag;
 		private static GameLogic gameLogic;
 		public static int size = 512;
-		public static int width = 300;
-		public static int height = 200;
+		public static int width = 600;
+		public static int height = 400;
 		private static final long serialVersionUID = 1L;
 		private static final int BUFFER = 3;
 		private static final int tilesWidth = 75;
@@ -67,25 +67,6 @@ import javax.imageio.ImageIO;
 		 * this is the game panel object . only 1 copy exist per game ~!
 		 */
 		private static GamePanel gamePanelInstance = new GamePanel();
-		/**
-		 * Create the panel.
-		 * @deprecated use getInstance() to obtain a static instance of GamePanel
-		 */
-		
-		//Constructor
-		GamePanel() {
-
-			gameLogic = new GameLogic();
-			this.setSize(width, height);
-			addKeyListener(this);
-			
-			//adds an background image
-			try {
-				//Change this to your own path
-			    bkgimg = ImageIO.read(new File("C:/Users/Owner/git/team-15/tron2.jpg"));
-			} catch (IOException e) {}	
-		}
-		
 		
 		/**
 		 * Takes key inputs and add them to player direction LinkedList in {@link GameLogic} 
@@ -143,7 +124,16 @@ import javax.imageio.ImageIO;
 		 * start() will be called to start a new thread start the game
 		 */
 		public synchronized void start() {
-			suspendflag = false;
+			
+			gameLogic = GameLogic.getInstance();
+			
+			
+			//adds an background image
+//			try {
+//				//Change this to your own path
+//			    bkgimg = ImageIO.read(new File("C:/Users/Owner/git/team-15/tron2.jpg"));
+//			} catch (IOException e) {}	
+			
 			running = true;
 			thread = new Thread(this,"Tron");
 			gameLogic.initializePlayers();
@@ -162,7 +152,7 @@ import javax.imageio.ImageIO;
 		public synchronized void resume(){
 			updates = 0;
 			frames = 0;
-			gameLogic.reinitializeGame();
+			gameLogic.initializePlayers();
 			this.timer = System.currentTimeMillis();
 			this.lastTime = System.nanoTime();
 			running = true;

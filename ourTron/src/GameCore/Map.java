@@ -34,10 +34,6 @@ public class Map implements Serializable {
 		WALL, player1Trail, player2Trail, power1, power2, EMPTY, player1Head, player2Head
 	}
 
-	public Map(String location) {
-		super();
-		loadMapFromFile(location);
-	}
 
 	public Map(String name, boolean generate) {
 		this.difficulty = 1;
@@ -318,9 +314,9 @@ public class Map implements Serializable {
 	public void convert2Dto1D() {
 		
 		List <MapSign> tempList =new ArrayList<MapSign>();
-		for(int i = 0 ; i < 75 ; i++){
-			for(int j = 0 ; j < 50 ; j++){
-				tempList.add( mapArray[i][j]);
+		for(int i = 0 ; i < 50 ; i++){
+			for(int j = 0 ; j < 75 ; j++){
+				tempList.add( mapArray[j][i]);
 			}
 		}
 		
