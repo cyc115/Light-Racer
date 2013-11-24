@@ -16,7 +16,7 @@ public class GameFrame extends UIElement {
 	
         private static final long serialVersionUID = 1L;
         //I've changed this to Canvas because Jpanel doesn't work well with BufferStrategy
-        private static Canvas canvas;
+        
         
     
         /**
@@ -34,13 +34,19 @@ public class GameFrame extends UIElement {
                 public void run() {
                         try {
                         		gameFrameInstance.setSize(1000,1000);
-                                canvas = (GamePanel.getInstance());
+                         
                                 GamePanel.getInstance().setSize(600, 400);
                     			GamePanel.getInstance().addKeyListener(GamePanel.getInstance());
-                                canvas.setVisible(true);
-                                gameFrameInstance.add(canvas);
+                    			System.out.println("gamePanel initialized");
+                               
+                                
+                                (GamePanel.getInstance()).setVisible(true);
+                                gameFrameInstance.add(GamePanel.getInstance());
                                 gameFrameInstance.pack();
-                                ((GamePanel) canvas).start();
+                                //Create a triple buffering BufferStrategy
+                                (GamePanel.getInstance()).createBufferStrategy(3);
+                                (GamePanel.getInstance()).start();
+                                System.out.println("game has started");
                         } catch (Exception e) {
                                 e.printStackTrace();
                         }

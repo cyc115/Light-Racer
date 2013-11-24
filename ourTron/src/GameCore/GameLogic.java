@@ -1,5 +1,6 @@
 package GameCore;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import UI.GamePanel;
@@ -13,7 +14,6 @@ import Backend.UserDataBase;
  */
 public class GameLogic {
 
-
 	//size of the game window
 	public int width = 600;
 	public int height = 400;
@@ -26,6 +26,7 @@ public class GameLogic {
 	private final int  tilesHeight = 50;
 	public int[] tiles = new int [tilesWidth * tilesHeight];
 	public Map gameMap;
+	public Map[] gameMapCopy = new Map[3];
 	//creates 3 maps
 	public static Map[] allMaps = new Map[3];
 	
@@ -56,10 +57,13 @@ public class GameLogic {
 	 */
 	public void initializePlayers(){
 		// reset the previous game.
-		roundNumber %= 3;
+		
 		
 		 	Coordinate startingPosP1 = new Coordinate(1,49);
 		 	Coordinate startingPosP2 = new Coordinate(74,1);
+		 	for ( int i = 0 ; i < 3 ; ++i){
+		 	 gameMapCopy[i] = new Map(allMaps[i]);
+		 	}
 		 	
 		
 		 	if(roundNumber == 0){
@@ -72,10 +76,10 @@ public class GameLogic {
 				p2Direction = new LinkedList<Control> ();
 				p2Direction.add(player2.getDirection());
 				gamescore = new GameScore();
-				gameMap = allMaps[0];
+				gameMap = gameMapCopy[0];
 		 	}
 		 	
-		 	else {
+		 	else{
 		 		gameStop= false;
 				gamePause = false;
 				player1.setCollision(false);
@@ -87,7 +91,13 @@ public class GameLogic {
 				p2Direction.clear();
 				p1Direction.add(player1.getDirection());
 				p2Direction.add(player2.getDirection());
-				gameMap = allMaps[roundNumber];
+				if(roundNumber != 3){
+					gameMap = gameMapCopy[roundNumber];
+				}
+				
+				else {
+					gameMap = gameMapCopy[0];
+				}
 		 	}
 			
 		
@@ -280,6 +290,7 @@ public class GameLogic {
 		}
 		else{
 			GamePanel.endGame = true;
+			clearScreen(this.pixels);
 			//handle the game results. 
 			if(this.gamescore.getPlayerOneScore() > this.gamescore.getPlayerTwoScore()) {
 				user1.addGameResult(user2, true);
@@ -432,6 +443,16 @@ public class GameLogic {
 	 */
 	public int getRoundNumber(){
 		return roundNumber;
+	}
+	
+	public void clearScreen(int[] pixels){
+		for ( int i = 0 ; i < pixels.length ; i++){
+			pixels[i] = 0;
+		}
+	}
+	
+	public void resetRoundNumber(){
+		roundNumber = 0;
 	}
 	public static User getUser(int i){
 		if (i == 1 ) return user1 ;
