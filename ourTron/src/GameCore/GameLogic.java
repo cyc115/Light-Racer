@@ -59,8 +59,8 @@ public class GameLogic {
 		// reset the previous game.
 		
 		
-		 	Coordinate startingPosP1 = new Coordinate(1,49);
-		 	Coordinate startingPosP2 = new Coordinate(74,1);
+		 	Coordinate startingPosP1 = new Coordinate(0,49);
+		 	Coordinate startingPosP2 = new Coordinate(74,0);
 		 	for ( int i = 0 ; i < 3 ; ++i){
 		 	 gameMapCopy[i] = new Map(allMaps[i]);
 		 	}

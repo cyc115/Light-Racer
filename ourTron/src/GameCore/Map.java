@@ -92,9 +92,9 @@ public class Map implements Serializable {
 		Map map3 = new Map("basicMap3", true);
 		map3.height = 50;
 		map3.width = 75;
-		map3.generateWalls(new Point(05, 05), new Point(25, 25));
+		map3.generateWalls(new Point(05, 25), new Point(25, 45));
 		map3.generateWalls(new Point(30, 20), new Point(45, 30));
-		map3.generateWalls(new Point(50, 25), new Point(70, 45));
+		map3.generateWalls(new Point(50, 05), new Point(70, 25));
 		Map.createMap(map3, "basicMap3.map");
 	}
 	/**
