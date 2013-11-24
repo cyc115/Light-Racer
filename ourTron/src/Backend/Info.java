@@ -1,6 +1,18 @@
 package Backend;
 
+/**
+ * 
+ * @author Joanna
+ *
+ *Stores the information: Instructions and AboutUs
+ */
+
 public class Info {
+	
+/**
+ * The game instructions in html format
+ * @return a String which contains the instruction in html format
+ */
 	public static String instructions(){
 		String htmlInstructions = "<body>"
 				+ "<h1 style='text-align: center;'>Instructions</h1>"
@@ -12,6 +24,10 @@ public class Info {
 		return htmlInstructions;
 	}
 
+	/**
+	 * The About Us page in html format
+	 * @return a String which contains the About Us page in html format
+	 */
 	public static String aboutUs(){
 		String htmlAboutUs = "<body>"
 				+ "<h1 style='text-align: center;'><span style='font-family:trebuchet ms,helvetica,sans-serif;'><span style='color:#b22222;'>About Us</span></span></h1>"
@@ -20,10 +36,6 @@ public class Info {
 				+ "</body>";
 		
 		return htmlAboutUs;
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(aboutUs());
 	}
 }
 
