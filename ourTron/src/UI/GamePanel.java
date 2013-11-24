@@ -2,6 +2,7 @@ package UI;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -47,12 +48,13 @@ import javax.imageio.ImageIO;
 		//keyboards input are stored in the the linkedlists
 		public int[] tiles = new int [tilesWidth * tilesHeight];
 
-		private Thread thread;
+		private  Thread thread;
 		private static boolean running = false;
 		// number of ticks
 		public static int updates; //TODO move this to map. 
 		//number of frames displayed on the screen
 		public static int frames;
+		public BufferStrategy bs;
 		
 		public static boolean resetGame = false;
 		public static boolean endGame = false;  
@@ -128,6 +130,10 @@ import javax.imageio.ImageIO;
 		public synchronized void start() {
 			
 			gameLogic = GameLogic.getInstance();
+			//gamePanelInstance.createBufferStrategy(BUFFER);
+			//Use bufferstrategy to pre-render new frames and reduce choppiness of the gameplay
+			bs = gamePanelInstance.getBufferStrategy();
+					
 			
 			
 			//adds an background image
@@ -137,7 +143,7 @@ import javax.imageio.ImageIO;
 //			} catch (IOException e) {}	
 			
 			running = true;
-			thread = new Thread(this,"Tron");
+			thread = new Thread(gamePanelInstance,"Tron");
 			gameLogic.initializePlayers();
 			thread.start();
 		}
@@ -163,50 +169,52 @@ import javax.imageio.ImageIO;
 		/**
 		 * called at the beginning of the Game match.
 		 */
-		public void run() {
-			
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	
-			frames = 0;
-			updates = 0;
-			this.timer = System.currentTimeMillis();
+		
+			public void run() {
 
-			//Timer variables ( limits the update rate to 30 times per second)
-			this.lastTime = System.nanoTime();
-			double framesPerSecond = 30.0 * playingspeed ;
-			//time of one frame
-			final double ns = 1000000000.0 / framesPerSecond;
-
-			double delta = 0.0;
-			//main game loop
-			while(running){
-				gameInterruptionCheck();
-				long now = System.nanoTime();
-				delta += (now-lastTime) / ns;
-				lastTime = now;
-				//this only happens 30 times per second
-				while (delta >=1 ){
-					gameLogic.update();
-					updates++;
-					delta--;
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				render();
-				frames++;
 
-				if(System.currentTimeMillis() - timer > 1000){
-					timer += 1000;
-					System.out.println(updates + "ups, " + frames + " fps");
-					updates = 0;
-					frames = 0;
+				frames = 0;
+				updates = 0;
+				this.timer = System.currentTimeMillis();
+
+				//Timer variables ( limits the update rate to 30 times per second)
+				this.lastTime = System.nanoTime();
+				double framesPerSecond = 30.0 * playingspeed ;
+				//time of one frame
+				final double ns = 1000000000.0 / framesPerSecond;
+
+				double delta = 0.0;
+				//main game loop
+				while(running){
+					gameInterruptionCheck();
+					long now = System.nanoTime();
+					delta += (now-lastTime) / ns;
+					lastTime = now;
+					//this only happens 30 times per second
+					while (delta >=1 ){
+						gameLogic.update();
+						updates++;
+						delta--;
+					}
+					render();
+					frames++;
+
+					if(System.currentTimeMillis() - timer > 1000){
+						timer += 1000;
+						System.out.println(updates + "ups, " + frames + " fps");
+						updates = 0;
+						frames = 0;
+					}
 				}
+
 			}
-			
-		}
+		
 
 		/**
 		 * Render() takes care of the graphical processing of the game.
@@ -215,12 +223,7 @@ import javax.imageio.ImageIO;
 		 */
 		private void render() {
 			//Use bufferstrategy to pre-render new frames and reduce choppiness of the gameplay
-			BufferStrategy bs = getBufferStrategy();
-			if (bs == null){
-				createBufferStrategy(BUFFER);
-				return;
-			}
-			
+			 
 			clearScreen(pixels);
 			renderScreen(pixels);
 
@@ -289,7 +292,12 @@ import javax.imageio.ImageIO;
 	    		
 	    		stop();
 	    		showGameEndMsg();
-	    		this.setVisible(false);
+	    		
+	    		gameLogic.initializePlayers();
+	    		gameLogic.resetRoundNumber();
+	    		
+	    		
+	    		gamePanelInstance.setVisible(false);
 	    		GameFrame.getInstance().setVisible(false);
 		    	MainMenu.getInstance().setVisible(true);
 		    	resetGame = false;

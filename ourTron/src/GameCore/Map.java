@@ -22,7 +22,6 @@ import java.util.Random;
 public class Map implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int difficulty;
-	private int size = 128;
 	private int height = 50;
 	private int width = 75;
 	private MapSign[][] mapArray = new MapSign[width][height];
@@ -34,6 +33,23 @@ public class Map implements Serializable {
 		WALL, player1Trail, player2Trail, power1, power2, EMPTY, player1Head, player2Head
 	}
 
+	
+	public Map(Map map) {
+	 	this.difficulty = map.difficulty;
+	 	this.height = map.height;
+	 	this.width = map.width;
+	 	this.mapArray = new MapSign[map.width][map.height];
+	 	for (int i = 0; i < width; i++) {
+	 		for (int j = 0; j < height; j++) {
+	 			this.mapArray[i][j] = map.mapArray[i][j];
+	 		}
+	 	}
+	 	this.convertedMapArray = new MapSign[width * height];
+	 	for(int i = 0; i < map.convertedMapArray.length; i++)
+	 	this.convertedMapArray[i] = map.convertedMapArray[i];
+	 	this.mapName = map.mapName;
+	 	convert2Dto1D();
+	 }
 
 	public Map(String name, boolean generate) {
 		this.difficulty = 1;
@@ -47,10 +63,10 @@ public class Map implements Serializable {
 	public Map() {
 		this.difficulty = 1;
 		this.mapName = "blankMap.map";
-		initializeJustEdges();
+		//initializeJustEdges();
 		
 		//merge conflict : donno if this line should be kept 
-		generateRandomWalls();
+		//generateRandomWalls();
 
 		convert2Dto1D();
 //		createMap(this, "defaultMap.map");
