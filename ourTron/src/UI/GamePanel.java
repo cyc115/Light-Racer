@@ -292,6 +292,10 @@ import javax.imageio.ImageIO;
 	    		this.setVisible(false);
 	    		GameFrame.getInstance().setVisible(false);
 		    	MainMenu.getInstance().setVisible(true);
+		    	resetGame = false;
+		    	endGame = false;
+		    	
+		    			
 	    		//do something here
 	    	}
 	    }
