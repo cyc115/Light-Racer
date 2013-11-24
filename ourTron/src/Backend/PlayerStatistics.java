@@ -174,31 +174,31 @@ public class PlayerStatistics {
 //	}
 	
 /**
- * Calculates the wins between 2 users
+ * Calculates the wins between 2 users.
  * @param user1 
  * @param user2
- * @return a String which contains the results of wins/losses of each user
+ * @return a String which contains the results of wins/losses of each user in html format. If either user is null, then it will return scores of 0 for both User 1 and User 2
  */
 	public static String user1VsUser2Wins(User user1, User user2){
-		int user1Wins = user1.getWinsVsOpponent(user2);
-		int user2Wins = user2.getWinsVsOpponent(user1);
-		
 		String htmlDisplay;
 		
-		if (user1 == null || user2 == null){
+		if (user1 != null && user2 != null){
+			int user1Wins = user1.getWinsVsOpponent(user2);
+			int user2Wins = user2.getWinsVsOpponent(user1);
+
 			htmlDisplay = "<h1 style='text-align: center;'><font color='#b22222' face='trebuchet ms, helvetica, sans-serif'>Head-To-Head Scores</font></h1>"
 					+ "<p><span style='font-family:trebuchet ms,helvetica,sans-serif;'><table align='center'>"
-					+ "<tr><td>" + "User 1" + "</td><td>-------------------</td><td>" + "User 2" + "</td></tr>"
-					+ "<tr><td><center>" + "0" + "</center></td><td> </td><td><center>" + "0" + "</center</td></tr>"
+					+ "<tr><td>" + user1.getUsername() + "</td><td>-------------------</td><td>" + user2.getUsername() + "</td></tr>"
+					+ "<tr><td><center>" + String.valueOf(user1Wins) + "</center></td><td> </td><td><center>" + String.valueOf(user2Wins) + "</center</td></tr>"
 					+ "</table><br/><br/></span></p>";
 		}
-		
+		else{
 		htmlDisplay = "<h1 style='text-align: center;'><font color='#b22222' face='trebuchet ms, helvetica, sans-serif'>Head-To-Head Scores</font></h1>"
 				+ "<p><span style='font-family:trebuchet ms,helvetica,sans-serif;'><table align='center'>"
-				+ "<tr><td>" + user1.getUsername() + "</td><td>-------------------</td><td>" + user2.getUsername() + "</td></tr>"
-				+ "<tr><td><center>" + String.valueOf(user1Wins) + "</center></td><td> </td><td><center>" + String.valueOf(user2Wins) + "</center</td></tr>"
+				+ "<tr><td>" + "User 1" + "</td><td>-------------------</td><td>" + "User 2" + "</td></tr>"
+				+ "<tr><td><center>" + "0" + "</center></td><td> </td><td><center>" + "0" + "</center</td></tr>"
 				+ "</table><br/><br/></span></p>";
-		
+		}
 		return htmlDisplay;
 	}
 	/**
@@ -206,18 +206,16 @@ public class PlayerStatistics {
 	 * @return a String in html format of top 10 users
 	 */
 	public static String top10Users(){
-		String toDisplay;
+		String toDisplay = "";
 
-		String[] top10 = new String[numberOfUsers-1];
-		for(int i=0; i<(numberOfUsers-1); i++){
-			top10[i] = null;
-		}
 
-		LinkedList<User> allUsers = UserDataBase.getAllUsers();
+		LinkedList<User> allUsers = new LinkedList<User>();
+		allUsers = UserDataBase.getAllUsers();
 		
 		//add at least 10 blank users to allUsers
 		User blank = new User();
 		blank.setUsername("---");
+		int numberOfUsers = 10;
 		for(int i=0; i<(numberOfUsers); i++){
 			allUsers.add(blank);
 		}
@@ -226,15 +224,33 @@ public class PlayerStatistics {
 		Collections.sort(allUsers, User.Comparators.Wins);
 		
 		//Write username and number of wins in the String toDisplay
+		int i = 1;
 		for(User u: allUsers){
-			for(int i=1; i<=10; i++){
-				toDisplay = toDisplay + String.valueOf(i) + ". " + u.getUsername() + ": " + u.getTotalWins() + "<br/>";
+			if(i<=10){
+				toDisplay += String.valueOf(i) + ". " + u.getUsername() + ": " + u.getTotalWins() + "<br/>";
+				i++;
 			}
 		}
 		String htmlDisplay = "<h1 style='text-align: center;'><font color='#b22222' face='trebuchet ms, helvetica, sans-serif'>Top 10 Users</font></h1>"
 				+ "<p><span style='font-family:trebuchet ms,helvetica,sans-serif;'>" + toDisplay + "</span></p>";
 		
 		return htmlDisplay;
+	}
+	
+	public static void main(String[] args) {
+		
+		User userJoanna = new User();
+		User userHalpern = new User();
+		
+		userJoanna = UserDataBase.retrieveUser("Joanna");
+		userHalpern = UserDataBase.retrieveUser("Halpern");
+		
+		String headToHead = user1VsUser2Wins(userJoanna, userHalpern);
+//		System.out.println(headToHead);
+		
+		String top10 = top10Users();
+		System.out.println(top10);
+		
 	}
 }
 
