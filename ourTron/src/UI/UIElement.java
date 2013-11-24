@@ -1,32 +1,60 @@
 package UI;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JMenu;
-import javax.swing.UIManager;
+import javax.swing.JMenuItem;
 
+import Backend.PlayerStatistics;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+/**
+ * UIElement is the parent class for almost all of the classes in UI package.
+ * it defines the size, closing actions of the JFrame as well as hosting the 
+ * JMenuBar and all of its options.This class is Abstract so it does not provide
+ *  ways to instantiate concrete Objects. Please provide a subclass for instantiation.
+ * 
+ * @author yuechuan
+ *
+ */
 public abstract class UIElement extends JFrame {
 
 	private JPanel contentPane;
-	private JFrame frame;
+	// TODO get the right msg from johanna.... this is only a stub 
+	private final static String INSTRUCTION_STR = 
+			"<h1><center>this is a sample instruction page</center></h1> \n" + 
+			"<h2><center>Goal of game</center></h2>\n" +
 
+			"<p>sadkjsajfdsa'j fdsalmsdal;fmsdal;kdmfsa\n" +
+			"dsakdflsajfdsa\n"+
+			"';fdk\n"+
+			"spadklfsdla\n" + 
+			"sfadlkdfsal,sdmfakdasjfd\n" +
+			";asdkl\n"+
+			"sksad;ljfkl;dsaf\n"+
+			"sdsfkjfdsa;ladskfsdfa</p>\n"+
 
+			"<h2><center>Control</center></h2>\n"+
 
+			"<p>sasjakdsa'dfasadfs\n"+
+			"sad\n"+
+			"dfsa\n"+
+			"dfa\n"+
+			"fdsasa</p>\n"+
+
+			"<h2><center>About use</center></h2>\n";
+	/**
+	 * Create the frame.
+	 */
 	public UIElement() {
-		setTitle("titleBar");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 500);
-		this.setResizable(false);
-//		this.setContentPane(new JLabel(new ImageIcon("Res/bg.png")));
-//		http://placehold.it/400x400
+		setTitle("Tron");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 450, 400);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -35,35 +63,109 @@ public abstract class UIElement extends JFrame {
 		menuBar.add(mnGame);
 		
 		JMenuItem mntmNewGame = new JMenuItem("New Game");
+		mntmNewGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("set Menu to visible");
+				MainMenu.getInstance().setVisible(true);
+			}
+		});
+
 		mnGame.add(mntmNewGame);
 		
 		JMenuItem mntmEndGame = new JMenuItem("End Game");
+		mntmEndGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		mnGame.add(mntmEndGame);
 		
-		JMenu mnOption = new JMenu("Option");
-		menuBar.add(mnOption);
+		JMenuItem mntmHellOfFame = new JMenuItem("Hell Of Fame");
+		mntmHellOfFame.addActionListener(new ActionListener(){
+			public void actionPerformed (ActionEvent e){
+				InfoPage hellOfFame = new InfoPage("Hell Of Fame ", PlayerStatistics.top10Users(), "Back");	//TODO get johanna's class 
+				hellOfFame.setVisible(true);
+				
+			}
+		});
 		
-		JMenuItem mntmMusic = new JMenuItem("Music");
-		mnOption.add(mntmMusic);
+		JMenuItem mntmLogOut = new JMenuItem("Log out");
+		mntmLogOut.addActionListener(new ActionListener(){
+			public void actionPerformed (ActionEvent e){
+				//redisplay 
+				MainMenu.getInstance().setVisible(true);
+				CreateUser.getInstance().setVisible(false);
+				GameFrame.getInstance().setVisible(false);
+				GamePanel.getInstance().setVisible(false);
+				Login.getInstance().setVisible(false);
+				MapSelect.getInstance().setVisible(false);
+				
+				
+				CreateUser.getInstance().reset();
+				GameFrame.getInstance().reset();
+				Login.getInstance().reset();
+				MapSelect.getInstance().reset();
+			}
+		});
+		mnGame.add(mntmLogOut);
+		mnGame.add(mntmHellOfFame);
 		
-		JMenuItem mntmMapSelection = new JMenuItem("Map Selection");
-		mnOption.add(mntmMapSelection);
+		JMenuItem mntmInstruction = new JMenuItem("Instruction");
+		mntmInstruction.addActionListener(new ActionListener(){
+			public void actionPerformed (ActionEvent e){
+				InfoPage hellOfFame = new InfoPage("Instruction", INSTRUCTION_STR, "Back");   	//TODO get johanna's class
+				hellOfFame.setVisible(true);
+				
+			}
+		});
 		
-		JMenu mnAbout = new JMenu("About");
-		menuBar.add(mnAbout);
+		mnGame.add(mntmInstruction);
 		
-		JMenuItem mntmPlayerState = new JMenuItem("player Statistics");
-		mnAbout.add(mntmPlayerState);
+		JMenu mnOptions = new JMenu("Options");
+		menuBar.add(mnOptions);
 		
-		JMenuItem mntmTeam = new JMenuItem("Team");
-		mnAbout.add(mntmTeam);
+		JMenuItem mntmOption = new JMenuItem("Option");
+		mntmOption.setEnabled(false);
+		mntmOption.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OptionMenu.getInstance().setVisible(true);
+			}
+		});
+		mnOptions.add(mntmOption);
 		
-		JMenuItem mntmProject = new JMenuItem("Project");
-		mnAbout.add(mntmProject);
+		JMenuItem mntmSelectMap = new JMenuItem("Select Map");
+		mntmSelectMap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MapSelect.getInstance().setVisible(true);
+			}
+		});
+		mnOptions.add(mntmSelectMap);
+		
+		JMenu mnOther = new JMenu("Other");
+		menuBar.add(mnOther);
+		
+		JMenuItem mntmAboutUs = new JMenuItem("About Us");
+		mntmAboutUs.addActionListener(new ActionListener(){
+			public void actionPerformed (ActionEvent e){
+				InfoPage hellOfFame = new InfoPage("About Us", INSTRUCTION_STR, "Back");  	//TODO get johanna's class
+				hellOfFame.setVisible(true);
+				
+			}
+		});
+
+		mnOther.add(mntmAboutUs);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.add(new JLabel(new ImageIcon("Res/bg.png")));
 		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.SOUTH);
+		panel.setPreferredSize(new Dimension(contentPane.getWidth(), 16));
+		this.setResizable(false);
 	}
+
+
+	
+
 }
