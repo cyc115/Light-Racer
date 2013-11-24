@@ -2,13 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="forms-1.3.0-src.zip"/>
-	<classpathentry kind="lib" path="miglayout-src.zip"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/yuechuan/git/team-15/ourTron/miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
-	<classpathentry kind="lib" path="forms-1.3.0-src.zip"/>
-	<classpathentry kind="lib" path="miglayout-src.zip"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="E:/GoogleDrive/Awesome ECSE-321_/miglayout-4.0-swing.jar"/>
+	<classpathentry kind="lib" path="E:/GoogleDrive/Awesome ECSE-321_/miglayout-4.0-swing.jar" sourcepath="miglayout-src.zip"/>
+	<classpathentry kind="lib" path="C:/Users/Bob/git/team-15-dev/ourTron/forms-1.3.0-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
