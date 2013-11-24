@@ -100,13 +100,13 @@ public class UserDataBase {
 				db.set(i, user);
 			}
 		UserDataBaseWriter.writeToFile(db);
-		printDB();
+//		printDB();
 		return;
 	}
 	
 	@SuppressWarnings("null")
 	public static LinkedList<User> getAllUsers() {
-		LinkedList<User> allUsers = null;
+		LinkedList<User> allUsers = new LinkedList<User>();
 		for(User thisUser: UserDataBaseWriter.readFromFile()){
 			allUsers.add(thisUser);
 			}
