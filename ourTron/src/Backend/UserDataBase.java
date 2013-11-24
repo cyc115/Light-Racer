@@ -113,7 +113,7 @@ public class UserDataBase {
 		return allUsers;
 	}
 	
-	public static void printDB() {
+	private static void printDB() {
 		for(User user : UserDataBaseWriter.readFromFile())
 			System.out.println(user);
 	}

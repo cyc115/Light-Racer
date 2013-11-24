@@ -288,8 +288,6 @@ public class GameLogic {
 			}
 			user1 = UserDataBase.retrieveUser(user1.getUsername());
 			user2 = UserDataBase.retrieveUser(user2.getUsername());
-			System.out.println(user1.getWinsVsOpponent(user2));
-			System.out.println(user2.getWinsVsOpponent(user1));
 			this.gamescore.initialize();
 			
 			return true;
