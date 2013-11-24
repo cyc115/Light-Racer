@@ -183,43 +183,49 @@ public class PlayerStatistics {
 		int user1Wins = user1.getWinsVsOpponent(user2);
 		int user2Wins = user2.getWinsVsOpponent(user1);
 		
-		//TODO: delete toDisplay
-		String toDisplay = user1.getUsername() + "'s Wins/Losses: " + String.valueOf(user1Wins) + "/" + String.valueOf(user2Wins)
-				+ "            " + user2.getUsername() + "'s Wins/Losses: " + String.valueOf(user2Wins) + "/" + String.valueOf(user1Wins);
+		String htmlDisplay;
 		
-		String htmlDisplay = "<h1 style='text-align: center;'><font color='#b22222' face='trebuchet ms, helvetica, sans-serif'>Head-To-Head Scores</font></h1>"
+		if (user1 == null || user2 == null){
+			htmlDisplay = "<h1 style='text-align: center;'><font color='#b22222' face='trebuchet ms, helvetica, sans-serif'>Head-To-Head Scores</font></h1>"
+					+ "<p><span style='font-family:trebuchet ms,helvetica,sans-serif;'><table align='center'>"
+					+ "<tr><td>" + "User 1" + "</td><td>-------------------</td><td>" + "User 2" + "</td></tr>"
+					+ "<tr><td><center>" + "0" + "</center></td><td> </td><td><center>" + "0" + "</center</td></tr>"
+					+ "</table><br/><br/></span></p>";
+		}
+		
+		htmlDisplay = "<h1 style='text-align: center;'><font color='#b22222' face='trebuchet ms, helvetica, sans-serif'>Head-To-Head Scores</font></h1>"
 				+ "<p><span style='font-family:trebuchet ms,helvetica,sans-serif;'><table align='center'>"
 				+ "<tr><td>" + user1.getUsername() + "</td><td>-------------------</td><td>" + user2.getUsername() + "</td></tr>"
 				+ "<tr><td><center>" + String.valueOf(user1Wins) + "</center></td><td> </td><td><center>" + String.valueOf(user2Wins) + "</center</td></tr>"
 				+ "</table><br/><br/></span></p>";
 		
-		return htmlDisplay; //TODO: write this out in html
+		return htmlDisplay;
 	}
 	/**
 	 * Calculates the top 10 Users (determined from who has the most wins)
 	 * @return a String in html format of top 10 users
 	 */
 	public static String top10Users(){
-		String toDisplay = null;
+		String toDisplay;
 
-		//fill top10[] with null
-		int numberOfUsers = 10;
-		
 		String[] top10 = new String[numberOfUsers-1];
 		for(int i=0; i<(numberOfUsers-1); i++){
 			top10[i] = null;
 		}
 
 		LinkedList<User> allUsers = UserDataBase.getAllUsers();
+		
+		//add at least 10 blank users to allUsers
+		User blank = new User();
+		blank.setUsername("---");
+		for(int i=0; i<(numberOfUsers); i++){
+			allUsers.add(blank);
+		}
+		
 		//sort all the users into top scores according to user.getTotalWins
 		Collections.sort(allUsers, User.Comparators.Wins);
 		
-		
 		//Write username and number of wins in the String toDisplay
-		for(int i=1; i<=10; i++){
-			
-		}
-		
 		for(User u: allUsers){
 			for(int i=1; i<=10; i++){
 				toDisplay = toDisplay + String.valueOf(i) + ". " + u.getUsername() + ": " + u.getTotalWins() + "<br/>";
