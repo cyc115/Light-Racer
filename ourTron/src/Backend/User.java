@@ -67,6 +67,18 @@ public class User implements Serializable, Comparable<User> {
 		UserDataBase.modifyUser(this);
 	}
 	
+	/**
+	 * takes 2 userNames and set user1 as the winner in the userdatabase
+	 * @param user1Name
+	 * @param user2Name
+	 * @param User1Won
+	 */
+	public void addGameResultFromNames(String user1Name, String user2Name, boolean User1Won) {
+		gameHistory.add(new GameEntry(user1Name, User1Won));
+		gameHistory.add(new GameEntry(user2Name, !User1Won));
+		UserDataBase.modifyUser(this);
+	}
+	
 	public int getWinsVsOpponent(User opponent) {
 		int count = 0;
 		for(GameEntry entry : this.gameHistory)
