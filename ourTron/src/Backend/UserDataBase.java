@@ -95,26 +95,29 @@ public class UserDataBase {
 	public static void modifyUser(User user) {
 		//get the user object
 		LinkedList<User> db = UserDataBaseWriter.readFromFile();
-		for(User oldEntry : db)
-			if(oldEntry.getUsername().equals(user.getUsername())) {
-				db.remove(oldEntry);
-				db.add(user);
-				UserDataBaseWriter.writeToFile(db);
-				return;
+		for(int i = 0; i < db.size(); i++)
+			if(db.get(i).getUsername().equals(user.getUsername())) {
+				db.set(i, user);
 			}
-		
+		UserDataBaseWriter.writeToFile(db);
+//		printDB();
 		return;
 	}
 	
 	@SuppressWarnings("null")
 	public static LinkedList<User> getAllUsers() {
-		LinkedList<User> allUsers = null;
+		LinkedList<User> allUsers = new LinkedList<User>();
 		for(User thisUser: UserDataBaseWriter.readFromFile()){
 			allUsers.add(thisUser);
 			}
 		return allUsers;
-		
 	}
+	
+	private static void printDB() {
+		for(User user : UserDataBaseWriter.readFromFile())
+			System.out.println(user);
+	}
+	
 	public static class UserDataBaseWriter {
 		private static String location = "UserDataBase.data";
 
@@ -165,6 +168,7 @@ public class UserDataBase {
 				out.close();
 				fileOut.close();
 			} catch (IOException i) {
+				System.err.println("ERROR");
 				//IOException not expected. 
 			}
 		}

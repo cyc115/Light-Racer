@@ -1,90 +1,106 @@
 package GameCore;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import UI.GamePanel;
 import Backend.User;
+import Backend.UserDataBase;
 /**
- * This class contains all the logic for the LightRacer game
- * @author Han Yang Zhao
+ * This class contains all the logic for the LightRacer game. 
+ * Its main functionality are to update the player's position within the map,check for collision and update the pixel array used by GamePanel.
+ * 	@author Han Yang Zhao
  *
  */
 public class GameLogic {
 
-	public int size = 512;
-	public int width = size;
-	public int height = size;
-	public int scale = 1;
-	private final int numberOfTiles = 128;
-	private int[] pixels;
+	//size of the game window
+	public int width = 600;
+	public int height = 400;
+	private int[] pixels = new int[width*height];
 	//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
-	private final int bitshift = 2;
+	private final int bitshift = 3;
+	
+	//size of the map
+	private final int tilesWidth = 75;
+	private final int  tilesHeight = 50;
+	public int[] tiles = new int [tilesWidth * tilesHeight];
+	public Map gameMap;
+	public Map[] gameMapCopy = new Map[3];
+	//creates 3 maps
+	public static Map[] allMaps = new Map[3];
+	
 	
 	private Player player1;
 	private Player player2;
 	private static  User user1 = new User();
 	private static  User user2 = new User();
 	private GameScore gamescore;
-	private int roundNumber;
-	final Coordinate startingPosP1 = new Coordinate(1,1);
-	final Coordinate startingPosP2 = new Coordinate(126,126);
+	private int roundNumber = 0;
+	
 	
 	private LinkedList <Control> p1Direction;
 	private LinkedList <Control> p2Direction;
 	private final int  MAX_KEYINPUT = 5;
 	
-	public int[] tiles = new int [numberOfTiles * numberOfTiles];
-	public Map gameMap;
-	public static Map[] allMaps = new Map[3];
-	
-	//right now, the constructor is set up so this will make a blank map
-	//     gameMap.createMapFromFile() ...
-	
 	private boolean gameStop = false;
 	private boolean gamePause = false;
 	
+	private static GameLogic gameLogicInstance = new GameLogic();
 	
-	public GameLogic(){
-		
-		pixels = new int[size*size];
-		roundNumber = 0;
+	
+	public static GameLogic getInstance(){
+		return gameLogicInstance;
 	}
 	/**
 	 * Initialize players for the 1st round
 	 */
 	public void initializePlayers(){
+		// reset the previous game.
 		
-			player1 = new Player(startingPosP1, user1, Control.SOUTH);
-			player2 = new Player(startingPosP2, user2, Control.NORTH);
+		
+		 	Coordinate startingPosP1 = new Coordinate(0,49);
+		 	Coordinate startingPosP2 = new Coordinate(74,0);
+		 	for ( int i = 0 ; i < 3 ; ++i){
+		 	 gameMapCopy[i] = new Map(allMaps[i]);
+		 	}
+		 	
+		
+		 	if(roundNumber == 0){
+		 		player1 = new Player(startingPosP1, user1, Control.NORTH);
+				player2 = new Player(startingPosP2, user2, Control.SOUTH);
 
-			p1Direction = new LinkedList<Control> ();
-			p1Direction.add(player1.getDirection());
+				p1Direction = new LinkedList<Control> ();
+				p1Direction.add(player1.getDirection());
 
-			p2Direction = new LinkedList<Control> ();
-			p2Direction.add(player2.getDirection());
-			gamescore = new GameScore();
-			gameMap = allMaps[0];
+				p2Direction = new LinkedList<Control> ();
+				p2Direction.add(player2.getDirection());
+				gamescore = new GameScore();
+				gameMap = gameMapCopy[0];
+		 	}
+		 	
+		 	else{
+		 		gameStop= false;
+				gamePause = false;
+				player1.setCollision(false);
+				player2.setCollision(false);
+				player1.setPlayerLocation(startingPosP1);
+				player2.setPlayerLocation(startingPosP2);
+				
+				p1Direction.clear();
+				p2Direction.clear();
+				p1Direction.add(player1.getDirection());
+				p2Direction.add(player2.getDirection());
+				if(roundNumber != 3){
+					gameMap = gameMapCopy[roundNumber];
+				}
+				
+				else {
+					gameMap = gameMapCopy[0];
+				}
+		 	}
+			
 		
-	}
-	/**
-	 * reinitialize players for round 2 and 3
-	 */
-	public void reinitializeGame(){
-		
-		gameStop= false;
-		gamePause = false;
-		player1.setCollision(false);
-		player2.setCollision(false);
-		final Coordinate startingPos1 = new Coordinate(1,1);
-		final Coordinate startingPos2 = new Coordinate(126,126);
-		player1.setPlayerLocation(startingPos1);
-		player2.setPlayerLocation(startingPos2);
-		
-		p1Direction.clear();
-		p2Direction.clear();
-		p1Direction.add(Control.SOUTH);
-		p2Direction.add(Control.NORTH);
-		gameMap = allMaps[roundNumber];
 	}
 
 	/**
@@ -106,7 +122,7 @@ public class GameLogic {
 	 * This class takes in the {@link Map} array and converts them into pixels to be displayed on the screen.
 	 * We first get each tiles in {@link Map} array and assign them to a ARGB int value. This will determine the type of the tile.
 	 * Then we assign each pixels to be part of a tile
-	 * @param pixels
+	 * 	@param {@link int[]} pixels
 	 */
 	public void renderScreen( int[] pixels){
 
@@ -152,15 +168,11 @@ public class GameLogic {
 		}
 		//This converts the tiles to pixels to be displayed on the screen
 		for (int y = 0; y < height ; y++){
-			int yy = y;
-			if(yy < 0 || y >= height) break;
 			for (int x = 0 ; x < width ; x++){
-				int xx = x;
-				if(xx < 0 || x >= width) break;
 				//updates pixels line by line from left to right and up to bottom
 				//each tiles has 16x16 pixels
-				int tileIndex = (x >> bitshift) + (y >> bitshift) * numberOfTiles;
-				pixels[x + y * width] = tiles[tileIndex];
+				int tileIndex = (x >> bitshift) + (y >> bitshift) * tilesWidth;
+				pixels[ x + y * width ] = tiles[tileIndex];
 			}
 		}
 	}
@@ -168,11 +180,11 @@ public class GameLogic {
 	/**
 	 * This functions determines the players new position based on the playerDirection linkedList. It checks if there is an obstacle
 	 * in the new position. If not it will modify the mapArray with updated values about the players head position and tail.
-	 * @param playerDirection
-	 * @param player
-	 * @param mapArray
-	 * @param trail
-	 * @param head
+	 * 	@param {@link LinkedList} playerDirection
+	 * 	@param {@link Player} player
+	 * 	@param {@link Map} mapArray
+	 * 	@param {@link String} trail
+	 * 	@param {@link String} head
 	 */
 	public void movePlayers(
 			LinkedList<Control> playerDirection, 
@@ -226,6 +238,7 @@ public class GameLogic {
 		
 	/**
 	 * Checks is player has collided with anything on the gameMap
+	 * @return {@link boolean}
 	 */
     public static boolean hasCollided(Player player, Map gameMap, Coordinate nextLocation){ //TODO: fill in hasCollided
     	
@@ -239,8 +252,9 @@ public class GameLogic {
     }
 	/**
 	 * handleCollision will first check if there are any collision, and then handle them.
-	 * If there are no collisions, then it will return
-	 * If there are collisions, then it will update the GameScore and end the game
+	 * If there are no collisions, then it will return false
+	 * If there are collisions, then it will return true, update the GameScore and end the game
+	 * 	@return {@link boolean}
 	 */
 	public boolean handleCollisions(Player player1, Player player2){ //TODO: fill in handleCollissions collision 
 		boolean p1HasCollided = player1.getCollision();
@@ -276,6 +290,7 @@ public class GameLogic {
 		}
 		else{
 			GamePanel.endGame = true;
+			clearScreen(this.pixels);
 			//handle the game results. 
 			if(this.gamescore.getPlayerOneScore() > this.gamescore.getPlayerTwoScore()) {
 				user1.addGameResult(user2, true);
@@ -286,6 +301,8 @@ public class GameLogic {
 				user2.addGameResult(user1, true);
 				GamePanel.winner = player2;
 			}
+			user1 = UserDataBase.retrieveUser(user1.getUsername());
+			user2 = UserDataBase.retrieveUser(user2.getUsername());
 			this.gamescore.initialize();
 			
 			return true;
@@ -293,8 +310,8 @@ public class GameLogic {
 	}
 	
 	/**
-	 * Add and direction to the player direction LinkedList 
-	 * @param direction
+	 * Add a direction to player1's direction LinkedList 
+	 * 	@param {@link Control}
 	 */
 	public void addP1Direction(Control direction){
 		switch(direction){
@@ -353,7 +370,10 @@ public class GameLogic {
 
 		} 
 	}
-	
+	/**
+	 * Add a direction to player2's direction LinkedList 
+	 * @param {@link Control}
+	 */
 	public void addP2Direction(Control direction){
 		switch(direction){
 		
@@ -369,7 +389,6 @@ public class GameLogic {
 				}
 			}
 			break;
-		
 		 case SOUTH:
              if(!gameStop && !gamePause) {
                      //makes sure we don't poll more than 3 times
@@ -382,7 +401,6 @@ public class GameLogic {
                      }
              }
              break;	
-			
 		 case WEST:
              if(!gameStop && !gamePause) {
                      //makes sure we don't poll more than 3 times
@@ -395,7 +413,6 @@ public class GameLogic {
                      }
              }
              break;	
-		//for player 1
     	case EAST:
             if(!gameStop && !gamePause) {
                     //makes sure we don't poll more than 3 times
@@ -412,19 +429,30 @@ public class GameLogic {
 		} 
 	}
 		
-	
-	public void usePowerUp(Player player){ //TODO: fill in usePowerUp
-
-	}
-	public void obtainPowerUp(){ //TODO: fill in
-	}
-	
+	/**
+	 * return pixel array
+	 * @return {@link int[]}
+	 */
 	public int[] getPixels(){
 		return pixels;
 	}
 	
+	/**
+	 * return round number
+	 * @return {@link int}
+	 */
 	public int getRoundNumber(){
 		return roundNumber;
+	}
+	
+	public void clearScreen(int[] pixels){
+		for ( int i = 0 ; i < pixels.length ; i++){
+			pixels[i] = 0;
+		}
+	}
+	
+	public void resetRoundNumber(){
+		roundNumber = 0;
 	}
 	public static User getUser(int i){
 		if (i == 1 ) return user1 ;

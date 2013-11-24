@@ -12,18 +12,13 @@ import java.awt.EventQueue;
 
 public class GameFrame extends UIElement implements reinitializable{
 	private static GameFrame gameFrameInstance = new GameFrame();
+
 	
         private static final long serialVersionUID = 1L;
         //I've changed this to Canvas because Jpanel doesn't work well with BufferStrategy
-        private static Canvas canvas;
         
-        /**
-         * Create the frame.
-         * @deprecated use getInstance() to obtain a static instance.
-         */
-        public GameFrame() {
-                this.setSize(1500,1500);
-        }
+        
+    
         /**
          * 
          * @return a static instance of the GameFrame class
@@ -38,11 +33,20 @@ public class GameFrame extends UIElement implements reinitializable{
         	EventQueue.invokeLater(new Runnable() {
                 public void run() {
                         try {
-                                canvas = (GamePanel.getInstance());
-                                canvas.setVisible(true);
-                                gameFrameInstance.add(canvas);
+                        		gameFrameInstance.setSize(1000,1000);
+                         
+                                GamePanel.getInstance().setSize(600, 400);
+                    			GamePanel.getInstance().addKeyListener(GamePanel.getInstance());
+                    			System.out.println("gamePanel initialized");
+                               
+                                
+                                (GamePanel.getInstance()).setVisible(true);
+                                gameFrameInstance.add(GamePanel.getInstance());
                                 gameFrameInstance.pack();
-                                ((GamePanel) canvas).start();
+                                //Create a triple buffering BufferStrategy
+                                (GamePanel.getInstance()).createBufferStrategy(3);
+                                (GamePanel.getInstance()).start();
+                                System.out.println("game has started");
                         } catch (Exception e) {
                                 e.printStackTrace();
                         }

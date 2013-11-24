@@ -22,23 +22,34 @@ import java.util.Random;
 public class Map implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int difficulty;
-	private int size = 128;
-	private int height = 128;
-	private int width = 128;
+	private int height = 50;
+	private int width = 75;
 	private MapSign[][] mapArray = new MapSign[width][height];
 	// exact copy of mapArray but in 1D
-	private MapSign[] convertedMapArray = new MapSign[mapArray.length
-			* mapArray.length];
+	private MapSign[] convertedMapArray = new MapSign[width * height];
 	private String mapName;
 
 	public enum MapSign {
 		WALL, player1Trail, player2Trail, power1, power2, EMPTY, player1Head, player2Head
 	}
 
-	public Map(String location) {
-		super();
-		loadMapFromFile(location);
-	}
+	
+	public Map(Map map) {
+	 	this.difficulty = map.difficulty;
+	 	this.height = map.height;
+	 	this.width = map.width;
+	 	this.mapArray = new MapSign[map.width][map.height];
+	 	for (int i = 0; i < width; i++) {
+	 		for (int j = 0; j < height; j++) {
+	 			this.mapArray[i][j] = map.mapArray[i][j];
+	 		}
+	 	}
+	 	this.convertedMapArray = new MapSign[width * height];
+	 	for(int i = 0; i < map.convertedMapArray.length; i++)
+	 	this.convertedMapArray[i] = map.convertedMapArray[i];
+	 	this.mapName = map.mapName;
+	 	convert2Dto1D();
+	 }
 
 	public Map(String name, boolean generate) {
 		this.difficulty = 1;
@@ -52,13 +63,13 @@ public class Map implements Serializable {
 	public Map() {
 		this.difficulty = 1;
 		this.mapName = "blankMap.map";
-		initializeJustEdges();
+		//initializeJustEdges();
 		
 		//merge conflict : donno if this line should be kept 
-		generateRandomWalls();
+		//generateRandomWalls();
 
 		convert2Dto1D();
-		createMap(this, "defaultMap.map");
+//		createMap(this, "defaultMap.map");
 	}
 
 	public static void main(String[] args) {
@@ -81,9 +92,9 @@ public class Map implements Serializable {
 		Map map3 = new Map("basicMap3", true);
 		map3.height = 50;
 		map3.width = 75;
-		map3.generateWalls(new Point(05, 05), new Point(25, 25));
+		map3.generateWalls(new Point(05, 25), new Point(25, 45));
 		map3.generateWalls(new Point(30, 20), new Point(45, 30));
-		map3.generateWalls(new Point(50, 25), new Point(70, 45));
+		map3.generateWalls(new Point(50, 05), new Point(70, 25));
 		Map.createMap(map3, "basicMap3.map");
 	}
 	/**
@@ -123,8 +134,8 @@ public class Map implements Serializable {
 		for (int i = 0; i < numberOfBlocks; i++) {
 			int blockWidth = randomGenerator.nextInt(30) + 1;
 			int blockHeight = randomGenerator.nextInt(30) + 1;
-			int randomX = randomGenerator.nextInt(128 - blockWidth) + 1;
-			int randomY = randomGenerator.nextInt(128 - blockHeight) + 1;
+			int randomX = randomGenerator.nextInt(75 - blockWidth) + 1;
+			int randomY = randomGenerator.nextInt(50 - blockHeight) + 1;
 			for (int j = randomX; j < randomX + blockWidth; j++) {
 				for (int k = randomY; k < randomY + blockHeight; k++) {
 					this.mapArray[j][k] = MapSign.WALL;
@@ -149,7 +160,7 @@ public class Map implements Serializable {
 	public boolean isOccupied(Coordinate coordinate) {
 		int x = coordinate.getX();
 		int y = coordinate.getY();
-		if (x >= 0 && x < size && y >= 0 && y < size) {
+		if (x >= 0 && x < width && y >= 0 && y < height) {
 			if (mapArray[x][y] != MapSign.EMPTY) {
 				return true;
 			} else {
@@ -246,14 +257,10 @@ public class Map implements Serializable {
 			setMap((Map) in.readObject());
 			in.close();
 			fileIn.close();
-			System.out.printf("The following mapfile has been loaded "
-					+ filename);
 		} catch (ClassNotFoundException c) {
-			System.err.println("The location does not have a valid file");
 			c.printStackTrace();
 			return;
 		} catch (IOException i) {
-			System.err.println("Something went wrong, exiting loading of map");
 			i.printStackTrace();
 			return;
 		}
@@ -270,7 +277,6 @@ public class Map implements Serializable {
 			out.writeObject(this);
 			out.close();
 			fileOut.close();
-			System.out.printf("Your data has been saved in " + filename);
 		} catch (IOException i) {
 			i.printStackTrace();
 		}
@@ -319,8 +325,8 @@ public class Map implements Serializable {
 	public void convert2Dto1D() {
 		
 		List <MapSign> tempList =new ArrayList<MapSign>();
-		for(int i = 0 ; i <mapArray.length ; i++){
-			for(int j = 0 ; j < mapArray[i].length ; j++){
+		for(int i = 0 ; i < 50 ; i++){
+			for(int j = 0 ; j < 75 ; j++){
 				tempList.add( mapArray[j][i]);
 			}
 		}

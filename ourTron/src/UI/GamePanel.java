@@ -2,6 +2,7 @@ package UI;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -24,33 +25,36 @@ import javax.imageio.ImageIO;
 
 /**This class has two main functions : Take in key inputs and displays the game on the screen
  * 
- * @author <Han Yang Zhao> 
- * @version 1.0
+
+ /**
+ * 	@author Han Yang Zhao
  *
  */
 	public class GamePanel extends Canvas implements KeyListener, Runnable {
 		boolean suspendflag;
 		private static GameLogic gameLogic;
 		public static int size = 512;
-		public static int width = size;
-		public static int height = size;
+		public static int width = 600;
+		public static int height = 400;
 		private static final long serialVersionUID = 1L;
 		private static final int BUFFER = 3;
-		private static final int numberOfTiles = 128;
+		private static final int tilesWidth = 75;
+		private static final int tilesHeight = 50;
 		//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
 
 		long timer;
 		long lastTime;
 		private int playingspeed = 1 ; //TODO move this to a map class. 
 		//keyboards input are stored in the the linkedlists
-		public int[] tiles = new int [numberOfTiles * numberOfTiles];
+		public int[] tiles = new int [tilesWidth * tilesHeight];
 
-		private Thread thread;
+		private  Thread thread;
 		private static boolean running = false;
 		// number of ticks
 		public static int updates; //TODO move this to map. 
 		//number of frames displayed on the screen
 		public static int frames;
+		public BufferStrategy bs;
 		
 		public static boolean resetGame = false;
 		public static boolean endGame = false;  
@@ -67,25 +71,6 @@ import javax.imageio.ImageIO;
 		 * this is the game panel object . only 1 copy exist per game ~!
 		 */
 		private static GamePanel gamePanelInstance = new GamePanel();
-		/**
-		 * Create the panel.
-		 * @deprecated use getInstance() to obtain a static instance of GamePanel
-		 */
-		
-		//Constructor
-		GamePanel() {
-
-			gameLogic = new GameLogic();
-			this.setSize(size, size);
-			addKeyListener(this);
-			
-			//adds an background image
-			try {
-				//Change this to your own path
-			    bkgimg = ImageIO.read(new File("C:/Users/Owner/git/team-15/tron2.jpg"));
-			} catch (IOException e) {}	
-		}
-		
 		
 		/**
 		 * Takes key inputs and add them to player direction LinkedList in {@link GameLogic} 
@@ -143,9 +128,22 @@ import javax.imageio.ImageIO;
 		 * start() will be called to start a new thread start the game
 		 */
 		public synchronized void start() {
-			suspendflag = false;
+			
+			gameLogic = GameLogic.getInstance();
+			//gamePanelInstance.createBufferStrategy(BUFFER);
+			//Use bufferstrategy to pre-render new frames and reduce choppiness of the gameplay
+			bs = gamePanelInstance.getBufferStrategy();
+					
+			
+			
+			//adds an background image
+//			try {
+//				//Change this to your own path
+//			    bkgimg = ImageIO.read(new File("C:/Users/Owner/git/team-15/tron2.jpg"));
+//			} catch (IOException e) {}	
+			
 			running = true;
-			thread = new Thread(this,"Tron");
+			thread = new Thread(gamePanelInstance,"Tron");
 			gameLogic.initializePlayers();
 			thread.start();
 		}
@@ -162,7 +160,7 @@ import javax.imageio.ImageIO;
 		public synchronized void resume(){
 			updates = 0;
 			frames = 0;
-			gameLogic.reinitializeGame();
+			gameLogic.initializePlayers();
 			this.timer = System.currentTimeMillis();
 			this.lastTime = System.nanoTime();
 			running = true;
@@ -171,50 +169,52 @@ import javax.imageio.ImageIO;
 		/**
 		 * called at the beginning of the Game match.
 		 */
-		public void run() {
-			
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	
-			frames = 0;
-			updates = 0;
-			this.timer = System.currentTimeMillis();
+		
+			public void run() {
 
-			//Timer variables ( limits the update rate to 30 times per second)
-			this.lastTime = System.nanoTime();
-			double framesPerSecond = 30.0 * playingspeed ;
-			//time of one frame
-			final double ns = 1000000000.0 / framesPerSecond;
-
-			double delta = 0.0;
-			//main game loop
-			while(running){
-				gameInterruptionCheck();
-				long now = System.nanoTime();
-				delta += (now-lastTime) / ns;
-				lastTime = now;
-				//this only happens 30 times per second
-				while (delta >=1 ){
-					gameLogic.update();
-					updates++;
-					delta--;
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				render();
-				frames++;
 
-				if(System.currentTimeMillis() - timer > 1000){
-					timer += 1000;
-					System.out.println(updates + "ups, " + frames + " fps");
-					updates = 0;
-					frames = 0;
+				frames = 0;
+				updates = 0;
+				this.timer = System.currentTimeMillis();
+
+				//Timer variables ( limits the update rate to 30 times per second)
+				this.lastTime = System.nanoTime();
+				double framesPerSecond = 30.0 * playingspeed ;
+				//time of one frame
+				final double ns = 1000000000.0 / framesPerSecond;
+
+				double delta = 0.0;
+				//main game loop
+				while(running){
+					gameInterruptionCheck();
+					long now = System.nanoTime();
+					delta += (now-lastTime) / ns;
+					lastTime = now;
+					//this only happens 30 times per second
+					while (delta >=1 ){
+						gameLogic.update();
+						updates++;
+						delta--;
+					}
+					render();
+					frames++;
+
+					if(System.currentTimeMillis() - timer > 1000){
+						timer += 1000;
+						System.out.println(updates + "ups, " + frames + " fps");
+						updates = 0;
+						frames = 0;
+					}
 				}
+
 			}
-			
-		}
+		
 
 		/**
 		 * Render() takes care of the graphical processing of the game.
@@ -223,12 +223,7 @@ import javax.imageio.ImageIO;
 		 */
 		private void render() {
 			//Use bufferstrategy to pre-render new frames and reduce choppiness of the gameplay
-			BufferStrategy bs = getBufferStrategy();
-			if (bs == null){
-				createBufferStrategy(BUFFER);
-				return;
-			}
-			
+			 
 			clearScreen(pixels);
 			renderScreen(pixels);
 
@@ -297,9 +292,18 @@ import javax.imageio.ImageIO;
 	    		
 	    		stop();
 	    		showGameEndMsg();
-	    		this.setVisible(false);
+	    		
+	    		gameLogic.initializePlayers();
+	    		gameLogic.resetRoundNumber();
+	    		
+	    		
+	    		gamePanelInstance.setVisible(false);
 	    		GameFrame.getInstance().setVisible(false);
 		    	MainMenu.getInstance().setVisible(true);
+		    	resetGame = false;
+		    	endGame = false;
+		    	
+		    			
 	    		//do something here
 	    	}
 	    }
