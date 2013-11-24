@@ -54,7 +54,7 @@ public class MainMenu extends UIElement {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Login.getInstance().setVisible(true);
-				MainMenu.getInstance().setVisible(false);
+				setVisible(false);
 			}
 		});
 		getContentPane().add(btnNewButton, "cell 1 1,alignx center");
