@@ -55,8 +55,12 @@ public class GameLogic {
 	 * Initialize players for the 1st round
 	 */
 	public void initializePlayers(){
+		// reset the previous game.
+		roundNumber %= 3;
+		
 		 	Coordinate startingPosP1 = new Coordinate(1,49);
 		 	Coordinate startingPosP2 = new Coordinate(74,1);
+		 	
 		
 		 	if(roundNumber == 0){
 		 		player1 = new Player(startingPosP1, user1, Control.NORTH);
