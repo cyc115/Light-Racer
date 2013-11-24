@@ -53,7 +53,7 @@ public class Map implements Serializable {
 		generateRandomWalls();
 
 		convert2Dto1D();
-		createMap(this, "defaultMap.map");
+//		createMap(this, "defaultMap.map");
 	}
 
 	public static void main(String[] args) {
@@ -241,14 +241,10 @@ public class Map implements Serializable {
 			setMap((Map) in.readObject());
 			in.close();
 			fileIn.close();
-			System.out.printf("The following mapfile has been loaded "
-					+ filename);
 		} catch (ClassNotFoundException c) {
-			System.err.println("The location does not have a valid file");
 			c.printStackTrace();
 			return;
 		} catch (IOException i) {
-			System.err.println("Something went wrong, exiting loading of map");
 			i.printStackTrace();
 			return;
 		}
@@ -265,7 +261,6 @@ public class Map implements Serializable {
 			out.writeObject(this);
 			out.close();
 			fileOut.close();
-			System.out.printf("Your data has been saved in " + filename);
 		} catch (IOException i) {
 			i.printStackTrace();
 		}

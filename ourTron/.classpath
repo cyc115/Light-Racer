@@ -11,7 +11,11 @@
 	<classpathentry kind="lib" path="forms-1.3.0-src.zip"/>
 	<classpathentry kind="lib" path="miglayout-src.zip"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="E:/GoogleDrive/Awesome ECSE-321_/miglayout-4.0-swing.jar"/>
+>>>>>>> bugFix1
+=======
+	<classpathentry kind="lib" path="/Users/danielle/Documents/miglayout-4.0-swing.jar"/>
 >>>>>>> bugFix1
 	<classpathentry kind="output" path="bin"/>
 </classpath>
