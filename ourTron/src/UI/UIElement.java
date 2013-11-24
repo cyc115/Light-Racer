@@ -49,11 +49,6 @@ public abstract class UIElement extends JFrame {
 
 			"<h2><center>About use</center></h2>\n";
 	/**
-	 * method used to reset the JFrame 
-	 */
-	public abstract void reset();
-
-	/**
 	 * Create the frame.
 	 */
 	public UIElement() {

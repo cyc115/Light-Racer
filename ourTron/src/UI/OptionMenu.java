@@ -17,7 +17,7 @@ import javax.swing.JButton;
  * @author yuechuan
  *
  */
-public class OptionMenu extends UIElement {
+public class OptionMenu extends UIElement implements reinitializable {
 
 	private static OptionMenu omInstance = new OptionMenu();
 	

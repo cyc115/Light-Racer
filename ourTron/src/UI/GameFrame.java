@@ -10,7 +10,7 @@ import java.awt.EventQueue;
  *
  */
 
-public class GameFrame extends UIElement {
+public class GameFrame extends UIElement implements reinitializable{
 	private static GameFrame gameFrameInstance = new GameFrame();
 	
         private static final long serialVersionUID = 1L;

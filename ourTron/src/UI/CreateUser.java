@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
  *  @author yuechuan Chen
  *
  */
-public class CreateUser extends UIElement {
+public class CreateUser extends UIElement implements reinitializable {
 
 	private JPanel contentPane;
 

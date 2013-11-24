@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
  * @author yuechuan
  *
  */
-public class Login extends UIElement  {
+public class Login extends UIElement implements reinitializable {
 	
 	//following are fields that need to be reset during reset() call 
 	private JTextField jtfUser = new JTextField();

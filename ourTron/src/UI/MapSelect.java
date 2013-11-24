@@ -26,7 +26,7 @@ import GameCore.Map;
  * @author yuechuan
  *
  */
-public class MapSelect extends UIElement {
+public class MapSelect extends UIElement implements reinitializable {
 	
 	private JPanel contentPane;
 	private static MapSelect msInstance = new MapSelect();
