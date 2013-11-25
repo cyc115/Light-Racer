@@ -13,7 +13,7 @@ public class Info {
  * The game instructions in html format
  * @return a String which contains the instruction in html format
  */
-	public static String instructions(){
+	public static String getInstruction(){
 		String htmlInstructions = "<body>"
 				+ "<h1 style='text-align: center;'>Instructions</h1>"
 				+ "<h3><span style='color:#b22222;'>Game Play</span></h3>"
@@ -28,7 +28,7 @@ public class Info {
 	 * The About Us page in html format
 	 * @return a String which contains the About Us page in html format
 	 */
-	public static String aboutUs(){
+	public static String getAboutUs(){
 		String htmlAboutUs = "<body>"
 				+ "<h1 style='text-align: center;'><span style='font-family:trebuchet ms,helvetica,sans-serif;'><span style='color:#b22222;'>About Us</span></span></h1>"
 				+ "<p><span style='font-family:trebuchet ms,helvetica,sans-serif;'>Hi!</span></p>"

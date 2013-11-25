@@ -9,6 +9,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import Backend.Info;
 import Backend.PlayerStatistics;
 
 import java.awt.event.ActionListener;
@@ -113,8 +114,8 @@ public abstract class UIElement extends JFrame {
 		JMenuItem mntmInstruction = new JMenuItem("Instruction");
 		mntmInstruction.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e){
-				InfoPage hellOfFame = new InfoPage("Instruction", INSTRUCTION_STR, "Back");   	//TODO get johanna's class
-				hellOfFame.setVisible(true);
+				InfoPage instructionPage = new InfoPage("Instruction", Info.getInstruction(), "Back");   	//TODO get johanna's class
+				instructionPage.setVisible(true);
 				
 			}
 		});
@@ -147,8 +148,8 @@ public abstract class UIElement extends JFrame {
 		JMenuItem mntmAboutUs = new JMenuItem("About Us");
 		mntmAboutUs.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e){
-				InfoPage hellOfFame = new InfoPage("About Us", INSTRUCTION_STR, "Back");  	//TODO get johanna's class
-				hellOfFame.setVisible(true);
+				InfoPage aboutUsPage = new InfoPage("About Us", Info.getAboutUs(), "Back");  	//TODO get johanna's class
+				aboutUsPage.setVisible(true);
 				
 			}
 		});
