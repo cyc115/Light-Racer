@@ -120,6 +120,17 @@ public abstract class UIElement extends JFrame {
 			}
 		});
 		
+		JMenuItem mntmHeadToHead = new JMenuItem("Head to Head");
+		
+		mntmHeadToHead.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				InfoPage headToHead = new InfoPage("Head To Head ", Info.getAboutUs(), "Back");  	//TODO get johanna's class
+				headToHead.setVisible(true);
+			}
+		});
+		
+		mnGame.add(mntmHeadToHead);
+		
 		mnGame.add(mntmInstruction);
 		
 		JMenu mnOptions = new JMenu("Options");
