@@ -124,8 +124,7 @@ public abstract class UIElement extends JFrame {
 		
 		mntmHeadToHead.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InfoPage headToHead = new InfoPage("Head To Head ", Info.getAboutUs(), "Back");  	//TODO get johanna's class
-				headToHead.setVisible(true);
+				HeadToHead.getInstance().setVisible(true);
 			}
 		});
 		
