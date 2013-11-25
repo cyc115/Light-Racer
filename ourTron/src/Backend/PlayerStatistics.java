@@ -17,13 +17,15 @@ import java.util.LinkedList;
 	public class PlayerStatistics {
 	
 		/**
-	 * Calculates the wins between 2 users.
-	 * @param user1 
-	 * @param user2
-	 * @return a String which contains the results of wins/losses of each user in html format. If either user is null, then it will return scores of 0 for both User 1 and User 2
+	 * Calculates the wins between 2 users. 
+	 * @param userName1 
+	 * @param userName2 
+	 * @return a String which contains the results of wins/losses of each user in html format. If either username does not exist, then it will return scores of 0 for both User 1 and User 2
 	 */
-		public static String user1VsUser2Wins(User user1, User user2){
+		public static String user1VsUser2Wins(String userName1, String userName2){
 			String htmlDisplay;
+			User user1 = UserDataBase.retrieveUser(userName1);
+			User user2 = UserDataBase.retrieveUser(userName2);
 			
 			if (user1 != null && user2 != null){
 				int user1Wins = user1.getWinsVsOpponent(user2);
@@ -78,5 +80,5 @@ import java.util.LinkedList;
 			
 			return htmlDisplay;
 		}
-	}
-	
+
+}
