@@ -59,6 +59,7 @@ import javax.imageio.ImageIO;
 		public static boolean resetGame = false;
 		public static boolean endGame = false;  
 		public static Player winner;
+		public static boolean isDraw = false;
 		
 		//  (creates an image)
 		private BufferedImage endimg = null;  //TODO not used 
@@ -141,7 +142,9 @@ import javax.imageio.ImageIO;
 //				//Change this to your own path
 //			    bkgimg = ImageIO.read(new File("C:/Users/Owner/git/team-15/tron2.jpg"));
 //			} catch (IOException e) {}	
-			
+			isDraw = false;
+			resetGame = false;
+	    	endGame = false;
 			running = true;
 			thread = new Thread(gamePanelInstance,"Tron");
 			gameLogic.initializePlayers();
@@ -158,6 +161,7 @@ import javax.imageio.ImageIO;
 		 * Resume the game after a reinitializing players for a new round
 		 */
 		public synchronized void resume(){
+			
 			updates = 0;
 			frames = 0;
 			gameLogic.initializePlayers();
@@ -165,6 +169,7 @@ import javax.imageio.ImageIO;
 			this.lastTime = System.nanoTime();
 			running = true;
 			resetGame= false;
+			isDraw = false;
 		}
 		/**
 		 * called at the beginning of the Game match.
@@ -300,8 +305,7 @@ import javax.imageio.ImageIO;
 	    		gamePanelInstance.setVisible(false);
 	    		GameFrame.getInstance().setVisible(false);
 		    	MainMenu.getInstance().setVisible(true);
-		    	resetGame = false;
-		    	endGame = false;
+		    	
 		    	
 		    			
 	    		//do something here
@@ -312,16 +316,31 @@ import javax.imageio.ImageIO;
 	     */
 	    private void showRoundEndMsg(){
 	    	
-	    	Object[] options = {"Next Round",
-            };
-	    	JOptionPane.showOptionDialog (
-	    			   null, 
-	    			   "Round " +  gameLogic.getGameRoundNumber() + " " + winner.getUsername() + " Wins",
-	    			   "Round End", JOptionPane.YES_OPTION,
-	    			   JOptionPane.QUESTION_MESSAGE,
-	    			   null,
-	    			   options,
-	    			   options[0]);
+	    	if(isDraw){
+	    		
+	    		Object[] options = {"Next Round",
+	            };
+		    	JOptionPane.showOptionDialog (
+		    			   null, 
+		    			   "Round Draw",
+		    			   "Round End", JOptionPane.YES_OPTION,
+		    			   JOptionPane.QUESTION_MESSAGE,
+		    			   null,
+		    			   options,
+		    			   options[0]);
+	    	}
+	    	else{
+	    		Object[] options = {"Next Round",
+	    		};
+	    		JOptionPane.showOptionDialog (
+	    				null, 
+	    				"Round " +  gameLogic.getGameRoundNumber() + " " + winner.getUsername() + " Wins",
+	    				"Round End", JOptionPane.YES_OPTION,
+	    				JOptionPane.QUESTION_MESSAGE,
+	    				null,
+	    				options,
+	    				options[0]);
+	    	}
 	    }
 		/**
 		 * Behavior when player has used power up.

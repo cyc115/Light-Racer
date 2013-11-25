@@ -31,16 +31,18 @@ public class GameLogic {
 	public static Map[] allMaps = new Map[3];
 	
 	
-	private Player player1;
-	private Player player2;
+	private static Player player1;
+	private static Player player2;
 	private static  User user1 = new User();
 	private static  User user2 = new User();
+	private static Coordinate startingPosP1;
+	private static Coordinate startingPosP2;
 	private GameScore gamescore;
 	private int roundNumber = 0;
 	
 	
-	private LinkedList <Control> p1Direction;
-	private LinkedList <Control> p2Direction;
+	private LinkedList <Control> p1Direction = new LinkedList <Control> ();
+	private LinkedList <Control> p2Direction = new LinkedList < Control >();
 	private final int  MAX_KEYINPUT = 5;
 	
 	private boolean gameStop = false;
@@ -50,7 +52,10 @@ public class GameLogic {
 	
 	
 	public static GameLogic getInstance(){
+		player1 = new Player(startingPosP1, user1, Control.NORTH);
+		player2 = new Player(startingPosP2, user2, Control.SOUTH);
 		return gameLogicInstance;
+		
 	}
 	/**
 	 * Initialize players for the 1st round
@@ -58,35 +63,31 @@ public class GameLogic {
 	public void initializePlayers(){
 		// reset the previous game.
 		
-		
-		 	Coordinate startingPosP1 = new Coordinate(0,49);
-		 	Coordinate startingPosP2 = new Coordinate(74,0);
+			
+		 	startingPosP1 = new Coordinate(0,49);
+		 	startingPosP2 = new Coordinate(74,0);
+		 	player1.setPlayerLocation(startingPosP1);
+ 			player2.setPlayerLocation(startingPosP2);
+		 	player1.setCollision(false);
+	 		player2.setCollision(false);
+	 		gameStop= false;
+			gamePause = false;
 		 	for ( int i = 0 ; i < 3 ; ++i){
 		 	 gameMapCopy[i] = new Map(allMaps[i]);
 		 	}
 		 	
 		
 		 	if(roundNumber == 0){
-		 		player1 = new Player(startingPosP1, user1, Control.NORTH);
-				player2 = new Player(startingPosP2, user2, Control.SOUTH);
-
-				p1Direction = new LinkedList<Control> ();
+		 		
+		 		
 				p1Direction.add(player1.getDirection());
-
-				p2Direction = new LinkedList<Control> ();
 				p2Direction.add(player2.getDirection());
 				gamescore = new GameScore();
 				gameMap = gameMapCopy[0];
 		 	}
 		 	
 		 	else{
-		 		gameStop= false;
-				gamePause = false;
-				player1.setCollision(false);
-				player2.setCollision(false);
-				player1.setPlayerLocation(startingPosP1);
-				player2.setPlayerLocation(startingPosP2);
-				
+		 		
 				p1Direction.clear();
 				p2Direction.clear();
 				p1Direction.add(player1.getDirection());
@@ -265,7 +266,10 @@ public class GameLogic {
 		}
 		else if(p2HasCollided && p1HasCollided){
 			gameStop = true;
+			GamePanel.resetGame=true;
+			GamePanel.isDraw = true;
 			System.out.println("DRAW");
+			return false;
 			
 		}
 		else if( (!p1HasCollided) && (p2HasCollided)){ //p1 wins
