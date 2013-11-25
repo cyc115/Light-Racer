@@ -132,8 +132,8 @@ public class CreateUser extends UIElement implements reinitializable {
 					reset();
 				} else if (!UserDataBase.isValidPassword(pass)) {
 					String message = "The password is not valid. \n"
-							+ "1. A password must be at least 6 characters long \n"
-							+ "2. A password may contain only letters or numbers. ";
+							+ "1. A password must be at least 8 characters long \n"
+							+ "2. A password must contain at least one of: uppercase letter, lowercase letter, number and special. ";
 					JOptionPane.showMessageDialog(contentPane, message,
 							"ERROR", JOptionPane.OK_OPTION);
 				} else {

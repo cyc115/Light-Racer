@@ -72,20 +72,30 @@ public class UserDataBase {
 	 * @return	True if the password is valid, else false;
 	 */
 	public static boolean isValidPassword(String password) {
-		if(password.length() < 6)
+		if(password.length() < 8)
 			return false;
 		else {
 			char[] pass = password.toCharArray();
+			boolean lowerCaseFound = false;
+			boolean upperCaseFound = false;
+			boolean numberFound = false;
+			boolean symbolFound = false;
 			for(char c : pass) {
-				if(!Character.isLetter(c) && !Character.isDigit(c))
-					return false;
+				if(Character.isLetter(c))
+					if(Character.isUpperCase(c))
+						upperCaseFound = true;
+					else
+						lowerCaseFound = true;
+				else if(Character.isDigit(c))
+					numberFound = true;
+				else
+					symbolFound = true;
 			}
-			return true;
+			return lowerCaseFound && upperCaseFound && numberFound && symbolFound;
 		}
 		
 	}
 	
-	//TODO TEST THIS METHOD.
 	/** 
 	 * This method takes in a {@link User} object and sets the entry in the database to that user object passed in.
 	 * This will prove useful when updating user information. This method assumes the username is not changed. Therefore usernames cannot change.

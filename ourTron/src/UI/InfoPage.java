@@ -76,11 +76,5 @@ public class InfoPage extends UIElement implements ActionListener{
 	}
 
 
-	@Override
-	/**
-	 * @deprecated not used since this class is immutable.
-	 */
-	public void reset() {
-	}
 
 }
