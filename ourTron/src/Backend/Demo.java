@@ -8,6 +8,10 @@ package Backend;
  */
 public class Demo {
 	public static void main(String[] args) {
+		generateDemoUsers();
+	}
+	
+	public static void generateDemoUsers(){
 		//create user Demo10
 		User demoUser = new User("Demo10", "Dem@Us3R10");
 		
@@ -29,8 +33,6 @@ public class Demo {
 		addDemoUserHistory("Demo06", "Demo09", 2, 4);
 		addDemoUserHistory("Demo06", "Demo10", 2, 5);
 	}
-	
-	
 	/**
 	 * Adds wins to users gameHistory as if user1 and user2 played (user1wins+user2wins) number of games
 	 * This exists just for the demo and testing purposes

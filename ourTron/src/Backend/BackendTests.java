@@ -30,7 +30,7 @@ public class BackendTests {
 //		 addUserHistory(userScore8, userScore9, 8, 9);
 //		 addUserHistory(userScore1, userScore2, 1, 2);
 		 
-		 Demo.main(null);
+		 Demo.generateDemoUsers();
 	 }
 
 	    @AfterClass //Master TearDown
