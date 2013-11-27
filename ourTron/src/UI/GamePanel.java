@@ -138,10 +138,10 @@ import javax.imageio.ImageIO;
 			
 			
 			//adds an background image
-//			try {
-//				//Change this to your own path
-//			    bkgimg = ImageIO.read(new File("C:/Users/Owner/git/team-15/tron2.jpg"));
-//			} catch (IOException e) {}	
+			try {
+				//Change this to your own path
+			    bkgimg = ImageIO.read(new File("C:/Users/Joanna/git/team-15/tron2_2.png"));
+			} catch (IOException e) {}	
 			isDraw = false;
 			resetGame = false;
 	    	endGame = false;
@@ -212,7 +212,7 @@ import javax.imageio.ImageIO;
 
 					if(System.currentTimeMillis() - timer > 1000){
 						timer += 1000;
-						System.out.println(updates + "ups, " + frames + " fps");
+						//System.out.println(updates + "ups, " + frames + " fps");
 						updates = 0;
 						frames = 0;
 					}
@@ -241,7 +241,7 @@ import javax.imageio.ImageIO;
 
 			//draw tron image on top of the background
 			//comment this out if you don't want the awesome background,however you must set the background to black 
-			//g.drawImage(bkgimg, 0, 0, getWidth(), getHeight(),null);
+			g.drawImage(bkgimg, 0, 0, getWidth(), getHeight(),null);
 			//draw the actual game on top of the tron image
 			g.drawImage(gameImage, 0, 0, getWidth(), getHeight(),null);
 

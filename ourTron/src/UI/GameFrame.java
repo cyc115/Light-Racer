@@ -37,7 +37,7 @@ public class GameFrame extends UIElement implements reinitializable{
                          
                                 GamePanel.getInstance().setSize(600, 400);
                     			GamePanel.getInstance().addKeyListener(GamePanel.getInstance());
-                    			System.out.println("gamePanel initialized");
+                    			//System.out.println("gamePanel initialized");
                                
                                 
                                 (GamePanel.getInstance()).setVisible(true);
@@ -46,7 +46,7 @@ public class GameFrame extends UIElement implements reinitializable{
                                 //Create a triple buffering BufferStrategy
                                 (GamePanel.getInstance()).createBufferStrategy(3);
                                 (GamePanel.getInstance()).start();
-                                System.out.println("game has started");
+                                //System.out.println("game has started");
                         } catch (Exception e) {
                                 e.printStackTrace();
                         }

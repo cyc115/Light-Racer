@@ -268,13 +268,13 @@ public class GameLogic {
 			gameStop = true;
 			GamePanel.resetGame=true;
 			GamePanel.isDraw = true;
-			System.out.println("DRAW");
+			//System.out.println("DRAW");
 			return false;
 			
 		}
 		else if( (!p1HasCollided) && (p2HasCollided)){ //p1 wins
 			gameStop = true;
-			System.out.println("P1 WINS");
+			//System.out.println("P1 WINS");
 			gamescore.incrP1Win();
 			incrRoundNumber();
 			GamePanel.winner = player1;
@@ -283,7 +283,7 @@ public class GameLogic {
 		}
 		else if ( (p1HasCollided) && (!p2HasCollided) ){ //p2 wins
 			gameStop = true;
-			System.out.println("P2 WINS");
+			//System.out.println("P2 WINS");
 			gamescore.incrP2Win();
 			incrRoundNumber();
 			GamePanel.winner = player2;

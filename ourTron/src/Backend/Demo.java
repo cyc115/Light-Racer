@@ -1,5 +1,11 @@
 package Backend;
 
+/**
+ * This class sets up the DataBase for the class demo according to the specifications of the professor.
+ * The existing UserDataBase.data file should be deleted before running this class.
+ * @author Joanna
+ *
+ */
 public class Demo {
 	public static void main(String[] args) {
 		//create user Demo10
@@ -8,8 +14,6 @@ public class Demo {
 		//create demo users 1-9
 		for(int i=1; i<=9; i++){
 			demoUser = new User("Demo0"+ i, "Dem@Us3R0"+ i);
-			System.out.println(demoUser.getUsername());
-			System.out.println(demoUser.getPassword());
 		}
 //		User user1 = new User();
 //		user1 = UserDataBase.retrieveUser("Demo01");
@@ -28,7 +32,8 @@ public class Demo {
 	
 	
 	/**
-	 * 
+	 * Adds wins to users gameHistory as if user1 and user2 played (user1wins+user2wins) number of games
+	 * This exists just for the demo and testing purposes
 	 * @param user1Name
 	 * @param user2Name
 	 * @param user1Wins

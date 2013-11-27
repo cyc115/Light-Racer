@@ -55,7 +55,7 @@ public abstract class UIElement extends JFrame {
 	public UIElement() {
 		setTitle("Tron");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 400);
+		setBounds(600, 200, 450, 400);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -81,10 +81,10 @@ public abstract class UIElement extends JFrame {
 		});
 		mnGame.add(mntmEndGame);
 		
-		JMenuItem mntmHellOfFame = new JMenuItem("Hell Of Fame");
+		JMenuItem mntmHellOfFame = new JMenuItem("Hall Of Fame");
 		mntmHellOfFame.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e){
-				InfoPage hellOfFame = new InfoPage("Hell Of Fame ", PlayerStatistics.top10Users(), "Back");	//TODO get johanna's class 
+				InfoPage hellOfFame = new InfoPage("Hall Of Fame ", PlayerStatistics.top10Users(), "Back");	//TODO get johanna's class 
 				hellOfFame.setVisible(true);
 				
 			}
