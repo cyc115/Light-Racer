@@ -1,10 +1,5 @@
 package Backend;
 
-/**
- *Authored: Joanna
- */
-
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,6 +9,11 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Calculates the Statistics for the database. This includes Head-to-head scores between two users and Top 10 Users.
+ * @author Joanna
+ *
+ */
 	public class PlayerStatistics {
 	
 		/**
@@ -48,11 +48,13 @@ import java.util.LinkedList;
 		}
 		/**
 		 * Calculates the top 10 Users (determined from who has the most wins)
-		 * @return a String in html format of top 10 users
+		 * and puts them into a String in HTML format of users in order from most to least total wins
+		 * @return a String in HTML format of top 10 users
 		 */
 		public static String top10Users(){
 			String toDisplay = "";
 	
+			//get all of the users in the database
 			LinkedList<User> allUsers = new LinkedList<User>();
 			allUsers = UserDataBase.getAllUsers();
 			

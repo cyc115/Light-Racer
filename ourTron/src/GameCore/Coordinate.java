@@ -1,5 +1,9 @@
 package GameCore; 
-
+/**
+ * A coordinate representing a location in (x,y) coordinate spacee, specified in integer precision.
+ * @author Joanna
+ *
+ */
 public class Coordinate{
 	private int x;
 	private int y;
@@ -21,6 +25,11 @@ public class Coordinate{
 		this.y =y;
 	}
 	
+	/**
+	 * Compares this coordinate to the specified coordinate 
+	 * @param c2 to compare this coordinate against
+	 * @returns true if they are equal, meaning they have the same x and same y values, false otherwise
+	 */
 	public boolean equals(Coordinate c2){
 		if ((this.x == c2.x) && (this.y == c2.y)){
 			return true;
@@ -29,8 +38,4 @@ public class Coordinate{
 			return false;
 		}
 	}
-
-//	public static void main(String[] args) {
-//	        System.out.println("It works!");
-//	}
 }

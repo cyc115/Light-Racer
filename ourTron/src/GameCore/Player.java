@@ -2,6 +2,14 @@ package GameCore;
 
 import Backend.User;
 
+/**
+ * This class is the Player object.
+ * Each Player contains the current Coordinate, Control(which is the current direction), username, speed, powerup, and lastInput of the Player.
+ * It also contains a boolean called hasCollided which tells if the player has made a collision.
+ * This is used to keep track of the current stated of the each player during game play.
+ * @author Joanna
+ *
+ */
 public class Player {
 	private Coordinate coord;
 	private Control direction;
@@ -22,8 +30,13 @@ public class Player {
 		this.powerUp = 0;
 		this.hasCollided = false;
 	}
-
-	public String convertFromUser(User user) { // TODO: convert from User
+	
+	/**
+	 * Returns the username of a specified user
+	 * @param user
+	 * @returns username
+	 */
+	public String convertFromUser(User user) {
 		return user.getUsername();
 	}
 

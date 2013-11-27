@@ -113,8 +113,10 @@ public class UserDataBase {
 //		printDB();
 		return;
 	}
-	
-	@SuppressWarnings("null")
+	/**
+	 * Returns a {@link}LinkedList of all of the Users in the database.
+	 * @returns the LinkedList of Users.
+	 */
 	public static LinkedList<User> getAllUsers() {
 		LinkedList<User> allUsers = new LinkedList<User>();
 		for(User thisUser: UserDataBaseWriter.readFromFile()){

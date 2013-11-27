@@ -8,8 +8,6 @@ import static org.junit.Assert.*;
 import org.junit.*;
 
 /**
- * @author Joanna </br>
- *
  *Here are the tests for the Head-to-head scores (called user1VsUser2Wins()) and test for Top10Users.
  *
  *For the head-to-head scores, I chose to test Demo01 vs Demo06 since I knew their scores were 2-5.
@@ -17,6 +15,8 @@ import org.junit.*;
  *The I tested blank names to make sure the score would come up as 0-0.
  *
  *For the Top10Users I just tested that the expected demo listings were returned.
+ *
+ *@author Joanna
  */
 public class PlayerStatisticsTest {
 

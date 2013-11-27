@@ -160,12 +160,11 @@ public class User implements Serializable, Comparable<User> {
 
 
 
-	@Override
-	public int compareTo(User arg0) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
+	/**
+	 * Compares the Users in a LinkedList of Users according to the User's total wins
+	 * @author Joanna
+	 *
+	 */
 	public static class Comparators {
 
 	    public static Comparator<User> Wins = new Comparator<User>() {
@@ -174,6 +173,10 @@ public class User implements Serializable, Comparable<User> {
 	            return user2.getTotalWins() - user1.getTotalWins();
 	        }
 	    };
+	}
+	@Override
+	public int compareTo(User arg0) {
+		return 0;
 	}
 }
 

@@ -136,7 +136,7 @@ public class GameLogic {
 				tiles[i]= 0x000000;
 				break;
 			case WALL:
-				//grey
+				//orange with slight transparency 
 				tiles[i]= 0xFF9100 | 0xB0000000 ;
 				break;
 			case player1Trail:

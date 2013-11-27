@@ -1,11 +1,21 @@
 package GameCore; 
 
+/**
+ * The GameScore object is used to keep track of the player1 and player2's score in the current game.
+ * Note: each game consists of three rounds.
+ * @author Joanna
+ *
+ */
 public class GameScore {
 	private int playerOneScore;
 	private int playerTwoScore;
 	
 	public GameScore() {
 		initialize();
+	}
+	public void initialize(){
+		this.playerOneScore = 0;
+		this.playerTwoScore = 0;
 	}
 	public void incrP1Win(){
 		playerOneScore++;
@@ -22,10 +32,6 @@ public class GameScore {
 	}
 	public int getPlayerTwoScore() {
 		return playerTwoScore;
-	}
-	public void initialize(){
-		this.playerOneScore = 0;
-		this.playerTwoScore = 0;
 	}
 	
 }

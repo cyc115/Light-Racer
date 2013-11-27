@@ -1,17 +1,15 @@
 package Backend;
 
 /**
- * 
+ *Stores the information: Instructions and AboutUs
  * @author Joanna
  *
- *Stores the information: Instructions and AboutUs
  */
-
 public class Info {
 	
 /**
- * The game instructions in html format
- * @return a String which contains the instruction in html format
+ * The game instructions in HTML format
+ * @return a String which contains the instruction in HTML format
  */
 	public static String getInstruction(){
 		String htmlInstructions = "<body>"
@@ -25,8 +23,8 @@ public class Info {
 	}
 
 	/**
-	 * The About Us page in html format
-	 * @return a String which contains the About Us page in html format
+	 * The About Us page in HTML format
+	 * @return a String which contains the About Us page in HTML format
 	 */
 	public static String getAboutUs(){
 		String htmlAboutUs = "<body>"
