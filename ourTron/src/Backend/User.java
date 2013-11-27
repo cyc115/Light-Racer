@@ -67,6 +67,16 @@ public class User implements Serializable, Comparable<User> {
 		UserDataBase.modifyUser(this);
 	}
 	
+	/**
+	 * This method will remove the last GameEntry of the user
+	 * This method exists only for testing purposes
+	 */
+	public void removeLastGameResult() {
+		GameEntry g = gameHistory.removeLast();
+		UserDataBase.modifyUser(this);
+	}
+	
+	
 	public int getWinsVsOpponent(User opponent) {
 		int count = 0;
 		for(GameEntry entry : this.gameHistory)

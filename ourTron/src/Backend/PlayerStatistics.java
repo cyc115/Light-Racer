@@ -76,7 +76,7 @@ import java.util.LinkedList;
 				}
 			}
 			String htmlDisplay = "<h1 style='text-align: center;'><font color='#b22222' face='trebuchet ms, helvetica, sans-serif'>Top 10 Users</font></h1>"
-					+ "<p><span style='font-family:trebuchet ms,helvetica,sans-serif;'>" + toDisplay + "</span></p>";
+					+ "<p style='text-align: center;'><span style='font-family:trebuchet ms,helvetica,sans-serif,;'>" + toDisplay + "</span></p>";
 			
 			return htmlDisplay;
 		}
