@@ -11,9 +11,6 @@ public class GameScore {
 	private int playerTwoScore;
 	
 	public GameScore() {
-		initialize();
-	}
-	public void initialize(){
 		this.playerOneScore = 0;
 		this.playerTwoScore = 0;
 	}

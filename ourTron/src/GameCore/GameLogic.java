@@ -226,7 +226,7 @@ public class GameLogic {
 				break;
 			mapArray.setOccupation(playerCoords, head);
 			break;
-		 default:
+		 default: 
 			break;
 		}
 	}
@@ -307,7 +307,7 @@ public class GameLogic {
 			}
 			user1 = UserDataBase.retrieveUser(user1.getUsername());
 			user2 = UserDataBase.retrieveUser(user2.getUsername());
-			this.gamescore.initialize();
+			this.gamescore = new GameScore();
 			
 			return true;
 		}
