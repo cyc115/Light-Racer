@@ -1,5 +1,9 @@
 package Backend;
 
+/**
+ * This class provides login credential services. It contains static methods
+ * which perform login functions.
+ */
 public class UserAuth {
 	/**
 	 * This static method will compare the user credentials passed into this
