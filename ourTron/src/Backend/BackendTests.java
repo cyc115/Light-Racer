@@ -1,5 +1,7 @@
 package Backend;
 
+import java.util.LinkedList;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -19,7 +21,8 @@ public class BackendTests {
 
 	 @BeforeClass //Master Setup
 	 public static void setUpClass() {   
-		 ///TODO: Clear existing database
+		 ///TODO: Clear existing database 
+		 UserDataBase.UserDataBaseWriter.writeToFile(new LinkedList<User>());
 		 
 //		 User userScore8 = new User("userScore8", "testing123!");
 //		 User userScore9 = new User("userScore9", "testing123!");
@@ -44,7 +47,7 @@ public class BackendTests {
 //	    	removeLastUserHistory(userScore8, userScore9, (8+9));
 //	    	removeLastUserHistory(userScore1, userScore2, (1+2));
 	    	
-	    	///TODO: Clear database
+			 UserDataBase.UserDataBaseWriter.writeToFile(new LinkedList<User>());
 	    }
 	
 	    /**

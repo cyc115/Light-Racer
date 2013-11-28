@@ -65,7 +65,7 @@ public class PlayerStatisticsTest {
 		String actual = PlayerStatistics.user1VsUser2Wins("", "");
 		String expected = "<h1 style='text-align: center;'><font color='#b22222' face='trebuchet ms, helvetica, sans-serif'>Head-To-Head Scores</font></h1>"
 				+ "<p><span style='font-family:trebuchet ms,helvetica,sans-serif;'><table align='center'>"
-				+ "<tr><td>" + "User 1" + "</td><td>-------------------</td><td>" + "User 2" + "</td></tr>"
+				+ "<tr><td>" + "" + "</td><td>-------------------</td><td>" + "" + "</td></tr>"
 				+ "<tr><td><center>" + "0" + "</center></td><td> </td><td><center>" + "0" + "</center</td></tr>"
 				+ "</table><br/><br/></span></p>";
 		assertEquals(expected, actual);

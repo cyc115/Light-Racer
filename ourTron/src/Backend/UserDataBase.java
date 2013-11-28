@@ -172,7 +172,7 @@ public class UserDataBase {
 		 * @param db
 		 *            A {@link UserDataBase} object that must be written to a file.
 		 */
-		public static void writeToFile(LinkedList<User> db) {
+		public static void writeToFile(LinkedList<User> db) { //TODO: use this to clear database
 			try {
 				FileOutputStream fileOut = new FileOutputStream(location);
 				ObjectOutputStream out = new ObjectOutputStream(fileOut);
