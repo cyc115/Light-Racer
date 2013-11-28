@@ -6,6 +6,23 @@ the ourTron folder contians the eclipse project of our current development.
 
 *if you want You can clone the 'develop' branch and import the 'ourTron' folder as eclipse project.*
 
+##Game status up to now(09/11/13)
+<pre>
+1.The Game is now playable.
+2.Everything is pushed under HanGameCore
+3.GameFrame and GamePanel can host a game.GamePanel can load Map from Map Class. Keylisteners have been implemented 
+and works with both players( WASD for player 1 and the arrows for player 2)
+4.Collision detection is implemented.
+6.I've added a background image to the game (looks way cooler). However you need downlaod the image (tron2.jpg) from the Drive 
+and you need to specify the file path in the GamePanel constructor. 
+7.You need to download swing.jar file from the Drive and add it to the build path of the project.
+7.There is a demo image on the drive.
+
+8.Game may lag on your computer.The ups and fps are printed on the console. Ups should remain stable at around 30.
+Fps may change depeding on your computer's hardware.If you don't want to display the background, comment out 
+g.drawImage(bkgimg, 0, 0, getWidth(), getHeight(),null); in GamePanel
+
+</pre>
 
 ##folder structure up to now (04/11/13)
 <pre>

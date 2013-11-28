@@ -244,6 +244,18 @@ public class Map implements Serializable {
 
 	}
 
+	/**
+	 * This method writes the input map to a location specified. The map is
+	 * stored as a serialized object at the location specified.
+	 * <p>
+	 * It is assumed this method will receive a valid file location, there is no
+	 * guarantee of its performance outside this case.
+	 * 
+	 * @param map
+	 *            A {@link Map} file to write to the hard disk.
+	 * @param filename
+	 *            A String object which contains the directory to write to.
+	 */
 	public static void createMap(Map map, String filename) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(filename);
@@ -257,7 +269,15 @@ public class Map implements Serializable {
 		}
 	}
 
-	// TODO there is repetition of code here. Ask TA what to do
+
+	/**
+	 * This method will load a map from a file. Specifically, it takes a String
+	 * location path and loads that into this Map object.
+	 * <p> This method is only guaranteed to work if the map either exists or does not exist. It is not guaranteed if the .map file is not the expected serialized file. 
+	 * 
+	 * @param filename
+	 *            A String object with the location of the file to load up. 
+	 */
 	public void loadMapFromFile(String filename) {
 		try {
 			FileInputStream fileIn = new FileInputStream(filename);
@@ -275,8 +295,9 @@ public class Map implements Serializable {
 	}
 
 	/**
-	 * This method writes to a file in a serialized fashion. The location of
-	 * output is defined in the instance of this object
+	 * This method writes this Map object to a file in a serialized fashion. The location of
+	 * output is defined.
+	 * @param filename	A String object containing the location to write to. 
 	 */
 	public void saveMapToFile(String filename) {
 		try {
