@@ -1,19 +1,10 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="miglayout-4.0-swing.jar"/>
-	<classpathentry kind="lib" path="forms-1.3.0-src.zip"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="/team-15/ourTron/miglayout-4.0.jar"/>
+	<classpathentry kind="lib" path="/team-15/ourTron/miglayout-src.zip"/>
+	<classpathentry kind="lib" path="/team-15/ourTron/forms-1.3.0-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/Users/danielle/Documents/miglayout-4.0-swing.jar" sourcepath="miglayout-src.zip"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
->>>>>>> 46257bdff374118d3a5caf4fa5f958ba1d87b6d3

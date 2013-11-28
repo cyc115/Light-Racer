@@ -2,6 +2,7 @@ package UI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +12,7 @@ import javax.swing.JMenuItem;
 
 import Backend.Info;
 import Backend.PlayerStatistics;
+import GameCore.GameLogic;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -26,29 +28,6 @@ import java.awt.event.ActionEvent;
 public abstract class UIElement extends JFrame {
 
 	private JPanel contentPane;
-	// TODO get the right msg from johanna.... this is only a stub 
-	private final static String INSTRUCTION_STR = 
-			"<h1><center>this is a sample instruction page</center></h1> \n" + 
-			"<h2><center>Goal of game</center></h2>\n" +
-
-			"<p>sadkjsajfdsa'j fdsalmsdal;fmsdal;kdmfsa\n" +
-			"dsakdflsajfdsa\n"+
-			"';fdk\n"+
-			"spadklfsdla\n" + 
-			"sfadlkdfsal,sdmfakdasjfd\n" +
-			";asdkl\n"+
-			"sksad;ljfkl;dsaf\n"+
-			"sdsfkjfdsa;ladskfsdfa</p>\n"+
-
-			"<h2><center>Control</center></h2>\n"+
-
-			"<p>sasjakdsa'dfasadfs\n"+
-			"sad\n"+
-			"dfsa\n"+
-			"dfa\n"+
-			"fdsasa</p>\n"+
-
-			"<h2><center>About use</center></h2>\n";
 	/**
 	 * Create the frame.
 	 */
@@ -120,7 +99,7 @@ public abstract class UIElement extends JFrame {
 			}
 		});
 		
-		JMenuItem mntmHeadToHead = new JMenuItem("Head to Head");
+		JMenuItem mntmHeadToHead = new JMenuItem("Head to Head search");
 		
 		mntmHeadToHead.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -129,6 +108,21 @@ public abstract class UIElement extends JFrame {
 		});
 		
 		mnGame.add(mntmHeadToHead);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Head to Head current user");
+		mntmNewMenuItem.addActionListener(new ActionListener (){
+			public void actionPerformed(ActionEvent e) {
+				InfoPage head2HeadCurrentUser = new InfoPage("Head to Head",
+						PlayerStatistics.user1VsUser2Wins(
+								GameLogic.getUser(1).getUsername(),
+								GameLogic.getUser(2).getUsername() )
+						,"Back");
+				head2HeadCurrentUser.setVisible(true);
+			}
+		});
+		
+		
+		mnGame.add(mntmNewMenuItem);
 		
 		mnGame.add(mntmInstruction);
 		
