@@ -9,27 +9,41 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.LinkedList;
 
-
+/**
+ * This class is the abstraction of a User containing essential properties like the a username, password and the game history. 
+ * The object is Serializable therefore writable to a file. It is also comparable to another user with regards to wins for {@link PlayerStatistics} purposes. 
+ * <p>
+ * @author Danielle Mustillo
+ * @author Joanna Halpern
+ */
 public class User implements Serializable, Comparable<User> {
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
 	private LinkedList<GameEntry> gameHistory;
 	
+	/**
+	 * Prints the {@link User} information. Used for debugging purposes. 
+	 */
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password
 				+ ", gameHistory=" + gameHistory + "]";
 	}
-	
+	/**
+	 * This creates a default user. Will not be added to the database as it is not valid (all entries are empty).
+	 */
 	public User() {
 		//this user will always be rejected
 		this.username=null;
 		this.password=null;
 		this.gameHistory=new LinkedList<GameEntry>();
-//		UserDataBase.addUser(this);
 	}
-	
+	/**
+	 * Creates a new {@link User} object with identical information to an existing user object. Creates a deep-copy of the user parameter. This user is written to the database if valid (or not if invalid).
+	 * <p>
+	 * @param user	A user object to copy. 
+	 */
 	public User(User user) {
 		this.username = user.username;
 		this.password = user.password;
@@ -38,36 +52,65 @@ public class User implements Serializable, Comparable<User> {
 			this.gameHistory.add(entry.clone());
 		UserDataBase.addUser(this);
 	}
-	
+	/**
+	 * Creates a new {@link User} object from a username and a password. The user will be written to the database. 
+	 * <p>
+	 * @param username	A String object with the username.
+	 * @param password	A String object containing the password. 
+	 */
 	public User(String username, String password) {
 		this.username=username;
 		this.password=password;
 		this.gameHistory=new LinkedList<GameEntry>();
 		UserDataBase.addUser(this);
 	}
-
+	/**
+	 * Retrieves the username from this {@link User}. 
+	 * <p>
+	 * @return	A String containing the username of this user object.
+	 */
 	public String getUsername() {
 		return username;
 	}
-
-	public void setUsername(String username) {
+	/**
+	 * Sets the username of this {@link User} to the input username. Should not be used by the client. Therefore it is a protected method. 
+	 * <p>
+	 * @param username	A String containing the username to change to.
+	 */
+	protected void setUsername(String username) {
 		this.username = username;
 	}
-
+	/**
+	 * Retrieves the password from this {@link User} object. 
+	 * <p>
+	 * @return	A String containing the password of this user object.
+	 */
 	public String getPassword() {
 		return password;
 	}
-
-	public void setPassword(String password) {
+	/**
+	 * Sets the password of this {@link User} to the input password. Should not be used by the client. Therefore it is a protected method. 
+	 * <p>
+	 * @param username	A String containing the password to change to.
+	 */
+	protected void setPassword(String password) {
 		this.password = password;
 	}
-	
+	/**
+	 * Adds the result of a game to this {@link User} object. Should be used after a series has been played only.
+	 * @param opponent	A String object containing the username of the opponent. 
+	 * @param won	A boolean whether this user won or not (true if won, false if lost).
+	 */
 	public void addGameResult(User opponent, boolean won) {
 		gameHistory.add(new GameEntry(opponent.username, won));
 		UserDataBase.modifyUser(this);
 	}
-	
-	public int getWinsVsOpponent(User opponent) {
+	/**
+	 * Compares this {@link User} object to the user parameter. It finds the games played versus the two opponents and returns the results. Protected because should only be used within the backend. 
+	 * @param opponent	The user object of the opponent. 
+	 * @return	The number of wins this user had versus the parameter user object. 
+	 */
+	protected int getWinsVsOpponent(User opponent) {
 		int count = 0;
 		for(GameEntry entry : this.gameHistory)
 			//if the oppoent is that user and the entry is won
@@ -75,8 +118,11 @@ public class User implements Serializable, Comparable<User> {
 				count++;
 		return count;
 	}
-	
-	public int getTotalWins() {
+	/**
+	 * Gets the total number of wins from this {@link User} object. 
+	 * @return	An integer containing the number of wins the user has. 
+	 */
+	protected int getTotalWins() {
 		int count = 0;
 		for(GameEntry entry : this.gameHistory)
 			//if the oppoent is that user and the entry is won
@@ -84,9 +130,11 @@ public class User implements Serializable, Comparable<User> {
 				count++;
 		return count;
 	}
-	
-	
-	//TODO make sure equals works as it would be expected to here.
+	/**
+	 * Compares this {@link User} object to the parameter user object. Finds if they are internally equal (but not necessarily the same object reference).
+	 * @param user The user object to compare to
+	 * @return	A boolean whether the two users are internally equal or not. 
+	 */
 	public boolean equals(User user){
 		boolean userSame = username.equals(user.username);
 		boolean passSame = password.equals(user.password);
@@ -94,13 +142,6 @@ public class User implements Serializable, Comparable<User> {
 		return userSame && passSame && gameHistorySame;
 	}
 	
-	
-	//TODO remove for final project.
-	
-	
-
-
-
 	/**
 	 * A game entry object just contains the username and the result of the game.
 	 * @author danielle
