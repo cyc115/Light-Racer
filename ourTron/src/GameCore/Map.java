@@ -33,23 +33,22 @@ public class Map implements Serializable {
 		WALL, player1Trail, player2Trail, power1, power2, EMPTY, player1Head, player2Head
 	}
 
-	
 	public Map(Map map) {
-	 	this.difficulty = map.difficulty;
-	 	this.height = map.height;
-	 	this.width = map.width;
-	 	this.mapArray = new MapSign[map.width][map.height];
-	 	for (int i = 0; i < width; i++) {
-	 		for (int j = 0; j < height; j++) {
-	 			this.mapArray[i][j] = map.mapArray[i][j];
-	 		}
-	 	}
-	 	this.convertedMapArray = new MapSign[width * height];
-	 	for(int i = 0; i < map.convertedMapArray.length; i++)
-	 	this.convertedMapArray[i] = map.convertedMapArray[i];
-	 	this.mapName = map.mapName;
-	 	convert2Dto1D();
-	 }
+		this.difficulty = map.difficulty;
+		this.height = map.height;
+		this.width = map.width;
+		this.mapArray = new MapSign[map.width][map.height];
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				this.mapArray[i][j] = map.mapArray[i][j];
+			}
+		}
+		this.convertedMapArray = new MapSign[width * height];
+		for (int i = 0; i < map.convertedMapArray.length; i++)
+			this.convertedMapArray[i] = map.convertedMapArray[i];
+		this.mapName = map.mapName;
+		convert2Dto1D();
+	}
 
 	public Map(String name, boolean generate) {
 		this.difficulty = 1;
@@ -63,13 +62,13 @@ public class Map implements Serializable {
 	public Map() {
 		this.difficulty = 1;
 		this.mapName = "blankMap.map";
-		//initializeJustEdges();
-		
-		//merge conflict : donno if this line should be kept 
-		//generateRandomWalls();
+		// initializeJustEdges();
+
+		// merge conflict : donno if this line should be kept
+		// generateRandomWalls();
 
 		convert2Dto1D();
-//		createMap(this, "defaultMap.map");
+		// createMap(this, "defaultMap.map");
 	}
 
 	public static void main(String[] args) {
@@ -97,6 +96,7 @@ public class Map implements Serializable {
 		map3.generateWalls(new Point(50, 05), new Point(70, 25));
 		Map.createMap(map3, "basicMap3.map");
 	}
+
 	/**
 	 * sets the edges of the map to walls
 	 */
@@ -152,10 +152,12 @@ public class Map implements Serializable {
 	public void setDifficulty(int difficulty) { // added a setter
 		this.difficulty = difficulty;
 	}
+
 	/**
 	 * checks if the tile in 2D mapArray is occupied (not Empty)
-	 * 	@param {@link Coordinate} coordinate
-	 *	@return {@link boolean}
+	 * 
+	 * @param {@link Coordinate} coordinate
+	 * @return {@link boolean}
 	 */
 	public boolean isOccupied(Coordinate coordinate) {
 		int x = coordinate.getX();
@@ -169,11 +171,13 @@ public class Map implements Serializable {
 		} else
 			return true;
 	}
+
 	/**
 	 * checks if the tile in 2D mapArray is occupied ( not Empty)
-	 * 	@param {@link int} x : x coordinate 
-	 * 	@param {@link int} y : y coordinate 
-	 * 	@return {@link boolean}
+	 * 
+	 * @param {@link int} x : x coordinate
+	 * @param {@link int} y : y coordinate
+	 * @return {@link boolean}
 	 */
 	public boolean isOccupied(int x, int y) {
 		if (mapArray[x][y] != MapSign.EMPTY) {
@@ -182,28 +186,37 @@ public class Map implements Serializable {
 			return false;
 		}
 	}
+
 	/**
-	 * returns the MapSign Enum that is contained in each tile from the 2D mapArray
-	 * 	@param {@link Coordinate} coordinate
-	 * 	@return {@link MapSign}
+	 * returns the MapSign Enum that is contained in each tile from the 2D
+	 * mapArray
+	 * 
+	 * @param {@link Coordinate} coordinate
+	 * @return {@link MapSign}
 	 */
 	public MapSign getOccupation(Coordinate coordinate) {
 		int x = coordinate.getX();
 		int y = coordinate.getY();
 		return mapArray[x][y];
 	}
+
 	/**
-	 * returns the MapSign Enum that is contained in each tile from the 1D convertedMapArray
-	 * 	@param  {@link int} i : position of the tile in the array
-	 * 	@return {@link MapSign}
+	 * returns the MapSign Enum that is contained in each tile from the 1D
+	 * convertedMapArray
+	 * 
+	 * @param {@link int} i : position of the tile in the array
+	 * @return {@link MapSign}
 	 */
 	public MapSign getOccupation1D(int i) {
 		return convertedMapArray[i];
 	}
+
 	/**
 	 * sets what each tile of the mapArray contains.
-	 * 	@param {@link Coordinate} coordinate : location of the tile ( x,y position)
-	 * 	@param {@link MapSign} attribute  : what is contained in the tile
+	 * 
+	 * @param {@link Coordinate} coordinate : location of the tile ( x,y
+	 *        position)
+	 * @param {@link MapSign} attribute : what is contained in the tile
 	 */
 	public void setOccupation(Coordinate coordinate, String attribute) {
 		int x = coordinate.getX();
@@ -236,6 +249,18 @@ public class Map implements Serializable {
 
 	}
 
+	/**
+	 * This method writes the input map to a location specified. The map is
+	 * stored as a serialized object at the location specified.
+	 * <p>
+	 * It is assumed this method will receive a valid file location, there is no
+	 * guarantee of its performance outside this case.
+	 * 
+	 * @param map
+	 *            A {@link Map} file to write to the hard disk.
+	 * @param filename
+	 *            A String object which contains the directory to write to.
+	 */
 	public static void createMap(Map map, String filename) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(filename);
@@ -249,7 +274,14 @@ public class Map implements Serializable {
 		}
 	}
 
-	// TODO there is repetition of code here. Ask TA what to do
+	/**
+	 * This method will load a map from a file. Specifically, it takes a String
+	 * location path and loads that into this Map object.
+	 * <p> This method is only guaranteed to work if the map either exists or does not exist. It is not guaranteed if the .map file is not the expected serialized file. 
+	 * 
+	 * @param filename
+	 *            A String object with the location of the file to load up. 
+	 */
 	public void loadMapFromFile(String filename) {
 		try {
 			FileInputStream fileIn = new FileInputStream(filename);
@@ -267,8 +299,9 @@ public class Map implements Serializable {
 	}
 
 	/**
-	 * This method writes to a file in a serialized fashion. The location of
-	 * output is defined in the instance of this object
+	 * This method writes this Map object to a file in a serialized fashion. The location of
+	 * output is defined.
+	 * @param filename	A String object containing the location to write to. 
 	 */
 	public void saveMapToFile(String filename) {
 		try {
@@ -281,20 +314,25 @@ public class Map implements Serializable {
 			i.printStackTrace();
 		}
 	}
+
 	/**
 	 * return the map's name
-	 *	@return String
+	 * 
+	 * @return String
 	 */
 	public String getMapName() {
 		return mapName;
 	}
+
 	/**
 	 * sets the map's name
-	 *	@param mapName
+	 * 
+	 * @param mapName
 	 */
 	public void setMapName(String mapName) {
 		this.mapName = mapName;
 	}
+
 	/*
 	 * sets the Map
 	 */
@@ -303,43 +341,47 @@ public class Map implements Serializable {
 		this.mapArray = map.mapArray;
 		this.mapName = map.mapName;
 	}
+
 	/**
 	 * return the 2D mapArray
-	 *	@return MapSign[][] 
+	 * 
+	 * @return MapSign[][]
 	 */
 	public MapSign[][] getMap() {
 		return this.mapArray;
 	}
+
 	/**
 	 * gets the size of the map
-	 *	@return int
+	 * 
+	 * @return int
 	 */
 	public int getMapSize() {
 		return convertedMapArray.length;
 	}
 
 	/**
-	 * Converts the 2D mapArray into a 1D mapArray
-	 * the result is stored in convertedMapArray
+	 * Converts the 2D mapArray into a 1D mapArray the result is stored in
+	 * convertedMapArray
 	 */
 	public void convert2Dto1D() {
-		
-		List <MapSign> tempList =new ArrayList<MapSign>();
-		for(int i = 0 ; i < 50 ; i++){
-			for(int j = 0 ; j < 75 ; j++){
-				tempList.add( mapArray[j][i]);
+
+		List<MapSign> tempList = new ArrayList<MapSign>();
+		for (int i = 0; i < 50; i++) {
+			for (int j = 0; j < 75; j++) {
+				tempList.add(mapArray[j][i]);
 			}
 		}
-		
-		for(int i = 0 ; i < convertedMapArray.length ; i++){
+
+		for (int i = 0; i < convertedMapArray.length; i++) {
 			convertedMapArray[i] = tempList.get(i);
 		}
-		
-//		for (int i = 0; i < mapArray.length; i++) {
-//			for (int j = 0; j < mapArray.length; j++) {
-//				convertedMapArray[(i * mapArray.length) + j] = mapArray[j][i];
-//			}
-//		}
+
+		// for (int i = 0; i < mapArray.length; i++) {
+		// for (int j = 0; j < mapArray.length; j++) {
+		// convertedMapArray[(i * mapArray.length) + j] = mapArray[j][i];
+		// }
+		// }
 
 	}
 
