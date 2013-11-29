@@ -75,6 +75,9 @@ public class Map implements Serializable {
 		generateDefaultMaps();
 	}
 
+	/**
+	 * This method simply generates the three maps the teacher requested. It adds the walls as requested. 
+	 */
 	private static void generateDefaultMaps() {
 		Map map1 = new Map("basicMap1", true);
 		map1.height = 50;
@@ -331,6 +334,7 @@ public class Map implements Serializable {
 	/**
 	 * This method writes this Map object to a file in a serialized fashion. The location of
 	 * output is defined.
+	 * <p>This map assumes this map file is a valid map file, which should be true by type-safety in java. 
 	 * @param filename	A String object containing the location to write to. 
 	 */
 	public void saveMapToFile(String filename) {
