@@ -19,9 +19,6 @@ public class Demo {
 		for(int i=1; i<=9; i++){
 			demoUser = new User("Demo0"+ i, "Dem@Us3R0"+ i);
 		}
-//		User user1 = new User();
-//		user1 = UserDataBase.retrieveUser("Demo01");
-		
 		
 		//add the demo scores specified by the prof
 		addDemoUserHistory("Demo01", "Demo02", 2, 2);

@@ -220,7 +220,6 @@ public class UserDataBase {
 				fileOut.close();
 			} catch (IOException i) {
 				System.err.println("ERROR");
-				// IOException not expected.
 			}
 		}
 	}

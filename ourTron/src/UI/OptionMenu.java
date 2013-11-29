@@ -8,10 +8,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import java.awt.FlowLayout;
-import java.awt.Label;
 import javax.swing.JSlider;
 import javax.swing.JLabel;
 
@@ -27,6 +24,10 @@ import javax.swing.JLabel;
  */
 public class OptionMenu extends UIElement implements reinitializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static OptionMenu omInstance = new OptionMenu();
 	
 	/**

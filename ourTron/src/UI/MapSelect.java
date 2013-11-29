@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -28,14 +27,15 @@ import GameCore.Map;
  */
 public class MapSelect extends UIElement implements reinitializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static MapSelect msInstance = new MapSelect();
 	private JFileChooser fileChooser = new JFileChooser();
 	private boolean[] mapSet ={false,false,false};
-	private String playerName [] = new String [2]; //contains the 2 player's user name to display in lblWelcomePAnd
-	
-
-    //get the user name of user 1 and user 2
+	//get the user name of user 1 and user 2
 	String welcomeMsg = "welcome " +
 			 GameLogic.getUser(1).getUsername() + 
 			" and " + GameLogic.getUser(2).getUsername();
@@ -56,7 +56,6 @@ public class MapSelect extends UIElement implements reinitializable {
 		 lblPleaseSelectA_1 = new JLabel("please select a map file");
 		 lblPleaseSelectA = new JLabel("please select a map file");
 		 welcomeMsg = null;
-		 playerName = new String [2] ;
 	}
 	
 	

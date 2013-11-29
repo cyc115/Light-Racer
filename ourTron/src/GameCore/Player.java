@@ -15,7 +15,6 @@ public class Player {
 	private Control direction;
 	private String username;
 	private int speed;
-	private int powerUp;
 	private char lastInput;
 	private boolean hasCollided;
 
@@ -27,7 +26,6 @@ public class Player {
 		this.direction = startingDirection;
 		this.username = convertFromUser(user);
 		this.speed = startingSpeed;
-		this.powerUp = 0;
 		this.hasCollided = false;
 	}
 	
@@ -62,14 +60,6 @@ public class Player {
 
 	public void setPlayerSpeed(int speed) {
 		this.speed = speed;
-	}
-
-	public int getPowerUp() {
-		return powerUp;
-	}
-
-	public void setPowerUp(int powerUp) {
-		this.powerUp = powerUp;
 	}
 
 	public char getLastInput() {

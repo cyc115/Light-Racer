@@ -300,8 +300,4 @@ public class GameLogicTest {
 		assertEquals("Draw", expected, actual);
 	
 	}
-	
-	
-	
-	
 }

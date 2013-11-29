@@ -23,30 +23,11 @@ public class BackendTests {
 	 public static void setUpClass() {   
 		 ///TODO: Clear existing database 
 		 UserDataBase.UserDataBaseWriter.writeToFile(new LinkedList<User>());
-		 
-//		 User userScore8 = new User("userScore8", "testing123!");
-//		 User userScore9 = new User("userScore9", "testing123!");
-//		 
-//		 User userScore1 = new User("userScore1", "testing123!");
-//		 User userScore2 = new User("userScore2", "testing123!");
-//
-//		 addUserHistory(userScore8, userScore9, 8, 9);
-//		 addUserHistory(userScore1, userScore2, 1, 2);
-		 
 		 Demo.generateDemoUsers();
 	 }
 
 	    @AfterClass //Master TearDown
 	    public static void tearDownClass() { 
-//			 User userScore8 = UserDataBase.retrieveUser("userScore8");
-//			 User userScore9 = UserDataBase.retrieveUser("userScore9");
-//			 
-//			 User userScore1 = UserDataBase.retrieveUser("userScore1");
-//			 User userScore2 = UserDataBase.retrieveUser("userScore2");
-			 
-//	    	removeLastUserHistory(userScore8, userScore9, (8+9));
-//	    	removeLastUserHistory(userScore1, userScore2, (1+2));
-	    	
 			 UserDataBase.UserDataBaseWriter.writeToFile(new LinkedList<User>());
 	    }
 	

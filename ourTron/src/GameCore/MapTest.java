@@ -6,11 +6,8 @@ package GameCore;
 import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,7 +41,6 @@ public class MapTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		Map testMap = new Map();
 	}
 
 	/**

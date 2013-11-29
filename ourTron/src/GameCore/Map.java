@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -195,7 +194,7 @@ public class Map implements Serializable {
 		return difficulty;
 	}
 
-	public void setDifficulty(int difficulty) { // added a setter
+	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
 	/**

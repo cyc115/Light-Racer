@@ -2,8 +2,6 @@ package UI;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JLabel;
@@ -15,7 +13,6 @@ import javax.swing.JPasswordField;
 
 import Backend.User;
 import Backend.UserAuth;
-import Backend.UserDataBase;
 import GameCore.GameLogic;
 
 import java.awt.event.ActionListener;
@@ -28,6 +25,10 @@ import java.awt.event.ActionEvent;
  */
 public class Login extends UIElement implements reinitializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//following are fields that need to be reset during reset() call 
 	private JTextField jtfUser = new JTextField();
 	private JTextField jtfUser2 = new JTextField();

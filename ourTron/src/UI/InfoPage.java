@@ -22,6 +22,11 @@ import java.awt.event.ActionEvent;
 public class InfoPage extends UIElement implements ActionListener{
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {

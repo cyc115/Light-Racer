@@ -1,10 +1,7 @@
 package UI;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -17,7 +14,6 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import Backend.User;
-import Backend.UserAuth;
 import Backend.UserDataBase;
 
 import java.awt.event.ActionListener;
@@ -28,6 +24,11 @@ import java.awt.event.ActionEvent;
  *
  */
 public class CreateUser extends UIElement implements reinitializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
 
