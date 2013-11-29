@@ -78,7 +78,7 @@ public class Map implements Serializable {
 	public Map() {
 		this.difficulty = 1;
 		this.mapName = "blankMap.map";
-
+		generateEmptyMap();
 		convert2Dto1D();
 	}
 
@@ -109,14 +109,18 @@ public class Map implements Serializable {
 		map3.generateWalls(new Point(30, 20), new Point(45, 30));
 		map3.generateWalls(new Point(50, 05), new Point(70, 25));
 		Map.createMap(map3, "basicMap3.map");
-//		
-//		Map map4 = new Map("extraMap", true);
-//		map4.height = 50;
-//		map4.width = 75;
-//		map4.generateWalls(new Point(10, 10), new Point(15, 40));
-//		map4.generateWalls(new Point(30, 20), new Point(45, 30));
-//		map4.generateWalls(new Point(50, 05), new Point(70, 25));
-//		Map.createMap(map4, "extraMap.map");
+
+	}
+	/**
+	 * This method sets all the tiles in the map to Empty
+	 */
+	public void generateEmptyMap(){
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				this.mapArray[i][j] = MapSign.EMPTY;
+			}
+		}
+		
 	}
 	
 	public int getHeight() {
@@ -398,13 +402,6 @@ public class Map implements Serializable {
 		for(int i = 0 ; i < convertedMapArray.length ; i++){
 			convertedMapArray[i] = tempList.get(i);
 		}
-		
-//		for (int i = 0; i < mapArray.length; i++) {
-//			for (int j = 0; j < mapArray.length; j++) {
-//				convertedMapArray[(i * mapArray.length) + j] = mapArray[j][i];
-//			}
-//		}
-
 	}
 
 }
