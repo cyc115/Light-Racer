@@ -1,12 +1,5 @@
 package GameCore;
 
-/*
- * FIXME this class still generates random walls when the generateDefaultMaps is called. These obstacles appear on screen in GamePanel. 
- * FIXME the maps are too large, they must be scaled down to a size of 75-50.
- * FIXME the maps still generate the edge walls inexplicably.
- * FIXME the maps must be inverted. Therefore, (0,0) is in the bottom-left corner as specified in the maps.pdf sent to everyone. This may not be the biggest priority for the moment. 
- */
-
 import java.awt.Point;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,20 +12,40 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The Map object is used to store information about the game map. 
+ * This includes the height and width, as well as the mapArray which at each point in the array, 
+ * contains a MapSign which indicated what is in that position (such as WALL or EMPTY)
+ * New game maps can also be generated, stored to a file, a loaded from a file.
+ * @author Joanna
+ *
+ */
 public class Map implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int difficulty;
 	private int height = 50;
 	private int width = 75;
+	
+	//the mapArray stores a MapSign (such as WALL, player1trail, or EMPTY) at each location on the Map
 	private MapSign[][] mapArray = new MapSign[width][height];
+	
 	// exact copy of mapArray but in 1D
 	private MapSign[] convertedMapArray = new MapSign[width * height];
 	private String mapName;
 
+	/**
+	 * These are the options of what the {@link mapArray} is filled with. It can be extended to add more types of powerups in the future.
+	 * @author Joanna
+	 *
+	 */
 	public enum MapSign {
 		WALL, player1Trail, player2Trail, power1, power2, EMPTY, player1Head, player2Head
 	}
 
+	/**
+	 * Constructs a map using an existing map
+	 * @param map
+	 */
 	public Map(Map map) {
 	 	this.difficulty = map.difficulty;
 	 	this.height = map.height;
@@ -59,16 +72,14 @@ public class Map implements Serializable {
 		convert2Dto1D();
 	}
 
+	/**
+	 * Constructs a blank map 
+	 */
 	public Map() {
 		this.difficulty = 1;
 		this.mapName = "blankMap.map";
-		//initializeJustEdges();
-		
-		//merge conflict : donno if this line should be kept 
-		//generateRandomWalls();
 
 		convert2Dto1D();
-//		createMap(this, "defaultMap.map");
 	}
 
 	public static void main(String[] args) {
@@ -107,24 +118,6 @@ public class Map implements Serializable {
 //		map4.generateWalls(new Point(50, 05), new Point(70, 25));
 //		Map.createMap(map4, "extraMap.map");
 	}
-	/**
-	 * sets the edges of the map to walls
-	 */
-	public void initializeJustEdges() {
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				this.mapArray[i][j] = MapSign.EMPTY;
-			}
-		}
-		for (int i = 0; i < width; i++) {
-			this.mapArray[i][0] = MapSign.WALL;
-			this.mapArray[i][height - 1] = MapSign.WALL;
-		}
-		for (int j = 0; j < height; j++) {
-			this.mapArray[0][j] = MapSign.WALL;
-			this.mapArray[width - 1][j] = MapSign.WALL;
-		}
-	}
 	
 	public int getHeight() {
 		return height;
@@ -158,7 +151,11 @@ public class Map implements Serializable {
 		this.convertedMapArray = convertedMapArray;
 	}
 
-
+	/**
+	 * Generates blocks of WALL on the mapArray
+	 * @param bottomLeft
+	 * @param topRight
+	 */
 	private void generateWalls(Point bottomLeft, Point topRight) {
 		for (int i = bottomLeft.x; i <= topRight.x; ++i)
 			for (int j = bottomLeft.y; j < topRight.y; ++j) {
@@ -198,7 +195,7 @@ public class Map implements Serializable {
 		this.difficulty = difficulty;
 	}
 	/**
-	 * checks if the tile in 2D mapArray is occupied (not Empty)
+	 * checks if the tile in 2D mapArray is occupied (not EMPTY)
 	 * 	@param {@link Coordinate} coordinate
 	 *	@return {@link boolean}
 	 */
@@ -215,7 +212,7 @@ public class Map implements Serializable {
 			return true;
 	}
 	/**
-	 * checks if the tile in 2D mapArray is occupied ( not Empty)
+	 * checks if the tile in 2D mapArray is occupied ( not EMPTY)
 	 * 	@param {@link int} x : x coordinate 
 	 * 	@param {@link int} y : y coordinate 
 	 * 	@return {@link boolean}
@@ -247,7 +244,7 @@ public class Map implements Serializable {
 	}
 	/**
 	 * sets what each tile of the mapArray contains.
-	 * 	@param {@link Coordinate} coordinate : location of the tile ( x,y position)
+	 * 	@param {@link Coordinate} coordinate : location of the tile (x,y position)
 	 * 	@param {@link MapSign} attribute  : what is contained in the tile
 	 */
 	public void setOccupation(Coordinate coordinate, String attribute) {

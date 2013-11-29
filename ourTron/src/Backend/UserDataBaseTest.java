@@ -144,7 +144,8 @@ public class UserDataBaseTest {
 	 * Test method for {@link Backend.UserDataBase#getAllUsers()}.
 	 */
 	@Test
-	public final void testGetAllUsers() {
-		fail("Not yet implemented"); // TODO
+	public final void testGetAllUsers() { //TODO
+		LinkedList<User> actual = UserDataBase.getAllUsers();
+		LinkedList<User> expected = new LinkedList<User>();
 	}
 }

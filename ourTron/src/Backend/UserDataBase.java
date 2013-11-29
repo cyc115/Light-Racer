@@ -151,7 +151,7 @@ public class UserDataBase {
 	}
 
 	/**
-	 * Returns a {@link}LinkedList of all of the Users in the database.
+	 * Returns a {@link LinkedList} of all of the Users in the database.
 	 * @returns the LinkedList of Users.
 	 */
 	public static LinkedList<User> getAllUsers() {
