@@ -30,12 +30,19 @@ public class Map implements Serializable {
 	private String mapName;
 
 	public enum MapSign {
-		WALL, player1Trail, player2Trail, power1, power2, EMPTY, player1Head, player2Head
+		WALL, player1Trail, player2Trail,EMPTY, player1Head, player2Head
 	}
 
+	public Map() {
+		
+		this.difficulty = 1;
+		this.mapName = "blankMap.map";
+		generateEmptyMap();
+		convert2Dto1D();
+	}
 	
 	public Map(Map map) {
-	 	this.difficulty = map.difficulty;
+	 	//this.difficulty = map.difficulty;
 	 	this.height = map.height;
 	 	this.width = map.width;
 	 	this.mapArray = new MapSign[map.width][map.height];
@@ -60,17 +67,7 @@ public class Map implements Serializable {
 		convert2Dto1D();
 	}
 
-	public Map() {
-		this.difficulty = 1;
-		this.mapName = "blankMap.map";
-		//initializeJustEdges();
-		
-		//merge conflict : donno if this line should be kept 
-		//generateRandomWalls();
-
-		convert2Dto1D();
-//		createMap(this, "defaultMap.map");
-	}
+	
 
 	public static void main(String[] args) {
 		generateDefaultMaps();
@@ -96,18 +93,20 @@ public class Map implements Serializable {
 		map3.generateWalls(new Point(30, 20), new Point(45, 30));
 		map3.generateWalls(new Point(50, 05), new Point(70, 25));
 		Map.createMap(map3, "basicMap3.map");
-//		
-//		Map map4 = new Map("extraMap", true);
-//		map4.height = 50;
-//		map4.width = 75;
-//		map4.generateWalls(new Point(10, 10), new Point(15, 40));
-//		map4.generateWalls(new Point(30, 20), new Point(45, 30));
-//		map4.generateWalls(new Point(50, 05), new Point(70, 25));
-//		Map.createMap(map4, "extraMap.map");
+
 	}
 	/**
 	 * sets the edges of the map to walls
 	 */
+	
+	public void generateEmptyMap(){
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				this.mapArray[i][j] = MapSign.EMPTY;
+			}
+		}
+		
+	}
 	public void initializeJustEdges() {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
@@ -363,13 +362,5 @@ public class Map implements Serializable {
 		for(int i = 0 ; i < convertedMapArray.length ; i++){
 			convertedMapArray[i] = tempList.get(i);
 		}
-		
-//		for (int i = 0; i < mapArray.length; i++) {
-//			for (int j = 0; j < mapArray.length; j++) {
-//				convertedMapArray[(i * mapArray.length) + j] = mapArray[j][i];
-//			}
-//		}
-
 	}
-
 }

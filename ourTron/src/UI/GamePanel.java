@@ -2,7 +2,6 @@ package UI;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -12,20 +11,19 @@ import javax.swing.*;
 
 import GameCore.Control;
 import GameCore.GameLogic;
-import GameCore.Map;
 import GameCore.Player;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+
+
 
 import javax.imageio.ImageIO;
 
 /**This class has two main functions : Take in key inputs and displays the game on the screen
  * 
-
  /**
  * 	@author Han Yang Zhao
  *
@@ -33,37 +31,25 @@ import javax.imageio.ImageIO;
 	public class GamePanel extends Canvas implements KeyListener, Runnable {
 		boolean suspendflag;
 		private static GameLogic gameLogic;
-		public static int size = 512;
-		public static int width = 600;
-		public static int height = 400;
+		private static int width = 600;
+		private static int height = 400;
 		private static final long serialVersionUID = 1L;
-		private static final int BUFFER = 3;
-		private static final int tilesWidth = 75;
-		private static final int tilesHeight = 50;
 		//this determines the size of each square in pixel, 2 = 4x4 , 3 = 8x8 , 4= 16x16
 
 		long timer;
 		long lastTime;
-		private int playingspeed = 1 ; //TODO move this to a map class. 
-		//keyboards input are stored in the the linkedlists
-		public int[] tiles = new int [tilesWidth * tilesHeight];
 
 		private  Thread thread;
 		private static boolean running = false;
-		// number of ticks
-		public static int updates; //TODO move this to map. 
-		//number of frames displayed on the screen
-		public static int frames;
 		public BufferStrategy bs;
 		
 		public static boolean resetGame = false;
 		public static boolean endGame = false;  
-		public static Player winner;
+		public static  Player winner;
 		public static boolean isDraw = false;
 		
-		//  (creates an image)
-		private BufferedImage endimg = null;  //TODO not used 
-		private BufferedImage bkgimg = null;  //TODO not used 
+		//creates 2 images, one for the background and one for the game
+		private BufferedImage bkgimg = null;
 		private BufferedImage gameImage = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
 		//converts the image objects into an array of int (allows to draw things on the image)
 		private int[] pixels = ((DataBufferInt)gameImage.getRaster().getDataBuffer()).getData();
@@ -72,6 +58,15 @@ import javax.imageio.ImageIO;
 		 * this is the game panel object . only 1 copy exist per game ~!
 		 */
 		private static GamePanel gamePanelInstance = new GamePanel();
+		
+		/**
+		 * 
+		 * @return a static instance of the GamePanel class
+		 */
+		public static GamePanel getInstance() {
+			// TODO Auto-generated method stub
+			return gamePanelInstance;
+		}
 		
 		/**
 		 * Takes key inputs and add them to player direction LinkedList in {@link GameLogic} 
@@ -83,7 +78,6 @@ import javax.imageio.ImageIO;
 
         	//for player 1
         	case KeyEvent.VK_W:
-        		System.out.println("up");
         		gameLogic.addP1Direction(Control.NORTH);
         		break;
         		// for player 2
@@ -118,14 +112,6 @@ import javax.imageio.ImageIO;
         }
 		
 		/**
-		 * 
-		 * @return  returns a static instance of the GamePanel Class
-		 */
-		public static GamePanel getInstance(){
-			return gamePanelInstance;
-		}
-
-		/**
 		 * start() will be called to start a new thread start the game
 		 */
 		public synchronized void start() {
@@ -134,18 +120,16 @@ import javax.imageio.ImageIO;
 			//gamePanelInstance.createBufferStrategy(BUFFER);
 			//Use bufferstrategy to pre-render new frames and reduce choppiness of the gameplay
 			bs = gamePanelInstance.getBufferStrategy();
-					
-			
-			
-			//adds an background image
+			//adds a background image
 			try {
-				//Change this to your own path
-			    bkgimg = ImageIO.read(new File("C:/Users/Joanna/git/team-15/tron2_2.png"));
+				File file = new File("");
+			    bkgimg = ImageIO.read( new File(file.getAbsolutePath() + "/tron2_2.png"));
 			} catch (IOException e) {}	
 			isDraw = false;
 			resetGame = false;
 	    	endGame = false;
 			running = true;
+			winner = null;
 			thread = new Thread(gamePanelInstance,"Tron");
 			gameLogic.initializePlayers();
 			thread.start();
@@ -162,9 +146,8 @@ import javax.imageio.ImageIO;
 		 */
 		public synchronized void resume(){
 			
-			updates = 0;
-			frames = 0;
 			gameLogic.initializePlayers();
+			winner = null;
 			this.timer = System.currentTimeMillis();
 			this.lastTime = System.nanoTime();
 			running = true;
@@ -172,11 +155,11 @@ import javax.imageio.ImageIO;
 			isDraw = false;
 		}
 		/**
-		 * called at the beginning of the Game match.
+		 * called at the beginning of first game.
 		 */
 		
 			public void run() {
-
+				// wait 2 seconds to allows the playing users some time to prepare
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
@@ -184,13 +167,11 @@ import javax.imageio.ImageIO;
 					e.printStackTrace();
 				}
 
-				frames = 0;
-				updates = 0;
 				this.timer = System.currentTimeMillis();
 
 				//Timer variables ( limits the update rate to 30 times per second)
 				this.lastTime = System.nanoTime();
-				double framesPerSecond = 30.0 * playingspeed ;
+				double framesPerSecond = 30.0;
 				//time of one frame
 				final double ns = 1000000000.0 / framesPerSecond;
 
@@ -201,20 +182,14 @@ import javax.imageio.ImageIO;
 					long now = System.nanoTime();
 					delta += (now-lastTime) / ns;
 					lastTime = now;
-					//this only happens 30 times per second
+					//this only happens 30 times per second, the previous calulation of delta limits the upates per seconds to 30 times per second
 					while (delta >=1 ){
 						gameLogic.update();
-						updates++;
 						delta--;
 					}
 					render();
-					frames++;
-
 					if(System.currentTimeMillis() - timer > 1000){
 						timer += 1000;
-						//System.out.println(updates + "ups, " + frames + " fps");
-						updates = 0;
-						frames = 0;
 					}
 				}
 
@@ -316,6 +291,7 @@ import javax.imageio.ImageIO;
 	     */
 	    private void showRoundEndMsg(){
 	    	
+	    	//if match was a draw
 	    	if(isDraw){
 	    		
 	    		Object[] options = {"Next Round",
@@ -342,24 +318,7 @@ import javax.imageio.ImageIO;
 	    				options[0]);
 	    	}
 	    }
-		/**
-		 * Behavior when player has used power up.
-		 * @param player 
-		 * @throws UnimplementedException the class has not yet been implemented for the final project.
-		 * May have time and interest to implement and expand game in the future.
-		 */
-		public void usePowerUp(Player player) throws UnimplementedException{ //TODO: fill in usePowerUp
-			throw new UnimplementedException();
-		}
-		/**
-		 * The class defines the behavior when player has obtained a power up 
-		 * @throws UnimplementedException the class has not yet been implemented for the final project.
-		 * May have time and interest to implement and expand game in the future.
-		 */
-		public void obtainPowerUp() throws UnimplementedException{
-			throw new UnimplementedException();
-		}
-
+		
 	    /**
 	     * display winning message when game ends
 	     */
