@@ -91,16 +91,16 @@ public class User implements Serializable, Comparable<User> {
 	public String getUsername() {
 		return username;
 	}
-
+	
+	
 	/**
-	 * Sets the username of this {@link User} to the input username. Should not
-	 * be used by the client. Therefore it is a protected method.
+	 * Sets the username of this {@link User} to the input username. 
 	 * <p>
 	 * 
 	 * @param username
 	 *            A String containing the username to change to.
 	 */
-	protected void setUsername(String username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 	

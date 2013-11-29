@@ -1,6 +1,5 @@
 package GameCore;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import UI.GamePanel;
@@ -33,14 +32,18 @@ public class GameLogic {
 	
 	private static Player player1;
 	private static Player player2;
+	
+	private static Player none;
 	private static  User user1 = new User();
 	private static  User user2 = new User();
+	// userNone is used in Junit test to test when a match is draw
+	private static  User userNone = new User();
 	private static Coordinate startingPosP1;
 	private static Coordinate startingPosP2;
 	private GameScore gamescore;
 	private int roundNumber = 0;
 	
-	
+	//creates 2 LinkedList for both players direction
 	private LinkedList <Control> p1Direction = new LinkedList <Control> ();
 	private LinkedList <Control> p2Direction = new LinkedList < Control >();
 	private final int  MAX_KEYINPUT = 5;
@@ -48,17 +51,24 @@ public class GameLogic {
 	private boolean gameStop = false;
 	private boolean gamePause = false;
 	
+	//only 1 instance of GameLogic should be created
 	private static GameLogic gameLogicInstance = new GameLogic();
 	
-	
+	/**
+	 * return a static instance of GameLogic and creates 2 new Players
+	 * 	@return {@link GameLogic} a static instance of the GameLogic class
+	 */
 	public static GameLogic getInstance(){
+		
 		player1 = new Player(startingPosP1, user1, Control.NORTH);
 		player2 = new Player(startingPosP2, user2, Control.SOUTH);
+		//note that "none" never moves and never updates
+		none = new Player(startingPosP1,userNone,Control.EAST);
 		return gameLogicInstance;
 		
 	}
 	/**
-	 * Initialize players for the 1st round
+	 * Initialize players before each round. Sets player's initial position,sets the map and sets collision for both players to false.
 	 */
 	public void initializePlayers(){
 		// reset the previous game.
@@ -100,12 +110,12 @@ public class GameLogic {
 					gameMap = gameMapCopy[0];
 				}
 		 	}
-			
-		
 	}
 
 	/**
-	 * Updates the game by determining players new direction and position, check if there is any collision
+	 * Updates the game by determining players new direction and position, the method movePlayers breaks if obstacle is detected. 
+	 * This method then proceeds to handle the collision by calling handleCollision method
+	 * Finally, it will update the direction LinkedList for both players
 	 */
 	public void update() {
 		if(!gameStop){
@@ -137,7 +147,7 @@ public class GameLogic {
 				break;
 			case WALL:
 				//orange with slight transparency 
-				tiles[i]= 0xFF9100 | 0xB0000000 ;
+				tiles[i]= 0x00D121 | 0xB0000000 ;
 				break;
 			case player1Trail:
 				//blue 0x00F0FC
@@ -146,14 +156,6 @@ public class GameLogic {
 			case player2Trail:
 				//red
 				tiles[i]= 0xFC0000 | 0xD0000000;
-				break;
-			case power1:
-				//green
-				tiles[i]= 0x3BBF3D | 0xFF000000;
-				break;
-			case power2:
-				//orange
-				tiles[i]= 0xFF9100 | 0xFF000000;
 				break;
 			case player1Head:
 				//light blue
@@ -179,8 +181,10 @@ public class GameLogic {
 	}
 	
 	/**
-	 * This functions determines the players new position based on the playerDirection linkedList. It checks if there is an obstacle
-	 * in the new position. If not it will modify the mapArray with updated values about the players head position and tail.
+	 * This functions determines the players new position based on the playerDirection LinkedList. <br>
+	 * The LinkedList contains the player's movement direction (NORTH,EAST,WEST,SOUTH).<br>
+	 * The method checks if there is an obstacle in the adjacent tile specified by the player's direction.<br>
+	 * If not it will modify the mapArray with updated values about the player's head position and tail. If obstacle is detected, the method breaks<br>
 	 * 	@param {@link LinkedList} playerDirection
 	 * 	@param {@link Player} player
 	 * 	@param {@link Map} mapArray
@@ -241,7 +245,7 @@ public class GameLogic {
 	 * Checks is player has collided with anything on the gameMap
 	 * @return {@link boolean}
 	 */
-    public static boolean hasCollided(Player player, Map gameMap, Coordinate nextLocation){ //TODO: fill in hasCollided
+    public static boolean hasCollided(Player player, Map gameMap, Coordinate nextLocation){ 
     	
     		if(gameMap.isOccupied(nextLocation)){
     			player.setCollision(true);
@@ -254,10 +258,10 @@ public class GameLogic {
 	/**
 	 * handleCollision will first check if there are any collision, and then handle them.
 	 * If there are no collisions, then it will return false
-	 * If there are collisions, then it will return true, update the GameScore and end the game
+	 * If there are collisions, then it will return true, update the {@link GameScore} and end the game
 	 * 	@return {@link boolean}
 	 */
-	public boolean handleCollisions(Player player1, Player player2){ //TODO: fill in handleCollissions collision 
+	public boolean handleCollisions(Player player1, Player player2){ 
 		boolean p1HasCollided = player1.getCollision();
 		boolean p2HasCollided = player2.getCollision();
 
@@ -268,13 +272,12 @@ public class GameLogic {
 			gameStop = true;
 			GamePanel.resetGame=true;
 			GamePanel.isDraw = true;
-			//System.out.println("DRAW");
+			GamePanel.winner = none;
 			return false;
 			
 		}
 		else if( (!p1HasCollided) && (p2HasCollided)){ //p1 wins
 			gameStop = true;
-			//System.out.println("P1 WINS");
 			gamescore.incrP1Win();
 			incrRoundNumber();
 			GamePanel.winner = player1;
@@ -283,7 +286,6 @@ public class GameLogic {
 		}
 		else if ( (p1HasCollided) && (!p2HasCollided) ){ //p2 wins
 			gameStop = true;
-			//System.out.println("P2 WINS");
 			gamescore.incrP2Win();
 			incrRoundNumber();
 			GamePanel.winner = player2;
@@ -295,7 +297,7 @@ public class GameLogic {
 		else{
 			GamePanel.endGame = true;
 			clearScreen(this.pixels);
-			//handle the game results. 
+			//handle the game results and updates the gamescore. 
 			if(this.gamescore.getPlayerOneScore() > this.gamescore.getPlayerTwoScore()) {
 				user1.addGameResult(user2, true);
 				user2.addGameResult(user1, false);
@@ -314,7 +316,7 @@ public class GameLogic {
 	}
 	
 	/**
-	 * Add a direction to player1's direction LinkedList 
+	 * Add a direction to player1's direction LinkedList based on the keyboard input
 	 * 	@param {@link Control}
 	 */
 	public void addP1Direction(Control direction){
@@ -448,22 +450,48 @@ public class GameLogic {
 	public int getRoundNumber(){
 		return roundNumber;
 	}
-	
+	/**
+	 * clear the screen
+	 * @param pixels
+	 */
 	public void clearScreen(int[] pixels){
 		for ( int i = 0 ; i < pixels.length ; i++){
 			pixels[i] = 0;
 		}
 	}
-	
+	/**
+	 * resets the round number to 0
+	 */
 	public void resetRoundNumber(){
 		roundNumber = 0;
 	}
+	/**
+	 * return user
+	 *	@param i if i == 1 then get the first user, else return the 2nd user
+	 * 	@return {@link User}
+	 */
 	public static User getUser(int i){
 		if (i == 1 ) return user1 ;
 		else return user2;
 	}
+	/**
+	 * sets user
+	 *	@param i if i == 1 then get the first user, else return the 2nd user
+	 */
 	public static void setUser(int i, User u){
-	if (i == 1 ) user1 = u ;
-	else user2 = u ;
+	if (i == 1 ) 
+		user1 = u ;
+	else if ( i == 2 )
+		user2 = u;
+	else userNone = u ;
+	}
+	/**
+	 * Method used in Junit testing to override the maps, usually the maps are loaded by a different class
+	 * @param {@link Map}
+	 */
+	public void overrideMap(Map map){
+		for ( int i = 0 ; i < 3 ; i++){
+			allMaps[i] = map;
+		}
 	}
 }

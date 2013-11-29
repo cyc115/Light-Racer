@@ -1,7 +1,6 @@
 package UI;
 
 
-import java.awt.Canvas;
 import java.awt.EventQueue;
 
 /**
@@ -29,7 +28,7 @@ public class GameFrame extends UIElement implements reinitializable{
         /**
          * initialize the GameFrame Object for gaming.
          */
-        public static void init() {
+        public void init() {
         	EventQueue.invokeLater(new Runnable() {
                 public void run() {
                         try {
@@ -37,16 +36,14 @@ public class GameFrame extends UIElement implements reinitializable{
                          
                                 GamePanel.getInstance().setSize(600, 400);
                     			GamePanel.getInstance().addKeyListener(GamePanel.getInstance());
-                    			//System.out.println("gamePanel initialized");
-                               
-                                
+             
                                 (GamePanel.getInstance()).setVisible(true);
                                 gameFrameInstance.add(GamePanel.getInstance());
                                 gameFrameInstance.pack();
                                 //Create a triple buffering BufferStrategy
                                 (GamePanel.getInstance()).createBufferStrategy(3);
                                 (GamePanel.getInstance()).start();
-                                //System.out.println("game has started");
+                               
                         } catch (Exception e) {
                                 e.printStackTrace();
                         }
