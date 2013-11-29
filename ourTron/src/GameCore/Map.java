@@ -33,7 +33,6 @@ public class Map implements Serializable {
 		WALL, player1Trail, player2Trail, power1, power2, EMPTY, player1Head, player2Head
 	}
 
-	
 	public Map(Map map) {
 	 	this.difficulty = map.difficulty;
 	 	this.height = map.height;
@@ -123,6 +122,39 @@ public class Map implements Serializable {
 			this.mapArray[width - 1][j] = MapSign.WALL;
 		}
 	}
+	
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public MapSign[][] getMapArray() {
+		return mapArray;
+	}
+
+	public void setMapArray(MapSign[][] mapArray) {
+		this.mapArray = mapArray;
+	}
+
+	public MapSign[] getConvertedMapArray() {
+		return convertedMapArray;
+	}
+
+	public void setConvertedMapArray(MapSign[] convertedMapArray) {
+		this.convertedMapArray = convertedMapArray;
+	}
+
 
 	private void generateWalls(Point bottomLeft, Point topRight) {
 		for (int i = bottomLeft.x; i <= topRight.x; ++i)
@@ -152,6 +184,8 @@ public class Map implements Serializable {
 			}
 		}
 	}
+	
+	
 
 	public int getDifficulty() {
 		return difficulty;
