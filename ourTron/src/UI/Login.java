@@ -140,9 +140,12 @@ public class Login extends UIElement implements reinitializable {
 		b2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// check the user info.
-				if (!UserAuth.isRegistered(jtfUser.getText())
-						|| !UserAuth.isRegistered(jtfUser2.getText())) {
-					String message = "One of the users do not exist in the database.";
+				if (!UserAuth.isRegistered(jtfUser.getText()) || !UserAuth.isRegistered(jtfUser2.getText())) {
+					String message = "";
+					if(!UserAuth.isRegistered(jtfUser.getText()))
+						message += "User 1 does not exist\n";
+					if(!UserAuth.isRegistered(jtfUser2.getText()))
+						message += "User 2 does not exist\n";
 					JOptionPane.showMessageDialog(Login.this, message, "Error",
 							JOptionPane.OK_OPTION);
 				} else if (jtfUser.getText().equals(jtfUser2.getText())) {
@@ -160,7 +163,11 @@ public class Login extends UIElement implements reinitializable {
 							u2Password);
 
 					if (user1 == null || user2 == null) {
-						String message = "A password was entered incorrectly.";
+						String message = "";
+						if(user1 == null)
+							message += "User 1's password is incorrect\n";
+						if(user2 == null)
+							message += "User 2's password is incorrect\n";
 						JOptionPane.showMessageDialog(Login.this, message,
 								"Error", JOptionPane.OK_OPTION);
 					} else {
