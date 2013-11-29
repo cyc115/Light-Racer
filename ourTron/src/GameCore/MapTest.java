@@ -44,6 +44,7 @@ public class MapTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		Map testMap = new Map();
 	}
 
 	/**
