@@ -15,6 +15,13 @@ import java.util.LinkedList;
  * @author Joanna Halpern
  */
 public class User implements Serializable, Comparable<User> {
+	public LinkedList<GameEntry> getGameHistory() {
+		return gameHistory;
+	}
+
+	public void setGameHistory(LinkedList<GameEntry> gameHistory) {
+		this.gameHistory = gameHistory;
+	}
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
@@ -96,6 +103,8 @@ public class User implements Serializable, Comparable<User> {
 	protected void setUsername(String username) {
 		this.username = username;
 	}
+	
+	
 
 	/**
 	 * Retrieves the password from this {@link User} object.
@@ -188,7 +197,16 @@ public class User implements Serializable, Comparable<User> {
 	public boolean equals(User user) {
 		boolean userSame = username.equals(user.username);
 		boolean passSame = password.equals(user.password);
-		boolean gameHistorySame = gameHistory.equals(user.gameHistory);
+		boolean gameHistorySame = true;
+		if (user.gameHistory.size() == this.gameHistory.size()) {
+			int i = 0;
+			for (GameEntry entry : gameHistory) {
+				gameHistorySame = entry.equals(user.gameHistory.get(i));
+				++i;
+			}
+		} else {
+			gameHistorySame = false;
+		}
 		return userSame && passSame && gameHistorySame;
 	}
 
