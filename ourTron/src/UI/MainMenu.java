@@ -4,9 +4,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import net.miginfocom.swing.MigLayout;
+
 import javax.swing.JLabel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
 /**
  * MainMenu is the first JFrame that the user sees when starting the game.
  * It contains Buttons to login, create account and exit game.
@@ -42,7 +45,8 @@ public class MainMenu extends UIElement {
 		getContentPane().setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][][][][][][]"));
 
 		JLabel lblLightRacer = new JLabel();
-		lblLightRacer.setIcon(new ImageIcon(MainMenu.class.getResource("/Res/tron.png")));//location of the icon 
+		File file = new File("");
+		lblLightRacer.setIcon(new ImageIcon(file.getAbsolutePath() + "/Res/tron.png"));//location of the icon 
 		lblLightRacer.setVisible(true);
 		getContentPane().add(lblLightRacer, "cell 1 0,alignx center");
 		
