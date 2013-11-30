@@ -16,8 +16,6 @@ import org.junit.Test;
 import Backend.User.GameEntry;
 
 /**
- * @author Joanna
- * 
  */
 public class UserTest {
 	User user1;

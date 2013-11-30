@@ -17,7 +17,6 @@ import org.junit.Test;
 import GameCore.Map.MapSign;
 
 /**
- * @author danielle
  *
  */
 public class MapTest {

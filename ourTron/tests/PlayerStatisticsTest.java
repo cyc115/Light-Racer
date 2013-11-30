@@ -16,7 +16,6 @@ import org.junit.*;
  *
  *For the Top10Users I just tested that the expected demo listings were returned.
  *
- *@author Joanna
  */
 public class PlayerStatisticsTest {
 
