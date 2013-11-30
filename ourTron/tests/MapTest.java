@@ -56,7 +56,7 @@ public class MapTest {
 	@Test
 	public void testCreateMap() {
 		Map map = new Map();
-		Map.createMap(map, "testMap.map");
+		Map.createMap(map, "res/data/testMap.map");
 		Map readmap = null;
 		try {
 			FileInputStream fileIn = new FileInputStream("testMap.map");
