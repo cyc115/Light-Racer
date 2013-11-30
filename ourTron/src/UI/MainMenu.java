@@ -20,15 +20,6 @@ public class MainMenu extends UIElement {
 
 	private static final long serialVersionUID = 1L;
 	private static MainMenu menuInstance = new MainMenu();
-
-	/**
-	 * 
-	 * @deprecated MainMenu is immutable.
-	 */
-	public void reset() {
-		
-	}
-	
 	
 	/**
 	 * Launch the application.
