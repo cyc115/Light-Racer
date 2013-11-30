@@ -117,7 +117,7 @@ public class User implements Serializable, Comparable<User> {
 	 * @param username
 	 *            A String containing the password to change to.
 	 */
-	protected void setPassword(String password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 

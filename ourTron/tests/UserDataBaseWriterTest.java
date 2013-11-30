@@ -1,7 +1,6 @@
 /**
  * 
  */
-package Backend;
 
 import static org.junit.Assert.*;
 
@@ -13,6 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Backend.User;
 import Backend.UserDataBase.UserDataBaseWriter;
 
 /**

@@ -1,11 +1,11 @@
 /**
  * 
  */
-package Backend;
-
 import static org.junit.Assert.*;
 
 import org.junit.*;
+
+import Backend.PlayerStatistics;
 
 /**
  *Here are the tests for the Head-to-head scores (called user1VsUser2Wins()) and test for Top10Users.

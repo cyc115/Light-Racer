@@ -1,5 +1,3 @@
-package Backend;
-
 import java.util.LinkedList;
 
 import org.junit.AfterClass;
@@ -7,6 +5,11 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+
+import Backend.Demo;
+import Backend.User;
+import Backend.UserDataBase;
+import Backend.UserDataBase.UserDataBaseWriter;
 
 /**
  * These are all of the unit tests for the backend. This includes the User, UserDataBase, and PlayerStatistics.
@@ -21,7 +24,7 @@ public class BackendTests {
 	 @BeforeClass //Master Setup
 	 public static void setUpClass() {   
 		 ///TODO: Clear existing database 
-		 UserDataBase.UserDataBaseWriter.writeToFile(new LinkedList<User>());
+		 UserDataBaseWriter.writeToFile(new LinkedList<User>());
 		 Demo.generateDemoUsers();
 	 }
 

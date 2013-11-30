@@ -1,19 +1,20 @@
 /**
  * 
  */
-package GameCore;
 
 import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import GameCore.Map;
 import GameCore.Map.MapSign;
 
 /**
