@@ -59,7 +59,7 @@ public class MapTest {
 		Map.createMap(map, "res/data/testMap.map");
 		Map readmap = null;
 		try {
-			FileInputStream fileIn = new FileInputStream("testMap.map");
+			FileInputStream fileIn = new FileInputStream("res/data/testMap.map");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			readmap = (Map) in.readObject();
 			in.close();
@@ -92,8 +92,8 @@ public class MapTest {
 	public final void testLoadMapFromFile() {
 		Map map = new Map();
 		Map map2 = new Map();
-		Map.createMap(map, "testMap.map");
-		map2.loadMapFromFile("testMap.map");
+		Map.createMap(map, "res/data/testMap.map");
+		map2.loadMapFromFile("res/data/testMap.map");
 
 		boolean equals = map2.getDifficulty() == map.getDifficulty();
 		equals = equals && map2.getHeight() == map.getHeight();
@@ -114,8 +114,8 @@ public class MapTest {
 	public final void testSaveMapToFile() {
 		Map map = new Map();
 		Map map2 = new Map();
-		map.saveMapToFile("testMap.map");
-		map2.loadMapFromFile("testMap.map");
+		map.saveMapToFile("res/data/testMap.map");
+		map2.loadMapFromFile("res/data/testMap.map");
 
 		boolean equals = map2.getDifficulty() == map.getDifficulty();
 		equals = equals && map2.getHeight() == map.getHeight();
