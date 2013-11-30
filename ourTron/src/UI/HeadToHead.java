@@ -70,7 +70,7 @@ public class HeadToHead extends UIElement implements Reinitializable {
 			public void actionPerformed(ActionEvent e) {
 				InfoPage head2Head = new InfoPage("Head to Head",PlayerStatistics.user1VsUser2Wins(textField.getText(), textField_1.getText()),"Back");
 				head2Head.setVisible(true);
-				getInstance().setVisible(false);  // close the window and reset its values 
+				setVisible(false);  // close the window and reset its values 
 				reset();
 			}
 		});

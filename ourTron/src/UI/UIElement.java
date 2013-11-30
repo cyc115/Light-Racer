@@ -9,9 +9,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import Backend.Info;
 import Backend.PlayerStatistics;
+import Backend.User;
 import GameCore.GameLogic;
 
 import java.awt.event.ActionListener;
@@ -46,8 +48,8 @@ public abstract class UIElement extends JFrame {
 		JMenuItem mntmNewGame = new JMenuItem("New Game");
 		mntmNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("set Menu to visible");
 				MainMenu.getInstance().setVisible(true);
+				setVisible(false);
 			}
 		});
 
@@ -66,6 +68,7 @@ public abstract class UIElement extends JFrame {
 			public void actionPerformed (ActionEvent e){
 				InfoPage hellOfFame = new InfoPage("Hall Of Fame ", PlayerStatistics.top10Users(), "Back");	//TODO get johanna's class 
 				hellOfFame.setVisible(true);
+				setVisible(false);
 			
 			}
 		});
@@ -73,9 +76,9 @@ public abstract class UIElement extends JFrame {
 		JMenuItem mntmLogOut = new JMenuItem("Log out");
 		mntmLogOut.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e){
-				GamePanel.setRunning(false);
-				
-				
+				//reset to default users. 
+				GameLogic.setUser1(new User());
+				GameLogic.setUser2(new User());
 				//redisplay 
 				MainMenu.getInstance().setVisible(true);
 				CreateUser.getInstance().setVisible(false);
@@ -86,7 +89,6 @@ public abstract class UIElement extends JFrame {
 				
 				
 				CreateUser.getInstance().reset();
-				GameFrame.getInstance().reset();
 				Login.getInstance().reset();
 				MapSelect.getInstance().reset();
 			}
@@ -97,9 +99,8 @@ public abstract class UIElement extends JFrame {
 		JMenuItem mntmInstruction = new JMenuItem("Instruction");
 		mntmInstruction.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e){
-				InfoPage instructionPage = new InfoPage("Instruction", Info.getInstruction(), "Back");   	//TODO get johanna's class
+				InfoPage instructionPage = new InfoPage("Instruction", Info.getInstruction(), "Back"); 
 				instructionPage.setVisible(true);
-				
 			}
 		});
 		
@@ -116,12 +117,18 @@ public abstract class UIElement extends JFrame {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Head to Head current user");
 		mntmNewMenuItem.addActionListener(new ActionListener (){
 			public void actionPerformed(ActionEvent e) {
+				if(GameLogic.getUser1().getUsername() == null || GameLogic.getUser2().getUsername() == null)
+					JOptionPane.showMessageDialog(contentPane,
+							"Please Login A User", "ERROR",
+							JOptionPane.OK_OPTION);
+				else {
 				InfoPage head2HeadCurrentUser = new InfoPage("Head to Head",
 						PlayerStatistics.user1VsUser2Wins(
 								GameLogic.getUser(1).getUsername(),
 								GameLogic.getUser(2).getUsername() )
 						,"Back");
 				head2HeadCurrentUser.setVisible(true);
+				}
 			}
 		});
 		
@@ -145,7 +152,12 @@ public abstract class UIElement extends JFrame {
 		JMenuItem mntmSelectMap = new JMenuItem("Select Map");
 		mntmSelectMap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MapSelect.getInstance().setVisible(true);
+				if(GameLogic.getUser1().getUsername() == null || GameLogic.getUser2().getUsername() == null)
+					JOptionPane.showMessageDialog(contentPane,
+							"Please Login A User", "ERROR",
+							JOptionPane.OK_OPTION);
+				else
+					MapSelect.getInstance().setVisible(true);
 			}
 		});
 		mnOptions.add(mntmSelectMap);
@@ -156,7 +168,7 @@ public abstract class UIElement extends JFrame {
 		JMenuItem mntmAboutUs = new JMenuItem("About Us");
 		mntmAboutUs.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e){
-				InfoPage aboutUsPage = new InfoPage("About Us", Info.getAboutUs(), "Back");  	//TODO get johanna's class
+				InfoPage aboutUsPage = new InfoPage("About Us", Info.getAboutUs(), "Back"); 
 				aboutUsPage.setVisible(true);
 				
 			}

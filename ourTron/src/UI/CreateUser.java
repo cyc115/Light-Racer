@@ -68,9 +68,6 @@ public class CreateUser extends UIElement implements Reinitializable {
 
 	/**
 	 * Create the frame.
-	 * @bug throws an exception when the UserDataBase.data does not exist in the
-	 *      working directory. Creates it however.
-	 * @deprecated use getInstance() to obtain a static Object 
 	 */
 	public CreateUser() {
 		setTitle("Create user dialog");
@@ -108,7 +105,7 @@ public class CreateUser extends UIElement implements Reinitializable {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainMenu.getInstance().setVisible(true);
-				CreateUser.getInstance().setVisible(false);
+				setVisible(false);
 			}
 		});
 		contentPane.add(btnNewButton, "cell 0 4,alignx center,aligny bottom");

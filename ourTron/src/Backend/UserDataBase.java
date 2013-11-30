@@ -173,7 +173,9 @@ public class UserDataBase {
 	 * it will create the file.
 	 */
 	public static class UserDataBaseWriter {
-		private static String location = "res/data/UserDataBase.data";
+		private static String res = "res";
+		private static String data = "data";
+		private static String userDB = "UserDataBase.data";
 
 		/**
 		 * This method reads from a file that is serialized. It must be in the
@@ -185,7 +187,8 @@ public class UserDataBase {
 		 */
 		public static LinkedList<User> readFromFile() {
 			try {
-				FileInputStream fileIn = new FileInputStream(location);
+				File temp = new File("");
+				FileInputStream fileIn = new FileInputStream(temp.getAbsolutePath() + File.separator + res + File.separator + data + File.separator + userDB);
 				ObjectInputStream in = new ObjectInputStream(fileIn);
 				@SuppressWarnings("unchecked")
 				LinkedList<User> db = (LinkedList<User>) in.readObject();
@@ -211,9 +214,10 @@ public class UserDataBase {
 		 *            A {@link LinkedList<User>} object that must be written to
 		 *            a file.
 		 */
-		public static void writeToFile(LinkedList<User> db) { //TODO: use this to clear database
+		public static void writeToFile(LinkedList<User> db) { 
 			try {
-				FileOutputStream fileOut = new FileOutputStream(location);
+				File temp = new File("");
+				FileOutputStream fileOut = new FileOutputStream(temp.getAbsolutePath() + File.separator + res + File.separator + data + File.separator + userDB);
 				ObjectOutputStream out = new ObjectOutputStream(fileOut);
 				out.writeObject(db);
 				out.close();

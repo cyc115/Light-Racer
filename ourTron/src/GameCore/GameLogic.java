@@ -375,6 +375,20 @@ public class GameLogic {
 
 		} 
 	}
+	
+	public static User getUser1() {
+		return user1;
+	}
+	public static void setUser1(User user1) {
+		GameLogic.user1 = user1;
+	}
+	public static User getUser2() {
+		return user2;
+	}
+	public static void setUser2(User user2) {
+		GameLogic.user2 = user2;
+	}
+	
 	/**
 	 * Add a direction to player2's direction LinkedList 
 	 * @param {@link Control}
