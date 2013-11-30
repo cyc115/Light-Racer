@@ -187,7 +187,7 @@ public class MapSelect extends UIElement implements Reinitializable {
 				case JFileChooser.APPROVE_OPTION:
 					lblNewLabel_1.setText(shortenStr("" + fileChooser.getSelectedFile(), MAX_CHAR_SIZE)) ;
 					Map map = new Map();
-					map.loadMapFromFile(fileChooser.getSelectedFile().getName());
+					map.loadMapFromFile(fileChooser.getSelectedFile().getAbsolutePath());
 					GameLogic.allMaps[0] = map;
 					mapSet[0] = true;
 	                break;
@@ -217,7 +217,7 @@ public class MapSelect extends UIElement implements Reinitializable {
 				case JFileChooser.APPROVE_OPTION:
 					lblPleaseSelectA.setText(shortenStr("" + fileChooser.getSelectedFile(), MAX_CHAR_SIZE));
 					Map map = new Map();
-					map.loadMapFromFile(fileChooser.getSelectedFile().getName());
+					map.loadMapFromFile(fileChooser.getSelectedFile().getAbsolutePath());
 					GameLogic.allMaps[1] = map;
 					mapSet[1] = true;
 	                break;
@@ -247,7 +247,7 @@ public class MapSelect extends UIElement implements Reinitializable {
 				case JFileChooser.APPROVE_OPTION:
 					lblPleaseSelectA_1.setText(shortenStr("" + fileChooser.getSelectedFile(), MAX_CHAR_SIZE));
 					Map map = new Map();
-					map.loadMapFromFile(fileChooser.getSelectedFile().getName());
+					map.loadMapFromFile(fileChooser.getSelectedFile().getAbsolutePath());
 					GameLogic.allMaps[2] = map;
 					mapSet[2] = true;
 	                break;

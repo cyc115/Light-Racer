@@ -38,6 +38,8 @@ import javax.imageio.ImageIO;
 
 		private  Thread thread;
 		private static boolean running = false;
+		
+
 		public BufferStrategy bs;
 		
 		public static boolean resetGame = false;
@@ -246,6 +248,14 @@ import javax.imageio.ImageIO;
 		@Override
 		public void keyReleased(KeyEvent arg0) {
 			// TODO Auto-generated method stub
+		}
+		
+		public static boolean isRunning() {
+			return running;
+		}
+
+		public static void setRunning(boolean running) {
+			GamePanel.running = running;
 		}
 
 		@Override

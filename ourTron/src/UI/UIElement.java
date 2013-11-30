@@ -66,13 +66,16 @@ public abstract class UIElement extends JFrame {
 			public void actionPerformed (ActionEvent e){
 				InfoPage hellOfFame = new InfoPage("Hall Of Fame ", PlayerStatistics.top10Users(), "Back");	//TODO get johanna's class 
 				hellOfFame.setVisible(true);
-				
+			
 			}
 		});
 		
 		JMenuItem mntmLogOut = new JMenuItem("Log out");
 		mntmLogOut.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e){
+				GamePanel.setRunning(false);
+				
+				
 				//redisplay 
 				MainMenu.getInstance().setVisible(true);
 				CreateUser.getInstance().setVisible(false);
