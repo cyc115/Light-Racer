@@ -14,12 +14,12 @@ import Backend.UserDataBase.UserDataBaseWriter;
 /**
  * These are all of the unit tests for the backend. This includes the User, UserDataBase, and PlayerStatistics.
  * 
- *First this sets up the database according to the class demo specified by the professor. (The old database should be cleared/deleted before running this)
+ * First this sets up the database according to the class demo specified by the professor. (The old database should be cleared/deleted before running this)
  */
 @RunWith(Suite.class)
 @SuiteClasses({ PlayerStatisticsTest.class, UserDataBaseTest.class,
-		UserTest.class })
-public class BackendTests {
+		UserTest.class, MapTest.class, UserAuthTest.class, UserDataBaseWriterTest.class})
+public class AllTests {
 
 	 @BeforeClass //Master Setup
 	 public static void setUpClass() {   
