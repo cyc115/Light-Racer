@@ -18,7 +18,7 @@ import Backend.UserDataBase.UserDataBaseWriter;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ PlayerStatisticsTest.class, UserDataBaseTest.class,
-		UserTest.class, MapTest.class, UserAuthTest.class, UserDataBaseWriterTest.class})
+		UserTest.class, MapTest.class, UserAuthTest.class, UserDataBaseWriterTest.class, GameLogicTest.class})
 public class AllTests {
 
 	 @BeforeClass //Master Setup

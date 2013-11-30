@@ -122,7 +122,7 @@ import javax.imageio.ImageIO;
 			//adds a background image
 			try {
 				File file = new File("");
-			    bkgimg = ImageIO.read( new File(file.getAbsolutePath() + "res/image/tron2_2.png"));
+			    bkgimg = ImageIO.read( new File(file.getAbsolutePath() + "/res/image/tron2_2.png"));
 			} catch (IOException e) {}	
 			isDraw = false;
 			resetGame = false;

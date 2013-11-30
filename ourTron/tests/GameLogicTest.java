@@ -1,11 +1,13 @@
 /**
  * 
  */
-package GameCore;
+
 
 import static org.junit.Assert.*;
 import UI.GamePanel;
 import UI.GameFrame;
+import GameCore.Coordinate;
+import GameCore.GameLogic;
 import GameCore.Map;
 import Backend.User;
 
