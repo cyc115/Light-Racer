@@ -16,7 +16,6 @@ import java.util.Random;
  * This includes the height and width, as well as the mapArray which at each point in the array, 
  * contains a MapSign which indicated what is in that position (such as WALL or EMPTY)
  * New game maps can also be generated, stored to a file, a loaded from a file.
- * @author Joanna
  *
  */
 public class Map implements Serializable {
@@ -34,7 +33,6 @@ public class Map implements Serializable {
 
 	/**
 	 * These are the options of what the {@link mapArray} is filled with. It can be extended to add more types of powerups in the future.
-	 * @author Joanna
 	 *
 	 */
 	public enum MapSign {
@@ -92,14 +90,14 @@ public class Map implements Serializable {
 		Map map1 = new Map("basicMap1", true);
 		map1.height = 50;
 		map1.width = 75;
-		Map.createMap(map1, "basicMap1.map");
+		Map.createMap(map1, "res/data/basicMap1.map");
 
 		Map map2 = new Map("basicMap2", true);
 		map2.height = 50;
 		map2.width = 75;
 		map2.generateWalls(new Point(15, 20), new Point(25, 30));
 		map2.generateWalls(new Point(50, 20), new Point(60, 30));
-		Map.createMap(map2, "basicMap2.map");
+		Map.createMap(map2, "res/data/basicMap2.map");
 
 		Map map3 = new Map("basicMap3", true);
 		map3.height = 50;
@@ -107,7 +105,7 @@ public class Map implements Serializable {
 		map3.generateWalls(new Point(05, 25), new Point(25, 45));
 		map3.generateWalls(new Point(30, 20), new Point(45, 30));
 		map3.generateWalls(new Point(50, 05), new Point(70, 25));
-		Map.createMap(map3, "basicMap3.map");
+		Map.createMap(map3, "res/data/basicMap3.map");
 
 	}
 	/**
@@ -300,7 +298,6 @@ public class Map implements Serializable {
 			out.writeObject(map);
 			out.close();
 			fileOut.close();
-			System.out.println("Your map has been saved in " + filename);
 		} catch (IOException i) {
 			i.printStackTrace();
 		}

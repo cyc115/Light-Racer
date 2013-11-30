@@ -2,8 +2,6 @@ package Backend;
 
 /**
  *Stores the information: Instructions and AboutUs
- * @author Joanna
- *
  */
 public class Info {
 	

@@ -19,10 +19,8 @@ import javax.swing.JLabel;
  * This is only something we can do for extra experience, hence the option menu will
  * be disabled in the deliverable if there are not enough time to fully implement its 
  * functionality.
- * @author yuechuan
- *
  */
-public class OptionMenu extends UIElement implements reinitializable {
+public class OptionMenu extends UIElement implements Reinitializable {
 
 	/**
 	 * 

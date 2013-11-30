@@ -15,9 +15,6 @@ import java.awt.event.ActionEvent;
  * Information will be displayed in HTML, allowing the displayed information to be flexible.
  * 
  * note : this is not a singleton as other UIs in this game. 
- * 
- * @author yuechuan
- *
  */
 public class InfoPage extends UIElement implements ActionListener{
 

@@ -13,7 +13,7 @@ import Backend.PlayerStatistics;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class HeadToHead extends UIElement implements reinitializable {
+public class HeadToHead extends UIElement implements Reinitializable {
 
 	/**
 	 * 
@@ -44,7 +44,6 @@ public class HeadToHead extends UIElement implements reinitializable {
 		return hthInstance;
 	}
 	/**
-	 * @deprecated obtain a static instance with getInstance instead
 	 * Create the frame.
 	 */
 	public HeadToHead() {

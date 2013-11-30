@@ -20,10 +20,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 /**
  * UI dialog to guide new users to create account
- *  @author yuechuan Chen
  *
  */
-public class CreateUser extends UIElement implements reinitializable {
+public class CreateUser extends UIElement implements Reinitializable {
 
 	/**
 	 * 

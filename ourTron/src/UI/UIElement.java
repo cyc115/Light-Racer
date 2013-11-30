@@ -21,9 +21,6 @@ import java.awt.event.ActionEvent;
  * it defines the size, closing actions of the JFrame as well as hosting the 
  * JMenuBar and all of its options.This class is Abstract so it does not provide
  *  ways to instantiate concrete Objects. Please provide a subclass for instantiation.
- * 
- * @author yuechuan
- *
  */
 public abstract class UIElement extends JFrame {
 

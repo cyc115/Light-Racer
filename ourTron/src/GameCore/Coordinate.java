@@ -1,8 +1,6 @@
 package GameCore; 
 /**
  * A coordinate representing a location in (x,y) coordinate spacee, specified in integer precision.
- * @author Joanna
- *
  */
 public class Coordinate{
 	private int x;

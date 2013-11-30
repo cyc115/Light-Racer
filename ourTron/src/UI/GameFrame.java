@@ -5,11 +5,10 @@ import java.awt.EventQueue;
 
 /**
  * GameFrame contains GamePanel.this is the window displaying the actual game that user plays.
- * @author yuechuan
  *
  */
 
-public class GameFrame extends UIElement implements reinitializable{
+public class GameFrame extends UIElement implements Reinitializable{
 	private static GameFrame gameFrameInstance = new GameFrame();
 
 	

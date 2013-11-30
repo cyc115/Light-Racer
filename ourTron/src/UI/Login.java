@@ -23,7 +23,7 @@ import java.awt.event.ActionEvent;
  * @author yuechuan
  *
  */
-public class Login extends UIElement implements reinitializable {
+public class Login extends UIElement implements Reinitializable {
 	
 	/**
 	 * 

@@ -22,11 +22,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-/**This class has two main functions : Take in key inputs and displays the game on the screen
- * 
- /**
- * 	@author Han Yang Zhao
- *
+/**
+ * This class has two main functions : Take in key inputs and displays the game on the screen
  */
 	public class GamePanel extends Canvas implements KeyListener, Runnable {
 		boolean suspendflag;
@@ -123,7 +120,7 @@ import javax.imageio.ImageIO;
 			//adds a background image
 			try {
 				File file = new File("");
-			    bkgimg = ImageIO.read( new File(file.getAbsolutePath() + "/tron2_2.png"));
+			    bkgimg = ImageIO.read( new File(file.getAbsolutePath() + "res/image/tron2_2.png"));
 			} catch (IOException e) {}	
 			isDraw = false;
 			resetGame = false;

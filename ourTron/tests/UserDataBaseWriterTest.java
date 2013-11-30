@@ -16,7 +16,6 @@ import org.junit.Test;
 import Backend.UserDataBase.UserDataBaseWriter;
 
 /**
- * @author danielle
  *
  */
 public class UserDataBaseWriterTest {

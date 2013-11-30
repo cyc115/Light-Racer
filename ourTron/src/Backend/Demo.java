@@ -3,7 +3,6 @@ package Backend;
 /**
  * This class sets up the DataBase for the class demo according to the specifications of the professor.
  * The existing UserDataBase.data file should be deleted before running this class.
- * @author Joanna
  *
  */
 public class Demo {

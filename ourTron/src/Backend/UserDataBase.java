@@ -173,7 +173,7 @@ public class UserDataBase {
 	 * it will create the file.
 	 */
 	public static class UserDataBaseWriter {
-		private static String location = "UserDataBase.data";
+		private static String location = "res/data/UserDataBase.data";
 
 		/**
 		 * This method reads from a file that is serialized. It must be in the

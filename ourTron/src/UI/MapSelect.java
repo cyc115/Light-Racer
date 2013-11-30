@@ -22,10 +22,8 @@ import GameCore.GameLogic;
 import GameCore.Map;
 /**
  * Map selection GUI 
- * @author yuechuan
- *
  */
-public class MapSelect extends UIElement implements reinitializable {
+public class MapSelect extends UIElement implements Reinitializable {
 	
 	/**
 	 * 

@@ -2,9 +2,7 @@
 package UI;
 
 /**
- * stub Exception class to mark method as not implemented 
- * @author yuechuan
- *
+ * Exception class to mark method as not implemented 
  */
 public class UnimplementedException extends Exception {
 

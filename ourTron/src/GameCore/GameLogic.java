@@ -8,7 +8,6 @@ import Backend.UserDataBase;
 /**
  * This class contains all the logic for the LightRacer game. 
  * Its main functionality are to update the player's position within the map,check for collision and update the pixel array used by GamePanel.
- * 	@author Han Yang Zhao
  *
  */
 public class GameLogic {

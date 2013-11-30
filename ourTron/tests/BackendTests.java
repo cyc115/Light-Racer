@@ -9,7 +9,6 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * @author Joanna </br>
  * These are all of the unit tests for the backend. This includes the User, UserDataBase, and PlayerStatistics.
  * 
  *First this sets up the database according to the class demo specified by the professor. (The old database should be cleared/deleted before running this)

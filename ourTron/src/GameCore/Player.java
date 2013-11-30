@@ -7,8 +7,6 @@ import Backend.User;
  * Each Player contains the current Coordinate, Control(which is the current direction), username, speed, powerup, and lastInput of the Player.
  * It also contains a boolean called hasCollided which tells if the player has made a collision.
  * This is used to keep track of the current stated of the each player during game play.
- * @author Joanna
- *
  */
 public class Player {
 	private Coordinate coord;

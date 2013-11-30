@@ -9,10 +9,6 @@ import java.util.LinkedList;
  * the a username, password and the game history. The object is Serializable
  * therefore writable to a file. It is also comparable to another user with
  * regards to wins for {@link PlayerStatistics} purposes.
- * <p>
- * 
- * @author Danielle Mustillo
- * @author Joanna Halpern
  */
 public class User implements Serializable, Comparable<User> {
 	public LinkedList<GameEntry> getGameHistory() {
@@ -51,7 +47,6 @@ public class User implements Serializable, Comparable<User> {
 	 * Creates a new {@link User} object with identical information to an
 	 * existing user object. Creates a deep-copy of the user parameter. This
 	 * user is written to the database if valid (or not if invalid).
-	 * <p>
 	 * 
 	 * @param user
 	 *            A user object to copy.
@@ -68,7 +63,6 @@ public class User implements Serializable, Comparable<User> {
 	/**
 	 * Creates a new {@link User} object from a username and a password. The
 	 * user will be written to the database.
-	 * <p>
 	 * 
 	 * @param username
 	 *            A String object with the username.
@@ -84,7 +78,6 @@ public class User implements Serializable, Comparable<User> {
 
 	/**
 	 * Retrieves the username from this {@link User}.
-	 * <p>
 	 * 
 	 * @return A String containing the username of this user object.
 	 */
@@ -148,7 +141,7 @@ public class User implements Serializable, Comparable<User> {
 	 * This method exists only for testing purposes
 	 */
 	public void removeLastGameResult() {
-		GameEntry g = gameHistory.removeLast();
+		gameHistory.removeLast();
 		UserDataBase.modifyUser(this);
 	}
 
@@ -162,7 +155,7 @@ public class User implements Serializable, Comparable<User> {
 	 * @return The number of wins this user had versus the parameter user
 	 *         object.
 	 */
-	protected int getWinsVsOpponent(User opponent) {
+	public int getWinsVsOpponent(User opponent) {
 		int count = 0;
 		for (GameEntry entry : this.gameHistory)
 			// if the oppoent is that user and the entry is won
@@ -176,7 +169,7 @@ public class User implements Serializable, Comparable<User> {
 	 * 
 	 * @return An integer containing the number of wins the user has.
 	 */
-	protected int getTotalWins() {
+	public int getTotalWins() {
 		int count = 0;
 		for (GameEntry entry : this.gameHistory)
 			// if the oppoent is that user and the entry is won
@@ -220,11 +213,8 @@ public class User implements Serializable, Comparable<User> {
 	 * The owning user provides the remaining information (ie. who does the win
 	 * status belong to, who is the other user who is not the opponent).
 	 * Therefore, the GameEntry only exists within the context of a User.
-	 * 
-	 * @author Danielle Mustillo
-	 * @author Joanna Halpern
 	 */
-	protected class GameEntry implements Serializable {
+	public class GameEntry implements Serializable {
 		private static final long serialVersionUID = 1L;
 		private String opponent;
 		private boolean won;
@@ -244,13 +234,13 @@ public class User implements Serializable, Comparable<User> {
 		 *            The result of this User, true if this user won and false
 		 *            if this user lost
 		 */
-		protected GameEntry(String opponentUsername, boolean won) {
+		public GameEntry(String opponentUsername, boolean won) {
 			this.opponent = opponentUsername;
 			this.won = won;
 		}
 
 		@Override
-		protected GameEntry clone() {
+		public GameEntry clone() {
 			return new GameEntry(this.opponent, this.won);
 		}
 
@@ -266,7 +256,7 @@ public class User implements Serializable, Comparable<User> {
 		 * @return A boolean variable of true if the two objects are equal, else
 		 *         false
 		 */
-		protected boolean equals(GameEntry entry) {
+		public boolean equals(GameEntry entry) {
 			boolean opponentSame = this.opponent.equals(entry.opponent);
 			boolean resultSame = this.won == entry.won;
 			return opponentSame && resultSame;
@@ -278,7 +268,7 @@ public class User implements Serializable, Comparable<User> {
 		 * 
 		 * @return A String object of the opponents username.
 		 */
-		protected String getOpponent() {
+		public String getOpponent() {
 			return opponent;
 		}
 
@@ -290,7 +280,7 @@ public class User implements Serializable, Comparable<User> {
 		 * @param opponent
 		 *            The String of the opponents name.
 		 */
-		protected void setOpponent(String opponent) {
+		public void setOpponent(String opponent) {
 			this.opponent = opponent;
 		}
 
@@ -300,7 +290,7 @@ public class User implements Serializable, Comparable<User> {
 		 * 
 		 * @return The result of this game entry (win, loss)
 		 */
-		protected boolean isWon() {
+		public boolean isWon() {
 			return won;
 		}
 
@@ -311,14 +301,13 @@ public class User implements Serializable, Comparable<User> {
 		 * @param won
 		 *            The win status of this {@link User}.
 		 */
-		protected void setWon(boolean won) {
+		public void setWon(boolean won) {
 			this.won = won;
 		}
 	}
 
 	/**
 	 * Compares the Users in a LinkedList of Users according to the User's total wins
-	 * @author Joanna
 	 *
 	 */
 	public static class Comparators {

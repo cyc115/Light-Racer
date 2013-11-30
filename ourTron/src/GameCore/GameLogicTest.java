@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Han Yang zhao
  * The main purpose of this test is to test the collison system of the game.<br>
  * 2 Users are created and placed at their respective starting location<br>
  * To simulate a collision, I override a mapTile. For example, to test Player 2 colliding with a wall, I set the MapTile in front of Player 2 starting position with a Wall<br>

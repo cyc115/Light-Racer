@@ -3,7 +3,6 @@ package GameCore;
 /**
  * The GameScore object is used to keep track of the player1 and player2's score in the current game.
  * Note: each game consists of three rounds.
- * @author Joanna
  *
  */
 public class GameScore {

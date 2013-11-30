@@ -5,7 +5,6 @@ import java.util.LinkedList;
 
 /**
  * Calculates the Statistics for the database. This includes Head-to-head scores between two users and Top 10 Users.
- * @author Joanna
  *
  */
 	public class PlayerStatistics {
