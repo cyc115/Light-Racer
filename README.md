@@ -1,4 +1,4 @@
-#team-15
+#team-15 Light Racer Game
 > **team 15** 
 
 This is the final version of our tron project 
